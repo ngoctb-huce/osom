@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
+  <process id="ProcessOrderItem" name="Start Order Otem Process" isExecutable="true">
+    <startEvent id="startevent1" name="Start"></startEvent>
+    <serviceTask id="stActionCheck" name="ActionCheck" activiti:delegateExpression="${processOrderItemActionCheck}"></serviceTask>
+    <sequenceFlow id="flow19" sourceRef="startevent1" targetRef="stActionCheck"></sequenceFlow>
+    <serviceTask id="stActionADD" name="Action ADD" activiti:delegateExpression="${processOrderItemActionAdd}"></serviceTask>
+    <exclusiveGateway id="exclusivegateway1" name="Exclusive Gateway"></exclusiveGateway>
+    <sequenceFlow id="flow20" sourceRef="stActionCheck" targetRef="exclusivegateway1"></sequenceFlow>
+    <sequenceFlow id="flow21" name="saction=='ADD'" sourceRef="exclusivegateway1" targetRef="stActionADD">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${saction=='ADD'}]]></conditionExpression>
+    </sequenceFlow>
+    <serviceTask id="stActionMODIFY" name="Action MODIFY" activiti:delegateExpression="${processOrderItemActionModify}"></serviceTask>
+    <sequenceFlow id="flow22" name="saction=='MODIFY'" sourceRef="exclusivegateway1" targetRef="stActionMODIFY">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${saction=='MODIFY'}]]></conditionExpression>
+    </sequenceFlow>
+    <serviceTask id="stActionDELETE" name="Action DELETE" activiti:delegateExpression="${processOrderItemActionDelete}"></serviceTask>
+    <sequenceFlow id="flow23" name="saction=='DELETE'" sourceRef="exclusivegateway1" targetRef="stActionDELETE">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${saction=='DELETE'}]]></conditionExpression>
+    </sequenceFlow>
+    <callActivity id="CreateServiceProcess" name="Create Service Process" activiti:async="true" calledElement="CreateServiceProcess" activiti:inheritVariables="true"></callActivity>
+    <endEvent id="endevent2" name="End"></endEvent>
+    <serviceTask id="stProcesOrderItemComplete" name="Proces Order Item Complete" activiti:delegateExpression="${processOrderItemActionComplete}"></serviceTask>
+    <sequenceFlow id="flow28" sourceRef="CreateServiceProcess" targetRef="stProcesOrderItemComplete"></sequenceFlow>
+    <sequenceFlow id="flow29" sourceRef="stActionMODIFY" targetRef="stProcesOrderItemComplete"></sequenceFlow>
+    <sequenceFlow id="flow30" sourceRef="stActionDELETE" targetRef="stProcesOrderItemComplete"></sequenceFlow>
+    <sequenceFlow id="flow31" sourceRef="stProcesOrderItemComplete" targetRef="endevent2"></sequenceFlow>
+    <sequenceFlow id="flow32" sourceRef="stActionADD" targetRef="CreateServiceProcess"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_ProcessOrderItem">
+    <bpmndi:BPMNPlane bpmnElement="ProcessOrderItem" id="BPMNPlane_ProcessOrderItem">
+      <bpmndi:BPMNShape bpmnElement="startevent1" id="BPMNShape_startevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="40.0" y="160.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="stActionCheck" id="BPMNShape_stActionCheck">
+        <omgdc:Bounds height="55.0" width="105.0" x="140.0" y="150.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="stActionADD" id="BPMNShape_stActionADD">
+        <omgdc:Bounds height="55.0" width="105.0" x="410.0" y="60.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegateway1" id="BPMNShape_exclusivegateway1">
+        <omgdc:Bounds height="40.0" width="40.0" x="300.0" y="157.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="stActionMODIFY" id="BPMNShape_stActionMODIFY">
+        <omgdc:Bounds height="55.0" width="105.0" x="464.0" y="220.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="stActionDELETE" id="BPMNShape_stActionDELETE">
+        <omgdc:Bounds height="55.0" width="105.0" x="464.0" y="340.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="CreateServiceProcess" id="BPMNShape_CreateServiceProcess">
+        <omgdc:Bounds height="65.0" width="111.0" x="560.0" y="55.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent2" id="BPMNShape_endevent2">
+        <omgdc:Bounds height="35.0" width="35.0" x="850.0" y="156.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="stProcesOrderItemComplete" id="BPMNShape_stProcesOrderItemComplete">
+        <omgdc:Bounds height="61.0" width="111.0" x="680.0" y="143.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow19" id="BPMNEdge_flow19">
+        <omgdi:waypoint x="75.0" y="177.0"></omgdi:waypoint>
+        <omgdi:waypoint x="140.0" y="177.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow20" id="BPMNEdge_flow20">
+        <omgdi:waypoint x="245.0" y="177.0"></omgdi:waypoint>
+        <omgdi:waypoint x="300.0" y="177.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow21" id="BPMNEdge_flow21">
+        <omgdi:waypoint x="320.0" y="157.0"></omgdi:waypoint>
+        <omgdi:waypoint x="320.0" y="87.0"></omgdi:waypoint>
+        <omgdi:waypoint x="410.0" y="87.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="73.0" x="330.0" y="120.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow22" id="BPMNEdge_flow22">
+        <omgdi:waypoint x="320.0" y="197.0"></omgdi:waypoint>
+        <omgdi:waypoint x="320.0" y="247.0"></omgdi:waypoint>
+        <omgdi:waypoint x="464.0" y="247.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="90.0" x="339.0" y="219.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow23" id="BPMNEdge_flow23">
+        <omgdi:waypoint x="320.0" y="197.0"></omgdi:waypoint>
+        <omgdi:waypoint x="320.0" y="367.0"></omgdi:waypoint>
+        <omgdi:waypoint x="464.0" y="367.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="88.0" x="340.0" y="339.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow28" id="BPMNEdge_flow28">
+        <omgdi:waypoint x="671.0" y="87.0"></omgdi:waypoint>
+        <omgdi:waypoint x="735.0" y="87.0"></omgdi:waypoint>
+        <omgdi:waypoint x="735.0" y="143.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow29" id="BPMNEdge_flow29">
+        <omgdi:waypoint x="569.0" y="247.0"></omgdi:waypoint>
+        <omgdi:waypoint x="735.0" y="247.0"></omgdi:waypoint>
+        <omgdi:waypoint x="735.0" y="204.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow30" id="BPMNEdge_flow30">
+        <omgdi:waypoint x="569.0" y="367.0"></omgdi:waypoint>
+        <omgdi:waypoint x="735.0" y="367.0"></omgdi:waypoint>
+        <omgdi:waypoint x="735.0" y="204.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow31" id="BPMNEdge_flow31">
+        <omgdi:waypoint x="791.0" y="173.0"></omgdi:waypoint>
+        <omgdi:waypoint x="850.0" y="173.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow32" id="BPMNEdge_flow32">
+        <omgdi:waypoint x="515.0" y="87.0"></omgdi:waypoint>
+        <omgdi:waypoint x="560.0" y="87.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

@@ -1,0 +1,30 @@
+{
+  "uuid": "40f027b5-24a9-4db7-b422-a963c9feeb7a",
+  "lastUpdate": null,
+  "@baseType": "BaseRootEntity",
+  "@schemaLocation": null,
+  "@type": "BaseEntity",
+  "href": null,
+  "name": "OSM config depending on class",
+  "description": "LCM Rule for specification Cirros Test OSM config depending on class",
+  "lifecycleStatus": "In study",
+  "version": null,
+  "validFor": null,
+  "id": "40f027b5-24a9-4db7-b422-a963c9feeb7a",
+  "lcmrulephase": "PRE_PROVISION",
+  "content": "<xml xmlns=\"https://developers.google.com/blockly/xml\"><block type=\"controls_if\" id=\"ezIW/Lp7?d[u/A8`K!VJ\" x=\"43\" y=\"110\"><mutation elseif=\"1\" else=\"1\"></mutation><value name=\"IF0\"><block type=\"logic_compare\" id=\"*ekZcAZ_,XZz{;WB,g5W\"><field name=\"OP\">EQ</field><value name=\"A\"><block type=\"getcharval_number\" id=\"WExcKv2H!)rCDI[uT?rm\"><field name=\"AVALUE\">Quality Class</field></block></value><value name=\"B\"><block type=\"literal_integer\" id=\"l1f(k)+1cls`GzX_ZE6A\"><field name=\"NUM\">2</field></block></value></block></value><statement name=\"DO0\"><block type=\"setcharval_string\" id=\"?gCX.V1+thXHr$r!X|^G\"><field name=\"NAMELBL\">cirros_2vnf_ns::OSM_CONFIG</field><value name=\"AVALUE\"><block type=\"osm_nsd_config\" id=\"*$NIN2?#,%E{nqD.C,[s\"><value name=\"NSDID\"><block type=\"literal_text\" id=\"%1c/IuALgz7!-]C;U.2+\"><field name=\"TEXT\">0b6853fc-8219-4580-9697-bf4a8f0a08f9</field></block></value><value name=\"VIMID\"><block type=\"literal_text\" id=\"wZ*p#fJKDLhjG|d3a1}m\"><field name=\"TEXT\">c224eb48-419e-4097-8a1d-11ec1bba087f</field></block></value></block></value></block></statement><value name=\"IF1\"><block type=\"logic_compare\" id=\"RCkz91fa[t(de{:W8z*u\"><field name=\"OP\">EQ</field><value name=\"A\"><block type=\"getcharval_number\" id=\"YyY0L]PctE#C%jytEtsY\"><field name=\"AVALUE\">Quality Class</field></block></value><value name=\"B\"><block type=\"literal_integer\" id=\"$3qYjNBhPmr%U,I=*;0o\"><field name=\"NUM\">1</field></block></value></block></value><statement name=\"DO1\"><block type=\"setcharval_string\" id=\"$q~oAJSlb(%rrZBx,Uf!\"><field name=\"NAMELBL\">cirros_2vnf_ns::OSM_CONFIG</field><value name=\"AVALUE\"><block type=\"osm_nsd_config\" id=\"CTljtvin=U?WpZD@@qQ~\"><value name=\"NSDID\"><block type=\"literal_text\" id=\"1V.Jyzj3d0x:gTCq^w+?\"><field name=\"TEXT\">eeeeeeee-8219-4580-9697-bf4a8f0a08f9</field></block></value><value name=\"VIMID\"><block type=\"literal_text\" id=\"qZOf!wzN~MaebefmIvx7\"><field name=\"TEXT\">eeeeeeee-419e-4097-8a1d-11ec1bba087f</field></block></value></block></value></block></statement><statement name=\"ELSE\"><block type=\"setcharval_string\" id=\"JQY#%xIXLvPK*DzyCR{_\"><field name=\"NAMELBL\">cirros_2vnf_ns::OSM_CONFIG</field><value name=\"AVALUE\"><block type=\"osm_nsd_config\" id=\"a-tUtYg:mDk^Qbe@CMGt\"><value name=\"NSDID\"><block type=\"literal_text\" id=\"ZY)+_ENMfz?mjiX.7O4:\"><field name=\"TEXT\">cccccccc-8219-4580-9697-bf4a8f0a08f9</field></block></value><value name=\"VIMID\"><block type=\"literal_text\" id=\"alJ:3%fxZr73K~qQQ`G%\"><field name=\"TEXT\">cccccccc-419e-4097-8a1d-11ec1bba087f</field></block></value></block></value></block></statement></block></xml>",
+  "code": "if (getCharValNumber(\"Quality Class\") == 2) {\n  setCharValFromStringType(\"cirros_2vnf_ns::OSM_CONFIG\", \"\"\"\n  {\n      \"nsdId\": \"0b6853fc-8219-4580-9697-bf4a8f0a08f9\",\n      \"vimAccountId\": \"c224eb48-419e-4097-8a1d-11ec1bba087f\"\n  }\n  \"\"\");\n} else if (getCharValNumber(\"Quality Class\") == 1) {\n  setCharValFromStringType(\"cirros_2vnf_ns::OSM_CONFIG\", \"\"\"\n  {\n      \"nsdId\": \"eeeeeeee-8219-4580-9697-bf4a8f0a08f9\",\n      \"vimAccountId\": \"eeeeeeee-419e-4097-8a1d-11ec1bba087f\"\n  }\n  \"\"\");\n} else {\n  setCharValFromStringType(\"cirros_2vnf_ns::OSM_CONFIG\", \"\"\"\n  {\n      \"nsdId\": \"cccccccc-8219-4580-9697-bf4a8f0a08f9\",\n      \"vimAccountId\": \"cccccccc-419e-4097-8a1d-11ec1bba087f\"\n  }\n  \"\"\"); setCharValFromStringType(\"newvar\", \"anewtestval\");  \n}\n",
+  "serviceSpecs": [
+    {
+      "@baseType": "BaseEntity",
+      "@schemaLocation": null,
+      "@type": null,
+      "href": null,
+      "name": "Cirros Test",
+      "version": null,
+      "targetServiceSchema": null,
+      "@referredType": null,
+      "id": "f2b74f90-4140-4895-80d1-ef243398117b"
+    }
+  ]
+}

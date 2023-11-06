@@ -1,0 +1,248 @@
+{
+	"uuid": "49eaa909-3caf-4a2d-94f0-379cf59ce3f1",
+	"orderDate": "2020-06-01T00:41:39+03:00",
+	"completionDate": null,
+	"expectedCompletionDate": "2020-07-02T00:41:33+03:00",
+	"requestedCompletionDate": "2020-07-02T00:41:33+03:00",
+	"requestedStartDate": "2020-06-01T00:41:33+03:00",
+	"startDate": null,
+	"@baseType": "BaseRootEntity",
+	"@schemaLocation": null,
+	"@type": "ServiceOrder",
+	"href": null,
+	"id": "49eaa909-3caf-4a2d-94f0-379cf59ce3f1",
+	"category": null,
+	"description": null,
+	"externalId": null,
+	"notificationContact": null,
+	"priority": null,
+	"note": [
+		{
+			"uuid": "1275226d-bbac-4b4c-a28d-4871edea846f",
+			"date": "2020-06-01T00:41:39+03:00",
+			"@baseType": "BaseEntity",
+			"@schemaLocation": null,
+			"@type": null,
+			"href": null,
+			"author": "admin",
+			"system": null,
+			"text": ""
+		}
+	],
+	"orderItem": [
+		{
+			"uuid": "481ae2dd-6347-4b1f-b2ea-373ca388ebd2",
+			"@baseType": "BaseEntity",
+			"@schemaLocation": null,
+			"@type": null,
+			"href": null,
+			"id": "481ae2dd-6347-4b1f-b2ea-373ca388ebd2",
+			"action": "add",
+			"orderItemRelationship": [],
+			"state": "INITIAL",
+			"service": {
+				"uuid": "b5be806d-40ed-4f81-93f9-02029d869867",
+				"serviceSpecification": {
+					"@baseType": "BaseEntity",
+					"@schemaLocation": null,
+					"@type": null,
+					"href": null,
+					"name": "Copy of Monitoring Service Example",
+					"version": "0.1.0",
+					"targetServiceSchema": null,
+					"@referredType": null,
+					"id": "0399516f-e9ae-4c8e-8f7a-b13ad9a1bd00"
+				},
+				"@baseType": "BaseEntity",
+				"@schemaLocation": null,
+				"@type": null,
+				"href": null,
+				"name": null,
+				"id": "b5be806d-40ed-4f81-93f9-02029d869867",
+				"category": null,
+				"serviceType": null,
+				"place": [],
+				"relatedParty": [],
+				"serviceCharacteristic": [
+					{
+						"uuid": "a3c8581c-374c-4062-ac44-ee289f85768a",
+						"value": {
+							"value": "192.168.199.130",
+							"alias": null
+						},
+						"@baseType": "BaseEntity",
+						"@schemaLocation": null,
+						"@type": null,
+						"href": null,
+						"name": "Monitoring_nsd::Netdata3_IP",
+						"valueType": "TEXT"
+					},
+					{
+						"uuid": "565a8b64-2ab9-4557-81aa-76086e6d155c",
+						"value": {
+							"value": "osm seven",
+							"alias": ""
+						},
+						"@baseType": "BaseEntity",
+						"@schemaLocation": null,
+						"@type": null,
+						"href": null,
+						"name": "Monitoring_nsd::ObMANOprovider_Name",
+						"valueType": "TEXT"
+					},
+					{
+						"uuid": "ab9ae065-2494-4e42-ae83-9fc618e53a76",
+						"value": {
+							"value": "40",
+							"alias": "id"
+						},
+						"@baseType": "BaseEntity",
+						"@schemaLocation": null,
+						"@type": null,
+						"href": null,
+						"name": "Monitoring_nsd::NSDID",
+						"valueType": "TEXT"
+					},
+					{
+						"uuid": "74d91790-72d9-4fd7-8135-4067e964ab15",
+						"value": {
+							"value": "ONBOARDED",
+							"alias": ""
+						},
+						"@baseType": "BaseEntity",
+						"@schemaLocation": null,
+						"@type": null,
+						"href": null,
+						"name": "Monitoring_nsd::OnBoardingStatus",
+						"valueType": "TEXT"
+					},
+					{
+						"uuid": "ce87796d-78ea-491e-911e-5f434db2f1eb",
+						"value": {
+							"value": "192.168.199.120",
+							"alias": null
+						},
+						"@baseType": "BaseEntity",
+						"@schemaLocation": null,
+						"@type": null,
+						"href": null,
+						"name": "Monitoring_nsd::Netdata2_IP",
+						"valueType": "TEXT"
+					},
+					{
+						"uuid": "ae8ee757-5756-4e4e-afc1-132f0348d95a",
+						"value": {
+							"value": "",
+							"alias": ""
+						},
+						"@baseType": "BaseEntity",
+						"@schemaLocation": null,
+						"@type": null,
+						"href": null,
+						"name": "Monitoring_nsd::SSHKEY",
+						"valueType": "TEXT"
+					},
+					{
+						"uuid": "78f086c1-c324-4f81-a6ac-584d227e8753",
+						"value": {
+							"value": "192.168.199.110",
+							"alias": null
+						},
+						"@baseType": "BaseEntity",
+						"@schemaLocation": null,
+						"@type": null,
+						"href": null,
+						"name": "Monitoring_nsd::Netdata1_IP",
+						"valueType": "TEXT"
+					},
+					{
+						"uuid": "d2bc1d49-a57c-41f0-a598-eead66e10ced",
+						"value": {
+							"value": null,
+							"alias": "Vendor"
+						},
+						"@baseType": "BaseEntity",
+						"@schemaLocation": null,
+						"@type": null,
+						"href": null,
+						"name": "Monitoring_nsd::Vendor",
+						"valueType": "TEXT"
+					},
+					{
+						"uuid": "74063a2d-e59e-4f21-80e7-e14dd05771a3",
+						"value": {
+							"value": "192.168.199.140",
+							"alias": null
+						},
+						"@baseType": "BaseEntity",
+						"@schemaLocation": null,
+						"@type": null,
+						"href": null,
+						"name": "Monitoring_nsd::Netdata4_IP",
+						"valueType": "TEXT"
+					},
+					{
+						"uuid": "9ab4b6e6-81b2-4b84-9d38-da647354f720",
+						"value": {
+							"value": "{ \"nsdId\": \"02aba53e-4af5-4222-91ce-1a14540d5b39\", \"vimAccountId\": \"c224eb48-419e-4097-8a1d-11ec1bba087f\", \"nsName\": \"ttest\", \"nsDescription\": \"desc\",  \t\"vnf\": [ \t\t{ \t\t\t\"member-vnf-index\": \"1\", \t\t\t\"vdu\": [ \t\t\t\t{ \t\t\t\t\t\"id\": \"Prometheus-VM\", \t\t\t\t\t\"interface\": [ \t\t\t\t\t\t{ \t\t\t\t\t\t\t\"name\": \"eth1\", \t\t\t\t\t\t\t\"floating-ip-required\": true \t\t\t\t\t\t} \t\t\t\t\t] \t\t\t\t} \t\t\t] \t\t} \t], \t\"vld\": [ \t\t{ \t\t\t\"name\": \"Management\", \t\t\t\"vim-network-name\": \"testingnet\", \t\t\t\"vnfd-connection-point-ref\": [ \t\t\t\t{ \t\t\t\t\t\"member-vnf-index-ref\": \"2\", \t\t\t\t\t\"vnfd-connection-point-ref\": \"vnf-cp0\", \t\t\t\t\t\"ip-address\": \"192.168.199.110\" \t\t\t\t}, \t\t\t\t{ \t\t\t\t\t\"member-vnf-index-ref\": \"3\", \t\t\t\t\t\"vnfd-connection-point-ref\": \"vnf-cp0\", \t\t\t\t\t\"ip-address\": \"192.168.199.120\" \t\t\t\t}, \t\t\t\t{ \t\t\t\t\t\"member-vnf-index-ref\": \"4\", \t\t\t\t\t\"vnfd-connection-point-ref\": \"vnf-cp0\", \t\t\t\t\t\"ip-address\": \"192.168.199.130\" \t\t\t\t}, \t\t\t\t{ \t\t\t\t\t\"member-vnf-index-ref\": \"5\", \t\t\t\t\t\"vnfd-connection-point-ref\": \"vnf-cp0\", \t\t\t\t\t\"ip-address\": \"192.168.199.140\" \t\t\t\t} \t\t\t] \t\t} \t] }",
+							"alias": ""
+						},
+						"@baseType": "BaseEntity",
+						"@schemaLocation": null,
+						"@type": null,
+						"href": null,
+						"name": "Monitoring_nsd::CONFIG",
+						"valueType": "TEXT"
+					},
+					{
+						"uuid": "c33e33eb-f48b-49c6-90d1-7da6058200da",
+						"value": {
+							"value": "http://openslice-portalapi:13000/osapi/packages/c803996c-9d40-4384-90f1-51396837ec16/Monitoring_nsd.tar.gz",
+							"alias": "PackageLocation"
+						},
+						"@baseType": "BaseEntity",
+						"@schemaLocation": null,
+						"@type": null,
+						"href": null,
+						"name": "Monitoring_nsd::PackageLocation",
+						"valueType": "TEXT"
+					},
+					{
+						"uuid": "3b4005c0-f3cf-4ee9-a0ac-49dd71f88761",
+						"value": {
+							"value": "OSMvSEVEN",
+							"alias": "PackagingFormat"
+						},
+						"@baseType": "BaseEntity",
+						"@schemaLocation": null,
+						"@type": null,
+						"href": null,
+						"name": "Monitoring_nsd::PackagingFormat",
+						"valueType": "TEXT"
+					}
+				],
+				"state": "feasibilityChecked",
+				"supportingResource": [],
+				"serviceRelationship": [],
+				"supportingService": []
+			},
+			"appointment": null
+		}
+	],
+	"orderRelationship": [],
+	"relatedParty": [
+		{
+			"uuid": "63dc176c-75b7-4bfd-94f5-fb62e126781c",
+			"@baseType": "BaseRootEntity",
+			"@schemaLocation": null,
+			"@type": "org.etsi.osl.tmf.prm669.model.RelatedParty",
+			"href": null,
+			"name": "admin",
+			"role": "REQUESTER",
+			"@referredType": "SimpleUsername_Individual",
+			"id": "admin",
+			"extendedInfo": "tranoris@ece.upatras.gr"
+		}
+	],
+	"state": "ACKNOWLEDGED"
+}

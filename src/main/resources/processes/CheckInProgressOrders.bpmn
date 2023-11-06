@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
+  <process id="fetchInRpogressOrdersProcess" name="My process" isExecutable="true">
+    <startEvent id="timerstarteventFetchOrders" name="Timer start">
+      <timerEventDefinition>
+        <timeCycle>0/20 * * * * ?</timeCycle>
+      </timerEventDefinition>
+    </startEvent>
+    <serviceTask id="stFetchInProgressOrders" name="Fetch In-Progress Orders" activiti:delegateExpression="${fetchInProgressOrders}"></serviceTask>
+    <sequenceFlow id="flow1" sourceRef="timerstarteventFetchOrders" targetRef="stFetchInProgressOrders"></sequenceFlow>
+    <serviceTask id="stCheck_If_InProgressOrder_Complete" name="Check If InProgressOrder Complete" activiti:delegateExpression="${orderCompleteService}">
+      <multiInstanceLoopCharacteristics isSequential="false" activiti:collection="ordersToBeQueried" activiti:elementVariable="orderId"></multiInstanceLoopCharacteristics>
+    </serviceTask>
+    <sequenceFlow id="flow2" sourceRef="stFetchInProgressOrders" targetRef="stCheck_If_InProgressOrder_Complete"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_fetchInRpogressOrdersProcess">
+    <bpmndi:BPMNPlane bpmnElement="fetchInRpogressOrdersProcess" id="BPMNPlane_fetchInRpogressOrdersProcess">
+      <bpmndi:BPMNShape bpmnElement="timerstarteventFetchOrders" id="BPMNShape_timerstarteventFetchOrders">
+        <omgdc:Bounds height="35.0" width="35.0" x="70.0" y="152.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="stFetchInProgressOrders" id="BPMNShape_stFetchInProgressOrders">
+        <omgdc:Bounds height="69.0" width="105.0" x="190.0" y="135.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="stCheck_If_InProgressOrder_Complete" id="BPMNShape_stCheck_If_InProgressOrder_Complete">
+        <omgdc:Bounds height="87.0" width="131.0" x="450.0" y="124.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
+        <omgdi:waypoint x="105.0" y="169.0"></omgdi:waypoint>
+        <omgdi:waypoint x="190.0" y="169.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
+        <omgdi:waypoint x="295.0" y="169.0"></omgdi:waypoint>
+        <omgdi:waypoint x="450.0" y="167.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

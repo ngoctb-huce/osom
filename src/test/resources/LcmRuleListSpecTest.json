@@ -1,0 +1,16 @@
+[
+  {
+    "uuid": "40f027b5-24a9-4db7-b422-a963c9feeb7a",
+    "id": "40f027b5-24a9-4db7-b422-a963c9feeb7a",
+    "name": "OSM config depending on class",
+    "description": "LCM Rule for specification Cirros Test OSM config depending on class",
+    "lcmrulephase": "PRE_PROVISION"
+  },
+  {
+    "uuid": "75cebf16-1699-486f-8304-d6512f90c910",
+    "id": "75cebf16-1699-486f-8304-d6512f90c910",
+    "name": "LCM Rule Cirros Test rule2",
+    "description": "LCM Rule for specification Cirros Test rule 2 example",
+    "lcmrulephase": "PRE_PROVISION"
+  }
+]

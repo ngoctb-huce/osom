@@ -1,0 +1,119 @@
+{
+  "uuid": "a842a6fd-a9df-4d0e-9e17-922954a100c6",
+  "orderDate": "2021-08-18T21:55:05+03:00",
+  "completionDate": null,
+  "expectedCompletionDate": "2021-08-19T21:55:01+03:00",
+  "requestedCompletionDate": "2021-08-19T21:55:01+03:00",
+  "requestedStartDate": "2021-08-18T21:55:01+03:00",
+  "startDate": "2021-08-18T21:55:01+03:00",
+  "@baseType": "BaseRootEntity",
+  "@schemaLocation": null,
+  "@type": "ServiceOrder",
+  "href": null,
+  "id": "a842a6fd-a9df-4d0e-9e17-922954a100c6",
+  "category": null,
+  "description": null,
+  "externalId": null,
+  "notificationContact": null,
+  "priority": null,
+  "note": [
+    {
+      "uuid": "1567e358-ff96-4bc5-8978-9677d8ec17db",
+      "date": "2021-08-18T21:55:05+03:00",
+      "@baseType": "BaseEntity",
+      "@schemaLocation": null,
+      "@type": null,
+      "href": null,
+      "author": "SO641API-addServiceOrder",
+      "system": null,
+      "text": "Service Order ACKNOWLEDGED"
+    }
+  ],
+  "orderItem": [
+    {
+      "uuid": "7501ebe7-4f3c-48a3-a3ed-978a279c31a0",
+      "@baseType": "BaseEntity",
+      "@schemaLocation": null,
+      "@type": null,
+      "href": null,
+      "id": "7501ebe7-4f3c-48a3-a3ed-978a279c31a0",
+      "action": "add",
+      "orderItemRelationship": [],
+      "state": "ACKNOWLEDGED",
+      "service": {
+        "uuid": "30883a98-53fa-4b70-b37e-a3823037df85",
+        "serviceSpecification": {
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "name": "Cirros Test",
+          "version": "0.1.0",
+          "targetServiceSchema": null,
+          "@referredType": null,
+          "id": "f2b74f90-4140-4895-80d1-ef243398117b"
+        },
+        "@baseType": "BaseEntity",
+        "@schemaLocation": null,
+        "@type": null,
+        "href": null,
+        "name": "Cirros Test",
+        "id": "30883a98-53fa-4b70-b37e-a3823037df85",
+        "category": null,
+        "serviceType": null,
+        "place": [],
+        "relatedParty": [],
+        "serviceCharacteristic": [
+          {
+            "uuid": "9beae187-1621-482c-b1b5-b97c2b990ca7",
+            "value": {
+              "value": "1",
+              "alias": "GOLD"
+            },
+            "@baseType": "BaseEntity",
+            "@schemaLocation": null,
+            "@type": null,
+            "href": null,
+            "name": "Quality Class",
+            "valueType": "ENUM"
+          },
+          
+          {
+            "uuid": "fffae187-1621-482c-b1b5-b97c2b990fff",
+            "value": {
+              "value": "MCKEYTESTINORDER",
+              "alias": ""
+            },
+            "@baseType": "BaseEntity",
+            "@schemaLocation": null,
+            "@type": null,
+            "href": null,
+            "name": "cirros_2vnf_ns::SSHKEY",
+            "valueType": "TEXT"
+          }
+        ],
+        "state": "feasibilityChecked",
+        "supportingResource": [],
+        "serviceRelationship": [],
+        "supportingService": []
+      },
+      "appointment": null
+    }
+  ],
+  "orderRelationship": [],
+  "relatedParty": [
+    {
+      "uuid": "2c37b4bf-4f26-49a2-b9da-842b12d9276f",
+      "@baseType": "BaseRootEntity",
+      "@schemaLocation": null,
+      "@type": "org.etsi.osl.tmf.prm669.model.RelatedParty",
+      "href": null,
+      "name": "admin",
+      "role": "REQUESTER",
+      "@referredType": "SimpleUsername_Individual",
+      "id": "admin",
+      "extendedInfo": null
+    }
+  ],
+  "state": "ACKNOWLEDGED"
+}

@@ -1,0 +1,1788 @@
+{
+  "uuid": "0d5551e6-069f-43b7-aa71-10530f290239",
+  "lastUpdate": "2021-09-04T10:04:05Z",
+  "@baseType": "BaseEntity",
+  "@schemaLocation": null,
+  "@type": "CustomerFacingServiceSpecification",
+  "href": null,
+  "name": "Upstream journalist case",
+  "description": "Example: “Upstream journalist case”\nA service provider (SP) wants to provide an upstream video service on demand (“pay as you go”)\nalso in case of an unplanned incident (e.g. “Breaking news”)\nOn the spot, live\nQuick setup\nPremium service (pricing: high)\nThis is based on 5G Day Session 2: 5G as a Service (5GaaS) – easy access for 3rd parties to 5G technology (Piotr Zuraniewski - TNO) from 8th OSM Hackfest",
+  "lifecycleStatus": "In design",
+  "version": "0.1.0",
+  "validFor": {
+    "endDateTime": "2039-12-13T21:35:37Z",
+    "startDateTime": "2019-12-13T21:35:37Z"
+  },
+  "isBundle": true,
+  "attachment": [
+    {
+      "uuid": "ade72f6c-8d21-4b96-ad3e-f48f24052a6b",
+      "@baseType": "BaseEntity",
+      "@schemaLocation": null,
+      "@type": null,
+      "href": null,
+      "name": "logo.jpg",
+      "id": "e58f2aaf-fe4f-404f-86bc-d69b6d2b2cd0",
+      "description": null,
+      "url": "/serviceCatalogManagement/v4/serviceSpecification/0d5551e6-069f-43b7-aa71-10530f290239/attachment/e58f2aaf-fe4f-404f-86bc-d69b6d2b2cd0/logo.jpg",
+      "@referredType": null
+    }
+  ],
+  "relatedParty": [
+    {
+      "uuid": "4e668e92-1875-41a6-bbc4-d01184cb3e31",
+      "@baseType": "BaseRootEntity",
+      "@schemaLocation": null,
+      "@type": "org.etsi.osl.tmf.prm669.model.RelatedParty",
+      "href": null,
+      "name": "anonymousUser",
+      "role": "OWNER",
+      "@referredType": "SimpleUsername_Individual",
+      "id": null,
+      "extendedInfo": null
+    }
+  ],
+  "resourceSpecification": [],
+  "serviceLevelSpecification": [],
+  "serviceSpecCharacteristic": [
+    {
+      "uuid": "00dc9fa5-0f44-485f-a210-d15d7b2cab71",
+      "@baseType": "BaseRootEntity",
+      "@schemaLocation": null,
+      "@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecCharacteristic",
+      "href": null,
+      "name": "Open5GCore-2enb_nsd::nsName",
+      "configurable": null,
+      "description": null,
+      "extensible": null,
+      "isUnique": null,
+      "maxCardinality": 1,
+      "minCardinality": 0,
+      "regex": null,
+      "valueType": "TEXT",
+      "serviceSpecCharRelationship": [],
+      "serviceSpecCharacteristicValue": [
+        {
+          "uuid": "e2956648-56c0-4de0-bfb4-2254d24e5c4a",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": true,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": null,
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": "TEXT",
+          "validFor": {
+            "endDateTime": "2039-12-13T21:21:47Z",
+            "startDateTime": "2019-12-13T21:21:47Z"
+          },
+          "value": {
+            "value": "Open5GCore-2enb_nsd",
+            "alias": null
+          }
+        }
+      ],
+      "validFor": {
+        "endDateTime": "2039-12-13T21:19:51Z",
+        "startDateTime": "2019-12-13T21:19:51Z"
+      },
+      "@valueSchemaLocation": null,
+      "id": "00dc9fa5-0f44-485f-a210-d15d7b2cab71"
+    },
+    {
+      "uuid": "646be409-5073-4fea-a5c6-d230295f68ad",
+      "@baseType": "BaseRootEntity",
+      "@schemaLocation": null,
+      "@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecCharacteristic",
+      "href": null,
+      "name": "Area of Service",
+      "configurable": true,
+      "description": null,
+      "extensible": null,
+      "isUnique": null,
+      "maxCardinality": 1,
+      "minCardinality": 0,
+      "regex": null,
+      "valueType": "SET",
+      "serviceSpecCharRelationship": [],
+      "serviceSpecCharacteristicValue": [
+        {
+          "uuid": "1423ac7a-bdb5-44dd-b4cb-8278d4308061",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": true,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": null,
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": "INTEGER",
+          "validFor": {
+            "endDateTime": "2041-08-25T15:31:06Z",
+            "startDateTime": "2021-08-25T15:31:06Z"
+          },
+          "value": {
+            "value": "ES",
+            "alias": "Spain"
+          }
+        },
+        {
+          "uuid": "fad8a832-f810-4287-8d08-aa69d3421976",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": false,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": null,
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": "INTEGER",
+          "validFor": {
+            "endDateTime": "2041-08-25T15:31:06Z",
+            "startDateTime": "2021-08-25T15:31:06Z"
+          },
+          "value": {
+            "value": "RO",
+            "alias": "Romania"
+          }
+        },
+        {
+          "uuid": "85ef658d-5de1-49dd-a4fd-a17f8d717e1b",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": false,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": null,
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": "INTEGER",
+          "validFor": {
+            "endDateTime": "2041-08-25T15:31:06Z",
+            "startDateTime": "2021-08-25T15:31:06Z"
+          },
+          "value": {
+            "value": "IT",
+            "alias": "Italy"
+          }
+        },
+        {
+          "uuid": "809447c5-77c0-4546-b5ad-eb8088c4fb5f",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": false,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": null,
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": "INTEGER",
+          "validFor": {
+            "endDateTime": "2041-08-25T15:31:06Z",
+            "startDateTime": "2021-08-25T15:31:06Z"
+          },
+          "value": {
+            "value": "LI",
+            "alias": "Lithouania"
+          }
+        },
+        {
+          "uuid": "934d0d09-637a-4f06-a070-f8b628963430",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": false,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": null,
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": "INTEGER",
+          "validFor": {
+            "endDateTime": "2041-08-25T15:31:06Z",
+            "startDateTime": "2021-08-25T15:31:06Z"
+          },
+          "value": {
+            "value": "UK",
+            "alias": "United Kingdom"
+          }
+        },
+        {
+          "uuid": "f563ca75-9b81-4a78-b6a9-884bc869bf48",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": false,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": null,
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": "INTEGER",
+          "validFor": {
+            "endDateTime": "2041-08-25T15:31:06Z",
+            "startDateTime": "2021-08-25T15:31:06Z"
+          },
+          "value": {
+            "value": "DE",
+            "alias": "Germany"
+          }
+        },
+        {
+          "uuid": "516ec895-c10c-4699-b79d-afdbae8e6a4a",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": false,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": null,
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": "INTEGER",
+          "validFor": {
+            "endDateTime": "2041-08-25T15:31:06Z",
+            "startDateTime": "2021-08-25T15:31:06Z"
+          },
+          "value": {
+            "value": "FR",
+            "alias": "France"
+          }
+        },
+        {
+          "uuid": "789e651a-5b10-48f1-b7cd-d10c51d95164",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": false,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": null,
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": "INTEGER",
+          "validFor": {
+            "endDateTime": "2041-08-25T15:31:06Z",
+            "startDateTime": "2021-08-25T15:31:06Z"
+          },
+          "value": {
+            "value": "PT",
+            "alias": "Portugal"
+          }
+        },
+        {
+          "uuid": "f226637a-6802-4633-b482-609544ab07ad",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": true,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": null,
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": "INTEGER",
+          "validFor": {
+            "endDateTime": "2041-08-25T15:31:06Z",
+            "startDateTime": "2021-08-25T15:31:06Z"
+          },
+          "value": {
+            "value": "GR",
+            "alias": "Greece"
+          }
+        }
+      ],
+      "validFor": {
+        "endDateTime": "2041-08-25T15:28:37Z",
+        "startDateTime": "2021-08-25T15:28:37Z"
+      },
+      "@valueSchemaLocation": null,
+      "id": "646be409-5073-4fea-a5c6-d230295f68ad"
+    },
+    {
+      "uuid": "1e1416c7-3862-4453-abb9-e07800476a88",
+      "@baseType": "BaseRootEntity",
+      "@schemaLocation": null,
+      "@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecCharacteristic",
+      "href": null,
+      "name": "Video quality of the mobile cameras",
+      "configurable": true,
+      "description": null,
+      "extensible": null,
+      "isUnique": null,
+      "maxCardinality": 1,
+      "minCardinality": 0,
+      "regex": null,
+      "valueType": "ENUM",
+      "serviceSpecCharRelationship": [],
+      "serviceSpecCharacteristicValue": [
+        {
+          "uuid": "3a9dbacc-7b23-437e-8a38-8f3dec1b2453",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": null,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": null,
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": "INTEGER",
+          "validFor": {
+            "endDateTime": "2039-12-13T21:52:24Z",
+            "startDateTime": "2019-12-13T21:52:24Z"
+          },
+          "value": {
+            "value": "2",
+            "alias": "4K"
+          }
+        },
+        {
+          "uuid": "6c63e237-b6c7-42d4-b1ff-f0806a2c3a9a",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": null,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": null,
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": "INTEGER",
+          "validFor": {
+            "endDateTime": "2039-12-13T21:52:24Z",
+            "startDateTime": "2019-12-13T21:52:24Z"
+          },
+          "value": {
+            "value": "1",
+            "alias": "FHD"
+          }
+        },
+        {
+          "uuid": "ed7d123d-98cc-4141-8ffe-ebf13262dcce",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": true,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": null,
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": "INTEGER",
+          "validFor": {
+            "endDateTime": "2039-12-13T21:52:24Z",
+            "startDateTime": "2019-12-13T21:52:24Z"
+          },
+          "value": {
+            "value": "0",
+            "alias": "SD"
+          }
+        },
+        {
+          "uuid": "548acd09-752f-4db6-811a-90fc5cd0e8fe",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": null,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": null,
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": "INTEGER",
+          "validFor": {
+            "endDateTime": "2039-12-13T21:52:24Z",
+            "startDateTime": "2019-12-13T21:52:24Z"
+          },
+          "value": {
+            "value": "3",
+            "alias": "8K"
+          }
+        }
+      ],
+      "validFor": {
+        "endDateTime": "2039-12-13T21:45:12Z",
+        "startDateTime": "2019-12-13T21:45:12Z"
+      },
+      "@valueSchemaLocation": null,
+      "id": "1e1416c7-3862-4453-abb9-e07800476a88"
+    },
+    {
+      "uuid": "7c07c2ef-7563-4712-8c5f-ab15bf886512",
+      "@baseType": "BaseRootEntity",
+      "@schemaLocation": null,
+      "@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecCharacteristic",
+      "href": null,
+      "name": "Video response time of the mobile cameras",
+      "configurable": true,
+      "description": "Video response time of the mobile cameras",
+      "extensible": null,
+      "isUnique": null,
+      "maxCardinality": 1,
+      "minCardinality": 0,
+      "regex": null,
+      "valueType": "ENUM",
+      "serviceSpecCharRelationship": [],
+      "serviceSpecCharacteristicValue": [
+        {
+          "uuid": "48c94034-0720-4c21-bc7a-d8391d0bb891",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": false,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": "sec",
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": "INTEGER",
+          "validFor": {
+            "endDateTime": "2039-12-13T22:03:31Z",
+            "startDateTime": "2019-12-13T22:03:31Z"
+          },
+          "value": {
+            "value": "0.1",
+            "alias": "Live (0.1s)"
+          }
+        },
+        {
+          "uuid": "a7678bcf-81c4-4463-9b07-1b9ae3de95c1",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": null,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": "sec",
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": "INTEGER",
+          "validFor": {
+            "endDateTime": "2039-12-13T22:03:31Z",
+            "startDateTime": "2019-12-13T22:03:31Z"
+          },
+          "value": {
+            "value": "5",
+            "alias": "Live (5s)"
+          }
+        },
+        {
+          "uuid": "c6e25d38-7c2e-4bde-b137-3698b6047843",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": true,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": "sec",
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": "INTEGER",
+          "validFor": {
+            "endDateTime": "2039-12-13T22:03:31Z",
+            "startDateTime": "2019-12-13T22:03:31Z"
+          },
+          "value": {
+            "value": "1",
+            "alias": "Live (1s)"
+          }
+        }
+      ],
+      "validFor": {
+        "endDateTime": "2039-12-13T21:52:38Z",
+        "startDateTime": "2019-12-13T21:52:38Z"
+      },
+      "@valueSchemaLocation": null,
+      "id": "7c07c2ef-7563-4712-8c5f-ab15bf886512"
+    },
+    {
+      "uuid": "83b7fa9f-28c0-405e-8042-bd7340639ee4",
+      "@baseType": "BaseRootEntity",
+      "@schemaLocation": null,
+      "@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecCharacteristic",
+      "href": null,
+      "name": "Open5GCore-2enb_nsd::deployId",
+      "configurable": null,
+      "description": null,
+      "extensible": null,
+      "isUnique": null,
+      "maxCardinality": 1,
+      "minCardinality": 0,
+      "regex": null,
+      "valueType": "TEXT",
+      "serviceSpecCharRelationship": [],
+      "serviceSpecCharacteristicValue": [
+        {
+          "uuid": "bc27dc77-6a19-4577-9572-a24f086d1831",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": true,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": null,
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": "TEXT",
+          "validFor": {
+            "endDateTime": "2039-12-13T21:19:42Z",
+            "startDateTime": "2019-12-13T21:19:42Z"
+          },
+          "value": {
+            "value": "e12d6ef5-4f64-4be3-bc46-fcf2946eb881",
+            "alias": "nsdId"
+          }
+        }
+      ],
+      "validFor": {
+        "endDateTime": "2039-12-13T21:17:17Z",
+        "startDateTime": "2019-12-13T21:17:17Z"
+      },
+      "@valueSchemaLocation": null,
+      "id": "83b7fa9f-28c0-405e-8042-bd7340639ee4"
+    },
+    {
+      "uuid": "9e8e3bd1-c4e3-4bbf-99f4-ef969bf557a3",
+      "@baseType": "BaseRootEntity",
+      "@schemaLocation": null,
+      "@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecCharacteristic",
+      "href": null,
+      "name": "cirros_2vnf_nsd::NSDID",
+      "configurable": true,
+      "description": "NSD id",
+      "extensible": null,
+      "isUnique": null,
+      "maxCardinality": 1,
+      "minCardinality": 1,
+      "regex": null,
+      "valueType": "TEXT",
+      "serviceSpecCharRelationship": [],
+      "serviceSpecCharacteristicValue": [
+        {
+          "uuid": "c9ce9261-37cf-46ca-84e3-36558a209fbf",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": true,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": "N/A",
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": null,
+          "validFor": {
+            "endDateTime": "2040-01-29T10:05:33Z",
+            "startDateTime": "2020-01-29T10:05:33Z"
+          },
+          "value": {
+            "value": "5",
+            "alias": "id"
+          }
+        }
+      ],
+      "validFor": {
+        "endDateTime": "2040-01-01T23:07:49Z",
+        "startDateTime": "2020-01-01T23:07:49Z"
+      },
+      "@valueSchemaLocation": null,
+      "id": "9e8e3bd1-c4e3-4bbf-99f4-ef969bf557a3"
+    },
+    {
+      "uuid": "e1719ead-6b97-4fa8-9cae-ad2e48d66631",
+      "@baseType": "BaseRootEntity",
+      "@schemaLocation": null,
+      "@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecCharacteristic",
+      "href": null,
+      "name": "cirros_2vnf_nsd::ObMANOprovider_Name",
+      "configurable": false,
+      "description": "NSD Onboarded MANO provider Name",
+      "extensible": null,
+      "isUnique": null,
+      "maxCardinality": 1,
+      "minCardinality": 1,
+      "regex": null,
+      "valueType": "TEXT",
+      "serviceSpecCharRelationship": [],
+      "serviceSpecCharacteristicValue": [
+        {
+          "uuid": "a8a86b84-0b07-4910-a4c9-8ac07dfbb56e",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": true,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": "N/A",
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": null,
+          "validFor": {
+            "endDateTime": "2040-01-09T21:27:43Z",
+            "startDateTime": "2020-01-09T21:27:43Z"
+          },
+          "value": {
+            "value": "uop",
+            "alias": ""
+          }
+        }
+      ],
+      "validFor": {
+        "endDateTime": "2040-01-01T23:07:49Z",
+        "startDateTime": "2020-01-01T23:07:49Z"
+      },
+      "@valueSchemaLocation": null,
+      "id": "e1719ead-6b97-4fa8-9cae-ad2e48d66631"
+    },
+    {
+      "uuid": "16f684d2-9f8d-4a8a-8a2b-5b8b5c19f302",
+      "@baseType": "BaseRootEntity",
+      "@schemaLocation": null,
+      "@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecCharacteristic",
+      "href": null,
+      "name": "cirros_2vnf_nsd::OnBoardingStatus",
+      "configurable": false,
+      "description": "NSDtOnBoardingStatus",
+      "extensible": null,
+      "isUnique": null,
+      "maxCardinality": 1,
+      "minCardinality": 1,
+      "regex": null,
+      "valueType": "TEXT",
+      "serviceSpecCharRelationship": [],
+      "serviceSpecCharacteristicValue": [
+        {
+          "uuid": "e6235da1-f93d-492b-accb-0650ed090174",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": true,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": "N/A",
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": null,
+          "validFor": {
+            "endDateTime": "2040-01-10T14:54:13Z",
+            "startDateTime": "2020-01-10T14:54:13Z"
+          },
+          "value": {
+            "value": "ONBOARDED",
+            "alias": ""
+          }
+        }
+      ],
+      "validFor": {
+        "endDateTime": "2040-01-01T23:07:49Z",
+        "startDateTime": "2020-01-01T23:07:49Z"
+      },
+      "@valueSchemaLocation": null,
+      "id": "16f684d2-9f8d-4a8a-8a2b-5b8b5c19f302"
+    },
+    {
+      "uuid": "4f2a4f1b-35f7-441f-a3f2-b5c250587463",
+      "@baseType": "BaseRootEntity",
+      "@schemaLocation": null,
+      "@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecCharacteristic",
+      "href": null,
+      "name": "cirros_2vnf_nsd::PackagingFormat",
+      "configurable": false,
+      "description": "NSD PackagingFormat",
+      "extensible": null,
+      "isUnique": null,
+      "maxCardinality": 1,
+      "minCardinality": 1,
+      "regex": null,
+      "valueType": "TEXT",
+      "serviceSpecCharRelationship": [],
+      "serviceSpecCharacteristicValue": [
+        {
+          "uuid": "7890d3a4-00b9-4e1c-9282-e3a5e8573858",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": true,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": "N/A",
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": null,
+          "validFor": {
+            "endDateTime": "2040-01-09T22:43:25Z",
+            "startDateTime": "2020-01-09T22:43:25Z"
+          },
+          "value": {
+            "value": "OSMvFIVE",
+            "alias": "PackagingFormat"
+          }
+        }
+      ],
+      "validFor": {
+        "endDateTime": "2040-01-01T23:07:49Z",
+        "startDateTime": "2020-01-01T23:07:49Z"
+      },
+      "@valueSchemaLocation": null,
+      "id": "4f2a4f1b-35f7-441f-a3f2-b5c250587463"
+    },
+    {
+      "uuid": "54fb7ed8-e50c-42c0-b5cc-cd948e2fba0e",
+      "@baseType": "BaseRootEntity",
+      "@schemaLocation": null,
+      "@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecCharacteristic",
+      "href": null,
+      "name": "cirros_2vnf_nsd::Vendor",
+      "configurable": false,
+      "description": "NSD Vendor",
+      "extensible": null,
+      "isUnique": null,
+      "maxCardinality": 1,
+      "minCardinality": 1,
+      "regex": null,
+      "valueType": "TEXT",
+      "serviceSpecCharRelationship": [],
+      "serviceSpecCharacteristicValue": [
+        {
+          "uuid": "e0adc92d-10f7-4e8c-944c-31226400a46d",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": true,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": "N/A",
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": null,
+          "validFor": {
+            "endDateTime": "2040-01-09T22:43:16Z",
+            "startDateTime": "2020-01-09T22:43:16Z"
+          },
+          "value": {
+            "value": "OSM",
+            "alias": "Vendor"
+          }
+        }
+      ],
+      "validFor": {
+        "endDateTime": "2040-01-01T23:07:49Z",
+        "startDateTime": "2020-01-01T23:07:49Z"
+      },
+      "@valueSchemaLocation": null,
+      "id": "54fb7ed8-e50c-42c0-b5cc-cd948e2fba0e"
+    },
+    {
+      "uuid": "5d83e09c-f150-49cf-9f96-c6ca862b9655",
+      "@baseType": "BaseRootEntity",
+      "@schemaLocation": null,
+      "@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecCharacteristic",
+      "href": null,
+      "name": "Maximum Number of cameras",
+      "configurable": true,
+      "description": null,
+      "extensible": null,
+      "isUnique": null,
+      "maxCardinality": 1,
+      "minCardinality": 0,
+      "regex": null,
+      "valueType": "SMALLINT",
+      "serviceSpecCharRelationship": [],
+      "serviceSpecCharacteristicValue": [
+        {
+          "uuid": "e3e25b21-3f7c-4403-b92f-5849cf93ec6f",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": true,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": null,
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": "SMALLINT",
+          "validFor": {
+            "endDateTime": "2041-08-16T12:37:57Z",
+            "startDateTime": "2021-08-16T12:37:57Z"
+          },
+          "value": {
+            "value": "3",
+            "alias": null
+          }
+        }
+      ],
+      "validFor": {
+        "endDateTime": "2039-12-13T21:43:23Z",
+        "startDateTime": "2019-12-13T21:43:23Z"
+      },
+      "@valueSchemaLocation": null,
+      "id": "5d83e09c-f150-49cf-9f96-c6ca862b9655"
+    },
+    {
+      "uuid": "9e6ce9af-c18c-4774-aa33-5382ea7f007a",
+      "@baseType": "BaseRootEntity",
+      "@schemaLocation": null,
+      "@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecCharacteristic",
+      "href": null,
+      "name": "cirros_2vnf_nsd::PackageLocation",
+      "configurable": false,
+      "description": "NSD PackageLocation",
+      "extensible": null,
+      "isUnique": null,
+      "maxCardinality": 1,
+      "minCardinality": 1,
+      "regex": null,
+      "valueType": "TEXT",
+      "serviceSpecCharRelationship": [],
+      "serviceSpecCharacteristicValue": [
+        {
+          "uuid": "7db6db63-255a-4dd0-a189-c08e31ee83d9",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": true,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": "N/A",
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": null,
+          "validFor": {
+            "endDateTime": "2040-01-09T22:43:06Z",
+            "startDateTime": "2020-01-09T22:43:06Z"
+          },
+          "value": {
+            "value": "/osapi/packages/ed3692a2-33ef-4a68-9a53-b9c5117cb8fe/cirros_2vnf_ns.tar.gz",
+            "alias": "PackageLocation"
+          }
+        }
+      ],
+      "validFor": {
+        "endDateTime": "2040-01-01T23:07:49Z",
+        "startDateTime": "2020-01-01T23:07:49Z"
+      },
+      "@valueSchemaLocation": null,
+      "id": "9e6ce9af-c18c-4774-aa33-5382ea7f007a"
+    },
+    {
+      "uuid": "1e5c4b8a-f309-42db-bfc6-267b5a8ffec5",
+      "@baseType": "BaseRootEntity",
+      "@schemaLocation": null,
+      "@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecCharacteristic",
+      "href": null,
+      "name": "test actions_array",
+      "configurable": true,
+      "description": "test ",
+      "extensible": null,
+      "isUnique": null,
+      "maxCardinality": 1,
+      "minCardinality": 0,
+      "regex": null,
+      "valueType": "ARRAY",
+      "serviceSpecCharRelationship": [],
+      "serviceSpecCharacteristicValue": [
+        {
+          "uuid": "87297f29-7e96-4027-9026-9337c5cd8f27",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": true,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": null,
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": "INTEGER",
+          "validFor": {
+            "endDateTime": "2041-08-25T15:10:30Z",
+            "startDateTime": "2021-08-25T15:10:30Z"
+          },
+          "value": {
+            "value": "33",
+            "alias": "param3"
+          }
+        },
+        {
+          "uuid": "05b0017d-6f40-48a2-9344-d6297bcfccd2",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": true,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": null,
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": "INTEGER",
+          "validFor": {
+            "endDateTime": "2041-08-25T15:10:30Z",
+            "startDateTime": "2021-08-25T15:10:30Z"
+          },
+          "value": {
+            "value": "22",
+            "alias": "param2"
+          }
+        },
+        {
+          "uuid": "4bdda9dc-92e8-429d-86e6-ac07a40990f8",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": true,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": null,
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": "INTEGER",
+          "validFor": {
+            "endDateTime": "2041-08-25T15:10:30Z",
+            "startDateTime": "2021-08-25T15:10:30Z"
+          },
+          "value": {
+            "value": "100",
+            "alias": "PARAM1"
+          }
+        }
+      ],
+      "validFor": {
+        "endDateTime": "2040-09-17T09:09:27Z",
+        "startDateTime": "2020-09-17T09:09:27Z"
+      },
+      "@valueSchemaLocation": null,
+      "id": "1e5c4b8a-f309-42db-bfc6-267b5a8ffec5"
+    },
+    {
+      "uuid": "7376c065-086a-4d31-9775-f313805811e7",
+      "@baseType": "BaseRootEntity",
+      "@schemaLocation": null,
+      "@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecCharacteristic",
+      "href": null,
+      "name": "Location of Mobile Cameras",
+      "configurable": true,
+      "description": null,
+      "extensible": null,
+      "isUnique": null,
+      "maxCardinality": 1,
+      "minCardinality": 0,
+      "regex": null,
+      "valueType": "ENUM",
+      "serviceSpecCharRelationship": [],
+      "serviceSpecCharacteristicValue": [
+        {
+          "uuid": "dffd13af-d55e-4b17-96dd-04d5ab1078aa",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": null,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": null,
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": "INTEGER",
+          "validFor": {
+            "endDateTime": "2039-12-13T21:52:29Z",
+            "startDateTime": "2019-12-13T21:52:29Z"
+          },
+          "value": {
+            "value": "2310",
+            "alias": "Thessaloniki"
+          }
+        },
+        {
+          "uuid": "4508b3cd-4f94-4996-8afb-da69b0aba4b6",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": true,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": null,
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": "INTEGER",
+          "validFor": {
+            "endDateTime": "2039-12-13T21:52:29Z",
+            "startDateTime": "2019-12-13T21:52:29Z"
+          },
+          "value": {
+            "value": "2610",
+            "alias": "Patras"
+          }
+        },
+        {
+          "uuid": "f84f8cae-e040-42c2-a6c4-02dc9f3ca907",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": false,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": null,
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": "INTEGER",
+          "validFor": {
+            "endDateTime": "2039-12-13T21:52:29Z",
+            "startDateTime": "2019-12-13T21:52:29Z"
+          },
+          "value": {
+            "value": "210",
+            "alias": "Athens"
+          }
+        }
+      ],
+      "validFor": {
+        "endDateTime": "2039-12-13T21:44:05Z",
+        "startDateTime": "2019-12-13T21:44:05Z"
+      },
+      "@valueSchemaLocation": null,
+      "id": "7376c065-086a-4d31-9775-f313805811e7"
+    },
+    {
+      "uuid": "ee6542d2-f624-47a5-a1b3-63c08fec9337",
+      "@baseType": "BaseRootEntity",
+      "@schemaLocation": null,
+      "@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecCharacteristic",
+      "href": null,
+      "name": "test",
+      "configurable": null,
+      "description": null,
+      "extensible": null,
+      "isUnique": null,
+      "maxCardinality": 1,
+      "minCardinality": 0,
+      "regex": null,
+      "valueType": null,
+      "serviceSpecCharRelationship": [],
+      "serviceSpecCharacteristicValue": [],
+      "validFor": {
+        "endDateTime": "2041-08-24T02:31:41Z",
+        "startDateTime": "2021-08-24T02:31:41Z"
+      },
+      "@valueSchemaLocation": null,
+      "id": "ee6542d2-f624-47a5-a1b3-63c08fec9337"
+    },
+    {
+      "uuid": "f4ec0ca1-6ad4-4e23-9911-90c13c6701e1",
+      "@baseType": "BaseRootEntity",
+      "@schemaLocation": null,
+      "@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecCharacteristic",
+      "href": null,
+      "name": "Director return channel to cameras",
+      "configurable": true,
+      "description": null,
+      "extensible": null,
+      "isUnique": null,
+      "maxCardinality": 1,
+      "minCardinality": 0,
+      "regex": null,
+      "valueType": "ENUM",
+      "serviceSpecCharRelationship": [],
+      "serviceSpecCharacteristicValue": [
+        {
+          "uuid": "283c6863-7034-489e-ae0d-780269cff8f2",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": true,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": null,
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": "INTEGER",
+          "validFor": {
+            "endDateTime": "2039-12-13T21:57:25Z",
+            "startDateTime": "2019-12-13T21:57:25Z"
+          },
+          "value": {
+            "value": "0",
+            "alias": "Audio"
+          }
+        },
+        {
+          "uuid": "0e4ad6e4-ced3-4db5-9d83-ac38233fc449",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": null,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": null,
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": "INTEGER",
+          "validFor": {
+            "endDateTime": "2039-12-13T21:57:25Z",
+            "startDateTime": "2019-12-13T21:57:25Z"
+          },
+          "value": {
+            "value": "1",
+            "alias": "Video"
+          }
+        }
+      ],
+      "validFor": {
+        "endDateTime": "2039-12-13T21:56:51Z",
+        "startDateTime": "2019-12-13T21:56:51Z"
+      },
+      "@valueSchemaLocation": null,
+      "id": "f4ec0ca1-6ad4-4e23-9911-90c13c6701e1"
+    },
+    {
+      "uuid": "7204eaaa-afdf-4680-bf69-df0d35897698",
+      "@baseType": "BaseRootEntity",
+      "@schemaLocation": null,
+      "@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecCharacteristic",
+      "href": null,
+      "name": "Open5GCore-2enb_nsd::VIM",
+      "configurable": true,
+      "description": null,
+      "extensible": null,
+      "isUnique": null,
+      "maxCardinality": 1,
+      "minCardinality": 0,
+      "regex": null,
+      "valueType": "ENUM",
+      "serviceSpecCharRelationship": [],
+      "serviceSpecCharacteristicValue": [
+        {
+          "uuid": "c3771b06-01fa-4384-8490-2a6879ca3921",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": false,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": null,
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": "TEXT",
+          "validFor": {
+            "endDateTime": "2039-12-13T21:31:31Z",
+            "startDateTime": "2019-12-13T21:31:31Z"
+          },
+          "value": {
+            "value": "ffaea117-66b5-4a0a-9c21-bcef21564224",
+            "alias": "CloudVille NFV-AZ2"
+          }
+        },
+        {
+          "uuid": "3d5e1fec-90be-4810-8c0c-0957668efcc4",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": null,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": null,
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": "TEXT",
+          "validFor": {
+            "endDateTime": "2039-12-13T21:31:31Z",
+            "startDateTime": "2019-12-13T21:31:31Z"
+          },
+          "value": {
+            "value": "b5f9e566-a5ad-4afe-91f0-3ac33008b3c8",
+            "alias": "CloudVille nova zone"
+          }
+        },
+        {
+          "uuid": "82911f83-55b3-4ca4-9aeb-57a4a3fb1a69",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": true,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": null,
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": "TEXT",
+          "validFor": {
+            "endDateTime": "2039-12-13T21:31:31Z",
+            "startDateTime": "2019-12-13T21:31:31Z"
+          },
+          "value": {
+            "value": "691c8956-0369-4b91-b914-b61dccba74db",
+            "alias": "Cloudville"
+          }
+        }
+      ],
+      "validFor": {
+        "endDateTime": "2039-12-13T21:28:20Z",
+        "startDateTime": "2019-12-13T21:28:20Z"
+      },
+      "@valueSchemaLocation": null,
+      "id": "7204eaaa-afdf-4680-bf69-df0d35897698"
+    },
+    {
+      "uuid": "761864c2-352a-4cff-84de-3c24d95bd181",
+      "@baseType": "BaseRootEntity",
+      "@schemaLocation": null,
+      "@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecCharacteristic",
+      "href": null,
+      "name": "test actions_set",
+      "configurable": true,
+      "description": "test",
+      "extensible": null,
+      "isUnique": null,
+      "maxCardinality": 1,
+      "minCardinality": 0,
+      "regex": null,
+      "valueType": "SET",
+      "serviceSpecCharRelationship": [],
+      "serviceSpecCharacteristicValue": [
+        {
+          "uuid": "cf409680-fa96-42f0-99ee-568e7c3d971b",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": true,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": null,
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": "INTEGER",
+          "validFor": {
+            "endDateTime": "2041-08-25T15:10:23Z",
+            "startDateTime": "2021-08-25T15:10:23Z"
+          },
+          "value": {
+            "value": "1000",
+            "alias": "test param 4"
+          }
+        },
+        {
+          "uuid": "e7a4d765-4791-4f60-b1bd-3f590299d3a9",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": true,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": null,
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": "INTEGER",
+          "validFor": {
+            "endDateTime": "2041-08-25T15:10:23Z",
+            "startDateTime": "2021-08-25T15:10:23Z"
+          },
+          "value": {
+            "value": "10",
+            "alias": "test param 3"
+          }
+        },
+        {
+          "uuid": "60351b4e-686e-45d3-80b6-82759a992cc7",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": false,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": null,
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": "INTEGER",
+          "validFor": {
+            "endDateTime": "2041-08-25T15:10:23Z",
+            "startDateTime": "2021-08-25T15:10:23Z"
+          },
+          "value": {
+            "value": "1",
+            "alias": "test param 1"
+          }
+        },
+        {
+          "uuid": "881e8cc3-854f-4ff3-b5e8-eaed457f09dd",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": false,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": null,
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": "INTEGER",
+          "validFor": {
+            "endDateTime": "2041-08-25T15:10:23Z",
+            "startDateTime": "2021-08-25T15:10:23Z"
+          },
+          "value": {
+            "value": "100",
+            "alias": "test param 2"
+          }
+        }
+      ],
+      "validFor": {
+        "endDateTime": "2040-09-17T09:30:10Z",
+        "startDateTime": "2020-09-17T09:30:10Z"
+      },
+      "@valueSchemaLocation": null,
+      "id": "761864c2-352a-4cff-84de-3c24d95bd181"
+    },
+    {
+      "uuid": "ef42d5b4-e6a0-4df2-9de7-1bd60c0c681b",
+      "@baseType": "BaseRootEntity",
+      "@schemaLocation": null,
+      "@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecCharacteristic",
+      "href": null,
+      "name": "High Availability",
+      "configurable": true,
+      "description": null,
+      "extensible": null,
+      "isUnique": null,
+      "maxCardinality": 1,
+      "minCardinality": 0,
+      "regex": null,
+      "valueType": "BOOLEAN",
+      "serviceSpecCharRelationship": [],
+      "serviceSpecCharacteristicValue": [
+        {
+          "uuid": "427fae37-06c8-4bda-ad0f-eddc71669de9",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": true,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": null,
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": "BOOLEAN",
+          "validFor": {
+            "endDateTime": "2041-08-25T13:47:59Z",
+            "startDateTime": "2021-08-25T13:47:59Z"
+          },
+          "value": {
+            "value": "FALSE",
+            "alias": null
+          }
+        },
+        {
+          "uuid": "2f4e6fd9-8dab-49fa-9110-733281f98942",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": false,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": null,
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": "BOOLEAN",
+          "validFor": {
+            "endDateTime": "2041-08-25T13:47:59Z",
+            "startDateTime": "2021-08-25T13:47:59Z"
+          },
+          "value": {
+            "value": "TRUE",
+            "alias": null
+          }
+        }
+      ],
+      "validFor": {
+        "endDateTime": "2041-08-25T13:46:21Z",
+        "startDateTime": "2021-08-25T13:46:21Z"
+      },
+      "@valueSchemaLocation": null,
+      "id": "ef42d5b4-e6a0-4df2-9de7-1bd60c0c681b"
+    },
+    {
+      "uuid": "478a7af5-200d-4ef8-9cdd-f18bf59e8e1d",
+      "@baseType": "BaseRootEntity",
+      "@schemaLocation": null,
+      "@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecCharacteristic",
+      "href": null,
+      "name": "Location of NASS",
+      "configurable": true,
+      "description": "Location of NASS",
+      "extensible": null,
+      "isUnique": null,
+      "maxCardinality": 1,
+      "minCardinality": 0,
+      "regex": null,
+      "valueType": "ENUM",
+      "serviceSpecCharRelationship": [],
+      "serviceSpecCharacteristicValue": [
+        {
+          "uuid": "d6e9e89d-e793-4958-a2bd-a4c1e9f2d1de",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": false,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": null,
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": "INTEGER",
+          "validFor": {
+            "endDateTime": "2040-05-05T15:07:47Z",
+            "startDateTime": "2020-05-05T15:07:47Z"
+          },
+          "value": {
+            "value": "210",
+            "alias": "Athens"
+          }
+        },
+        {
+          "uuid": "f7487da7-dfde-4b56-b00d-035f58aaa46f",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": true,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": null,
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": "INTEGER",
+          "validFor": {
+            "endDateTime": "2040-05-05T15:07:47Z",
+            "startDateTime": "2020-05-05T15:07:47Z"
+          },
+          "value": {
+            "value": "2310",
+            "alias": "Patras"
+          }
+        }
+      ],
+      "validFor": {
+        "endDateTime": "2039-12-13T21:56:08Z",
+        "startDateTime": "2019-12-13T21:56:08Z"
+      },
+      "@valueSchemaLocation": null,
+      "id": "478a7af5-200d-4ef8-9cdd-f18bf59e8e1d"
+    },
+    {
+      "uuid": "d83af264-810f-4016-9e28-753783112935",
+      "@baseType": "BaseRootEntity",
+      "@schemaLocation": null,
+      "@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecCharacteristic",
+      "href": null,
+      "name": "Open5GCore-2enb_nsd::OSM_CONFIG",
+      "configurable": null,
+      "description": null,
+      "extensible": null,
+      "isUnique": null,
+      "maxCardinality": 1,
+      "minCardinality": 0,
+      "regex": null,
+      "valueType": "TEXT",
+      "serviceSpecCharRelationship": [],
+      "serviceSpecCharacteristicValue": [],
+      "validFor": {
+        "endDateTime": "2041-08-16T20:00:24Z",
+        "startDateTime": "2021-08-16T20:00:24Z"
+      },
+      "@valueSchemaLocation": null,
+      "id": "d83af264-810f-4016-9e28-753783112935"
+    },
+    {
+      "uuid": "293b486c-d5cc-42f3-bc38-c176f9cdffff",
+      "@baseType": "BaseRootEntity",
+      "@schemaLocation": null,
+      "@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecCharacteristic",
+      "href": null,
+      "name": "image of Network Assistanse Server (NASS)",
+      "configurable": false,
+      "description": "image of Network Assistanse Server (NASS)",
+      "extensible": null,
+      "isUnique": null,
+      "maxCardinality": 1,
+      "minCardinality": 0,
+      "regex": null,
+      "valueType": "TEXT",
+      "serviceSpecCharRelationship": [],
+      "serviceSpecCharacteristicValue": [
+        {
+          "uuid": "a6761857-effc-4bc3-934b-58299fa50e88",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": true,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": null,
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": "TEXT",
+          "validFor": {
+            "endDateTime": "2041-08-25T13:46:09Z",
+            "startDateTime": "2021-08-25T13:46:09Z"
+          },
+          "value": {
+            "value": "naas:latest",
+            "alias": "naas:latest"
+          }
+        }
+      ],
+      "validFor": {
+        "endDateTime": "2039-12-13T21:55:20Z",
+        "startDateTime": "2019-12-13T21:55:20Z"
+      },
+      "@valueSchemaLocation": null,
+      "id": "293b486c-d5cc-42f3-bc38-c176f9cdffff"
+    },
+    {
+      "uuid": "fd2e1b18-f107-4520-8205-8a42cea806d9",
+      "@baseType": "BaseRootEntity",
+      "@schemaLocation": null,
+      "@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecCharacteristic",
+      "href": null,
+      "name": "Current active cameras",
+      "configurable": false,
+      "description": "measure current active cameras",
+      "extensible": null,
+      "isUnique": null,
+      "maxCardinality": 1,
+      "minCardinality": 0,
+      "regex": null,
+      "valueType": "INTEGER",
+      "serviceSpecCharRelationship": [],
+      "serviceSpecCharacteristicValue": [
+        {
+          "uuid": "00187fc9-9d5b-475d-81e1-dfc1ee2eeb29",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": true,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": null,
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": "INTEGER",
+          "validFor": {
+            "endDateTime": "2041-09-03T15:58:16Z",
+            "startDateTime": "2021-09-03T15:58:16Z"
+          },
+          "value": {
+            "value": "0",
+            "alias": null
+          }
+        }
+      ],
+      "validFor": {
+        "endDateTime": "2041-09-03T15:57:36Z",
+        "startDateTime": "2021-09-03T15:57:36Z"
+      },
+      "@valueSchemaLocation": null,
+      "id": "fd2e1b18-f107-4520-8205-8a42cea806d9"
+    },
+    {
+      "uuid": "a81864cd-0f1f-4d04-a8ab-684b5d8fc972",
+      "@baseType": "BaseRootEntity",
+      "@schemaLocation": null,
+      "@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecCharacteristic",
+      "href": null,
+      "name": "Number of reserved hours",
+      "configurable": true,
+      "description": "Number of reserved hours",
+      "extensible": null,
+      "isUnique": null,
+      "maxCardinality": 1,
+      "minCardinality": 0,
+      "regex": null,
+      "valueType": "SMALLINT",
+      "serviceSpecCharRelationship": [],
+      "serviceSpecCharacteristicValue": [
+        {
+          "uuid": "771061ac-10ec-417d-a342-f2d76bbc949f",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": true,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": "hour",
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": "SMALLINT",
+          "validFor": {
+            "endDateTime": "2039-12-13T21:55:14Z",
+            "startDateTime": "2019-12-13T21:55:14Z"
+          },
+          "value": {
+            "value": "2",
+            "alias": "2"
+          }
+        }
+      ],
+      "validFor": {
+        "endDateTime": "2039-12-13T21:54:30Z",
+        "startDateTime": "2019-12-13T21:54:30Z"
+      },
+      "@valueSchemaLocation": null,
+      "id": "a81864cd-0f1f-4d04-a8ab-684b5d8fc972"
+    },
+    {
+      "uuid": "bc3ddea0-d362-414f-9cc6-a0f2a2664e20",
+      "@baseType": "BaseRootEntity",
+      "@schemaLocation": null,
+      "@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecCharacteristic",
+      "href": null,
+      "name": "cirros_2vnf_nsd::Primitive::fsetup",
+      "configurable": true,
+      "description": null,
+      "extensible": null,
+      "isUnique": null,
+      "maxCardinality": 1,
+      "minCardinality": 0,
+      "regex": null,
+      "valueType": "ARRAY",
+      "serviceSpecCharRelationship": [],
+      "serviceSpecCharacteristicValue": [
+        {
+          "uuid": "f3b91d34-90a7-4455-aca5-b40e1319058c",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": true,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": null,
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": "TEXT",
+          "validFor": {
+            "endDateTime": "2041-09-04T10:04:05Z",
+            "startDateTime": "2021-09-04T10:04:05Z"
+          },
+          "value": {
+            "value": "fsetup",
+            "alias": "primitive"
+          }
+        },
+        {
+          "uuid": "df6a846f-f934-4164-a3f5-e85fe2938064",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": true,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": null,
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": "TEXT",
+          "validFor": {
+            "endDateTime": "2041-09-04T10:04:05Z",
+            "startDateTime": "2021-09-04T10:04:05Z"
+          },
+          "value": {
+            "value": "{      \"tvg\": {         \"ip\": \"\",         \"channel1\": {             \"mode\": \"0\"         }     } }",
+            "alias": "confjson"
+          }
+        },
+        {
+          "uuid": "747a1ffc-1b3a-4198-b627-b6e545e0d34f",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": true,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": null,
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": "TEXT",
+          "validFor": {
+            "endDateTime": "2041-09-04T10:04:05Z",
+            "startDateTime": "2021-09-04T10:04:05Z"
+          },
+          "value": {
+            "value": "1",
+            "alias": "member_vnf_index"
+          }
+        }
+      ],
+      "validFor": {
+        "endDateTime": "2041-09-04T09:39:46Z",
+        "startDateTime": "2021-09-04T09:39:46Z"
+      },
+      "@valueSchemaLocation": null,
+      "id": "bc3ddea0-d362-414f-9cc6-a0f2a2664e20"
+    }
+  ],
+  "serviceSpecRelationship": [
+    {
+      "uuid": "4f7de502-b771-4df8-9b99-a0183e9489b5",
+      "@baseType": "BaseRootEntity",
+      "@schemaLocation": null,
+      "@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecRelationship",
+      "href": null,
+      "name": "Open5GCore-2enb_nsd",
+      "id": "2d2bd5b2-c4ef-44bb-8796-6360ae8f5581",
+      "relationshipType": null,
+      "role": null,
+      "validFor": null
+    }
+  ],
+  "targetServiceSchema": null,
+  "id": "0d5551e6-069f-43b7-aa71-10530f290239"
+}

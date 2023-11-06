@@ -1,0 +1,606 @@
+{
+	"uuid": "0399516f-e9ae-4c8e-8f7a-b13ad9a1bd00",
+	"lastUpdate": "2020-05-29T18:59:03+03:00",
+	"@baseType": "BaseEntity",
+	"@schemaLocation": null,
+	"@type": "CustomerFacingServiceSpecification",
+	"href": null,
+	"name": "Copy of Monitoring Service Example",
+	"description": "Monitoring Service Example",
+	"lifecycleStatus": "In study",
+	"version": "0.1.0",
+	"validFor": {
+		"endDateTime": "2040-05-29T18:57:53+03:00",
+		"startDateTime": "2020-05-29T18:57:53+03:00"
+	},
+	"isBundle": true,
+	"attachment": [],
+	"relatedParty": [],
+	"resourceSpecification": [],
+	"serviceLevelSpecification": [],
+	"serviceSpecCharacteristic": [
+		{
+			"uuid": "888f5295-8ece-4bbd-9ad1-d6f0c9689fe2",
+			"@baseType": "BaseRootEntity",
+			"@schemaLocation": null,
+			"@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecCharacteristic",
+			"href": null,
+			"name": "Monitoring_nsd::Netdata4_IP",
+			"configurable": null,
+			"description": null,
+			"extensible": null,
+			"isUnique": null,
+			"maxCardinality": 1,
+			"minCardinality": 0,
+			"regex": null,
+			"valueType": "TEXT",
+			"serviceSpecCharRelationship": [],
+			"serviceSpecCharacteristicValue": [
+				{
+					"uuid": "50eed4ab-bb8f-415f-bdc6-ab2806a641c8",
+					"@baseType": "BaseEntity",
+					"@schemaLocation": null,
+					"@type": null,
+					"href": null,
+					"isDefault": true,
+					"rangeInterval": null,
+					"regex": null,
+					"unitOfMeasure": null,
+					"valueFrom": null,
+					"valueTo": null,
+					"valueType": "TEXT",
+					"validFor": {
+						"endDateTime": "2040-05-29T18:59:03+03:00",
+						"startDateTime": "2020-05-29T18:59:03+03:00"
+					},
+					"value": {
+						"value": "192.168.199.140",
+						"alias": null
+					}
+				}
+			],
+			"validFor": {
+				"endDateTime": "2040-05-29T15:29:56+03:00",
+				"startDateTime": "2020-05-29T15:29:56+03:00"
+			},
+			"@valueSchemaLocation": null,
+			"id": "888f5295-8ece-4bbd-9ad1-d6f0c9689fe2"
+		},
+		{
+			"uuid": "d1bfc476-5a06-40a4-93f4-94519dd1755e",
+			"@baseType": "BaseRootEntity",
+			"@schemaLocation": null,
+			"@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecCharacteristic",
+			"href": null,
+			"name": "Monitoring_nsd::OnBoardingStatus",
+			"configurable": false,
+			"description": "NSDtOnBoardingStatus",
+			"extensible": null,
+			"isUnique": null,
+			"maxCardinality": 1,
+			"minCardinality": 1,
+			"regex": null,
+			"valueType": "TEXT",
+			"serviceSpecCharRelationship": [],
+			"serviceSpecCharacteristicValue": [
+				{
+					"uuid": "9afbf51c-18f1-4d82-a114-26d8f32b7e83",
+					"@baseType": "BaseEntity",
+					"@schemaLocation": null,
+					"@type": null,
+					"href": null,
+					"isDefault": true,
+					"rangeInterval": null,
+					"regex": null,
+					"unitOfMeasure": "N/A",
+					"valueFrom": null,
+					"valueTo": null,
+					"valueType": null,
+					"validFor": {
+						"endDateTime": "2040-05-29T14:58:55+03:00",
+						"startDateTime": "2020-05-29T14:58:55+03:00"
+					},
+					"value": {
+						"value": "ONBOARDED",
+						"alias": ""
+					}
+				}
+			],
+			"validFor": {
+				"endDateTime": "2040-05-29T14:58:55+03:00",
+				"startDateTime": "2020-05-29T14:58:55+03:00"
+			},
+			"@valueSchemaLocation": null,
+			"id": "d1bfc476-5a06-40a4-93f4-94519dd1755e"
+		},
+		{
+			"uuid": "f22919af-404f-4bee-9a75-7a7acaa3fd65",
+			"@baseType": "BaseRootEntity",
+			"@schemaLocation": null,
+			"@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecCharacteristic",
+			"href": null,
+			"name": "Monitoring_nsd::NSDID",
+			"configurable": false,
+			"description": "NSD id",
+			"extensible": null,
+			"isUnique": null,
+			"maxCardinality": 1,
+			"minCardinality": 1,
+			"regex": null,
+			"valueType": "TEXT",
+			"serviceSpecCharRelationship": [],
+			"serviceSpecCharacteristicValue": [
+				{
+					"uuid": "29f36556-c330-4754-8494-81c60855f324",
+					"@baseType": "BaseEntity",
+					"@schemaLocation": null,
+					"@type": null,
+					"href": null,
+					"isDefault": true,
+					"rangeInterval": null,
+					"regex": null,
+					"unitOfMeasure": "N/A",
+					"valueFrom": null,
+					"valueTo": null,
+					"valueType": null,
+					"validFor": {
+						"endDateTime": "2040-05-29T14:58:55+03:00",
+						"startDateTime": "2020-05-29T14:58:55+03:00"
+					},
+					"value": {
+						"value": "40",
+						"alias": "id"
+					}
+				}
+			],
+			"validFor": {
+				"endDateTime": "2040-05-29T14:58:55+03:00",
+				"startDateTime": "2020-05-29T14:58:55+03:00"
+			},
+			"@valueSchemaLocation": null,
+			"id": "f22919af-404f-4bee-9a75-7a7acaa3fd65"
+		},
+		{
+			"uuid": "98d38975-0de4-44e7-9b59-82b8963fdd97",
+			"@baseType": "BaseRootEntity",
+			"@schemaLocation": null,
+			"@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecCharacteristic",
+			"href": null,
+			"name": "Monitoring_nsd::PackageLocation",
+			"configurable": false,
+			"description": "NSD PackageLocation",
+			"extensible": null,
+			"isUnique": null,
+			"maxCardinality": 1,
+			"minCardinality": 1,
+			"regex": null,
+			"valueType": "TEXT",
+			"serviceSpecCharRelationship": [],
+			"serviceSpecCharacteristicValue": [
+				{
+					"uuid": "c8d7ed9c-85c7-45f1-864d-8963f96141c3",
+					"@baseType": "BaseEntity",
+					"@schemaLocation": null,
+					"@type": null,
+					"href": null,
+					"isDefault": true,
+					"rangeInterval": null,
+					"regex": null,
+					"unitOfMeasure": "N/A",
+					"valueFrom": null,
+					"valueTo": null,
+					"valueType": null,
+					"validFor": {
+						"endDateTime": "2040-05-29T14:58:55+03:00",
+						"startDateTime": "2020-05-29T14:58:55+03:00"
+					},
+					"value": {
+						"value": "http://openslice-portalapi:13000/osapi/packages/c803996c-9d40-4384-90f1-51396837ec16/Monitoring_nsd.tar.gz",
+						"alias": "PackageLocation"
+					}
+				}
+			],
+			"validFor": {
+				"endDateTime": "2040-05-29T14:58:55+03:00",
+				"startDateTime": "2020-05-29T14:58:55+03:00"
+			},
+			"@valueSchemaLocation": null,
+			"id": "98d38975-0de4-44e7-9b59-82b8963fdd97"
+		},
+		{
+			"uuid": "c213b59f-c2a0-488a-bed5-bfecb0608e49",
+			"@baseType": "BaseRootEntity",
+			"@schemaLocation": null,
+			"@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecCharacteristic",
+			"href": null,
+			"name": "Monitoring_nsd::SSHKEY",
+			"configurable": false,
+			"description": "SSH public key",
+			"extensible": null,
+			"isUnique": null,
+			"maxCardinality": 1,
+			"minCardinality": 1,
+			"regex": null,
+			"valueType": "TEXT",
+			"serviceSpecCharRelationship": [],
+			"serviceSpecCharacteristicValue": [
+				{
+					"uuid": "20192e4b-6669-47ad-aca6-94b8bfe2b79d",
+					"@baseType": "BaseEntity",
+					"@schemaLocation": null,
+					"@type": null,
+					"href": null,
+					"isDefault": true,
+					"rangeInterval": null,
+					"regex": null,
+					"unitOfMeasure": "N/A",
+					"valueFrom": null,
+					"valueTo": null,
+					"valueType": null,
+					"validFor": {
+						"endDateTime": "2040-05-29T14:58:55+03:00",
+						"startDateTime": "2020-05-29T14:58:55+03:00"
+					},
+					"value": {
+						"value": "",
+						"alias": ""
+					}
+				}
+			],
+			"validFor": {
+				"endDateTime": "2040-05-29T14:58:55+03:00",
+				"startDateTime": "2020-05-29T14:58:55+03:00"
+			},
+			"@valueSchemaLocation": null,
+			"id": "c213b59f-c2a0-488a-bed5-bfecb0608e49"
+		},
+		{
+			"uuid": "5b1b326d-e19e-42fb-bdd8-e22e39a54c9b",
+			"@baseType": "BaseRootEntity",
+			"@schemaLocation": null,
+			"@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecCharacteristic",
+			"href": null,
+			"name": "Monitoring_nsd::CONFIG",
+			"configurable": false,
+			"description": "Initial config to OSM",
+			"extensible": null,
+			"isUnique": null,
+			"maxCardinality": 1,
+			"minCardinality": 1,
+			"regex": null,
+			"valueType": "TEXT",
+			"serviceSpecCharRelationship": [],
+			"serviceSpecCharacteristicValue": [
+				{
+					"uuid": "25a41cb8-2d4c-49aa-934b-34532e6bab67",
+					"@baseType": "BaseEntity",
+					"@schemaLocation": null,
+					"@type": null,
+					"href": null,
+					"isDefault": true,
+					"rangeInterval": null,
+					"regex": null,
+					"unitOfMeasure": "N/A",
+					"valueFrom": null,
+					"valueTo": null,
+					"valueType": null,
+					"validFor": {
+						"endDateTime": "2040-05-29T18:58:17+03:00",
+						"startDateTime": "2020-05-29T18:58:17+03:00"
+					},
+					"value": {
+						"value": "{ \"nsdId\": \"02aba53e-4af5-4222-91ce-1a14540d5b39\", \"vimAccountId\": \"c224eb48-419e-4097-8a1d-11ec1bba087f\", \"nsName\": \"ttest\", \"nsDescription\": \"desc\",  \t\"vnf\": [ \t\t{ \t\t\t\"member-vnf-index\": \"1\", \t\t\t\"vdu\": [ \t\t\t\t{ \t\t\t\t\t\"id\": \"Prometheus-VM\", \t\t\t\t\t\"interface\": [ \t\t\t\t\t\t{ \t\t\t\t\t\t\t\"name\": \"eth1\", \t\t\t\t\t\t\t\"floating-ip-required\": true \t\t\t\t\t\t} \t\t\t\t\t] \t\t\t\t} \t\t\t] \t\t} \t], \t\"vld\": [ \t\t{ \t\t\t\"name\": \"Management\", \t\t\t\"vim-network-name\": \"testingnet\", \t\t\t\"vnfd-connection-point-ref\": [ \t\t\t\t{ \t\t\t\t\t\"member-vnf-index-ref\": \"2\", \t\t\t\t\t\"vnfd-connection-point-ref\": \"vnf-cp0\", \t\t\t\t\t\"ip-address\": \"192.168.199.110\" \t\t\t\t}, \t\t\t\t{ \t\t\t\t\t\"member-vnf-index-ref\": \"3\", \t\t\t\t\t\"vnfd-connection-point-ref\": \"vnf-cp0\", \t\t\t\t\t\"ip-address\": \"192.168.199.120\" \t\t\t\t}, \t\t\t\t{ \t\t\t\t\t\"member-vnf-index-ref\": \"4\", \t\t\t\t\t\"vnfd-connection-point-ref\": \"vnf-cp0\", \t\t\t\t\t\"ip-address\": \"192.168.199.130\" \t\t\t\t}, \t\t\t\t{ \t\t\t\t\t\"member-vnf-index-ref\": \"5\", \t\t\t\t\t\"vnfd-connection-point-ref\": \"vnf-cp0\", \t\t\t\t\t\"ip-address\": \"192.168.199.140\" \t\t\t\t} \t\t\t] \t\t} \t] }",
+						"alias": ""
+					}
+				}
+			],
+			"validFor": {
+				"endDateTime": "2040-05-29T14:58:55+03:00",
+				"startDateTime": "2020-05-29T14:58:55+03:00"
+			},
+			"@valueSchemaLocation": null,
+			"id": "5b1b326d-e19e-42fb-bdd8-e22e39a54c9b"
+		},
+		{
+			"uuid": "a9987ec7-8253-4b09-9eb5-7837c182457f",
+			"@baseType": "BaseRootEntity",
+			"@schemaLocation": null,
+			"@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecCharacteristic",
+			"href": null,
+			"name": "Monitoring_nsd::Netdata3_IP",
+			"configurable": null,
+			"description": null,
+			"extensible": null,
+			"isUnique": null,
+			"maxCardinality": 1,
+			"minCardinality": 0,
+			"regex": null,
+			"valueType": "TEXT",
+			"serviceSpecCharRelationship": [],
+			"serviceSpecCharacteristicValue": [
+				{
+					"uuid": "592e4a66-38db-406e-98ed-30c03561728f",
+					"@baseType": "BaseEntity",
+					"@schemaLocation": null,
+					"@type": null,
+					"href": null,
+					"isDefault": true,
+					"rangeInterval": null,
+					"regex": null,
+					"unitOfMeasure": null,
+					"valueFrom": null,
+					"valueTo": null,
+					"valueType": "TEXT",
+					"validFor": {
+						"endDateTime": "2040-05-29T18:58:55+03:00",
+						"startDateTime": "2020-05-29T18:58:55+03:00"
+					},
+					"value": {
+						"value": "192.168.199.130",
+						"alias": null
+					}
+				}
+			],
+			"validFor": {
+				"endDateTime": "2040-05-29T15:29:47+03:00",
+				"startDateTime": "2020-05-29T15:29:47+03:00"
+			},
+			"@valueSchemaLocation": null,
+			"id": "a9987ec7-8253-4b09-9eb5-7837c182457f"
+		},
+		{
+			"uuid": "040b72a3-9eae-450a-b403-aa9e85ed025c",
+			"@baseType": "BaseRootEntity",
+			"@schemaLocation": null,
+			"@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecCharacteristic",
+			"href": null,
+			"name": "Monitoring_nsd::PackagingFormat",
+			"configurable": false,
+			"description": "NSD PackagingFormat",
+			"extensible": null,
+			"isUnique": null,
+			"maxCardinality": 1,
+			"minCardinality": 1,
+			"regex": null,
+			"valueType": "TEXT",
+			"serviceSpecCharRelationship": [],
+			"serviceSpecCharacteristicValue": [
+				{
+					"uuid": "66541a66-0fde-46bb-a9e7-84b2da070a3c",
+					"@baseType": "BaseEntity",
+					"@schemaLocation": null,
+					"@type": null,
+					"href": null,
+					"isDefault": true,
+					"rangeInterval": null,
+					"regex": null,
+					"unitOfMeasure": "N/A",
+					"valueFrom": null,
+					"valueTo": null,
+					"valueType": null,
+					"validFor": {
+						"endDateTime": "2040-05-29T14:58:55+03:00",
+						"startDateTime": "2020-05-29T14:58:55+03:00"
+					},
+					"value": {
+						"value": "OSMvSEVEN",
+						"alias": "PackagingFormat"
+					}
+				}
+			],
+			"validFor": {
+				"endDateTime": "2040-05-29T14:58:55+03:00",
+				"startDateTime": "2020-05-29T14:58:55+03:00"
+			},
+			"@valueSchemaLocation": null,
+			"id": "040b72a3-9eae-450a-b403-aa9e85ed025c"
+		},
+		{
+			"uuid": "b4a660b3-d2ed-498e-ae68-618d94239ecd",
+			"@baseType": "BaseRootEntity",
+			"@schemaLocation": null,
+			"@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecCharacteristic",
+			"href": null,
+			"name": "Monitoring_nsd::Vendor",
+			"configurable": false,
+			"description": "NSD Vendor",
+			"extensible": null,
+			"isUnique": null,
+			"maxCardinality": 1,
+			"minCardinality": 1,
+			"regex": null,
+			"valueType": "TEXT",
+			"serviceSpecCharRelationship": [],
+			"serviceSpecCharacteristicValue": [
+				{
+					"uuid": "2ee92b9e-61a6-41c4-9f3c-544015bb4fb3",
+					"@baseType": "BaseEntity",
+					"@schemaLocation": null,
+					"@type": null,
+					"href": null,
+					"isDefault": true,
+					"rangeInterval": null,
+					"regex": null,
+					"unitOfMeasure": "N/A",
+					"valueFrom": null,
+					"valueTo": null,
+					"valueType": null,
+					"validFor": {
+						"endDateTime": "2040-05-29T14:58:55+03:00",
+						"startDateTime": "2020-05-29T14:58:55+03:00"
+					},
+					"value": {
+						"value": null,
+						"alias": "Vendor"
+					}
+				}
+			],
+			"validFor": {
+				"endDateTime": "2040-05-29T14:58:55+03:00",
+				"startDateTime": "2020-05-29T14:58:55+03:00"
+			},
+			"@valueSchemaLocation": null,
+			"id": "b4a660b3-d2ed-498e-ae68-618d94239ecd"
+		},
+		{
+			"uuid": "6a79f2e6-2c2c-435f-9c70-426e70e5e498",
+			"@baseType": "BaseRootEntity",
+			"@schemaLocation": null,
+			"@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecCharacteristic",
+			"href": null,
+			"name": "Monitoring_nsd::Netdata2_IP",
+			"configurable": null,
+			"description": null,
+			"extensible": null,
+			"isUnique": null,
+			"maxCardinality": 1,
+			"minCardinality": 0,
+			"regex": null,
+			"valueType": "TEXT",
+			"serviceSpecCharRelationship": [],
+			"serviceSpecCharacteristicValue": [
+				{
+					"uuid": "1d002e98-3bc4-4998-a044-cfa75022144e",
+					"@baseType": "BaseEntity",
+					"@schemaLocation": null,
+					"@type": null,
+					"href": null,
+					"isDefault": true,
+					"rangeInterval": null,
+					"regex": null,
+					"unitOfMeasure": null,
+					"valueFrom": null,
+					"valueTo": null,
+					"valueType": "TEXT",
+					"validFor": {
+						"endDateTime": "2040-05-29T18:58:45+03:00",
+						"startDateTime": "2020-05-29T18:58:45+03:00"
+					},
+					"value": {
+						"value": "192.168.199.120",
+						"alias": null
+					}
+				}
+			],
+			"validFor": {
+				"endDateTime": "2040-05-29T15:29:34+03:00",
+				"startDateTime": "2020-05-29T15:29:34+03:00"
+			},
+			"@valueSchemaLocation": null,
+			"id": "6a79f2e6-2c2c-435f-9c70-426e70e5e498"
+		},
+		{
+			"uuid": "420c3979-6e01-433f-8727-43c70ab339ad",
+			"@baseType": "BaseRootEntity",
+			"@schemaLocation": null,
+			"@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecCharacteristic",
+			"href": null,
+			"name": "Monitoring_nsd::ObMANOprovider_Name",
+			"configurable": false,
+			"description": "NSD Onboarded MANO provider Name",
+			"extensible": null,
+			"isUnique": null,
+			"maxCardinality": 1,
+			"minCardinality": 1,
+			"regex": null,
+			"valueType": "TEXT",
+			"serviceSpecCharRelationship": [],
+			"serviceSpecCharacteristicValue": [
+				{
+					"uuid": "ae3d1ec5-4d9c-4f12-801f-6d58d2d3b9b0",
+					"@baseType": "BaseEntity",
+					"@schemaLocation": null,
+					"@type": null,
+					"href": null,
+					"isDefault": true,
+					"rangeInterval": null,
+					"regex": null,
+					"unitOfMeasure": "N/A",
+					"valueFrom": null,
+					"valueTo": null,
+					"valueType": null,
+					"validFor": {
+						"endDateTime": "2040-05-29T14:58:55+03:00",
+						"startDateTime": "2020-05-29T14:58:55+03:00"
+					},
+					"value": {
+						"value": "osm seven",
+						"alias": ""
+					}
+				}
+			],
+			"validFor": {
+				"endDateTime": "2040-05-29T14:58:55+03:00",
+				"startDateTime": "2020-05-29T14:58:55+03:00"
+			},
+			"@valueSchemaLocation": null,
+			"id": "420c3979-6e01-433f-8727-43c70ab339ad"
+		},
+		{
+			"uuid": "5880a01d-2331-4da9-9b69-ad2374456a8b",
+			"@baseType": "BaseRootEntity",
+			"@schemaLocation": null,
+			"@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecCharacteristic",
+			"href": null,
+			"name": "Monitoring_nsd::Netdata1_IP",
+			"configurable": false,
+			"description": null,
+			"extensible": null,
+			"isUnique": null,
+			"maxCardinality": 1,
+			"minCardinality": 0,
+			"regex": null,
+			"valueType": "TEXT",
+			"serviceSpecCharRelationship": [],
+			"serviceSpecCharacteristicValue": [
+				{
+					"uuid": "0022e428-ca5d-482e-8f62-aec2687024a2",
+					"@baseType": "BaseEntity",
+					"@schemaLocation": null,
+					"@type": null,
+					"href": null,
+					"isDefault": true,
+					"rangeInterval": null,
+					"regex": null,
+					"unitOfMeasure": null,
+					"valueFrom": null,
+					"valueTo": null,
+					"valueType": "TEXT",
+					"validFor": {
+						"endDateTime": "2040-05-29T18:58:36+03:00",
+						"startDateTime": "2020-05-29T18:58:36+03:00"
+					},
+					"value": {
+						"value": "192.168.199.110",
+						"alias": null
+					}
+				}
+			],
+			"validFor": {
+				"endDateTime": "2040-05-29T15:29:21+03:00",
+				"startDateTime": "2020-05-29T15:29:21+03:00"
+			},
+			"@valueSchemaLocation": null,
+			"id": "5880a01d-2331-4da9-9b69-ad2374456a8b"
+		}
+	],
+	"serviceSpecRelationship": [
+		{
+			"uuid": "bebbeb8e-55fb-4c53-b1db-98866f0dc4a5",
+			"@baseType": "BaseRootEntity",
+			"@schemaLocation": null,
+			"@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecRelationship",
+			"href": null,
+			"name": "Monitoring_nsd",
+			"id": "22e399d3-b152-4966-9d0f-20e5b2ec42c4",
+			"relationshipType": null,
+			"role": null,
+			"validFor": {
+				"endDateTime": "2040-05-29T18:57:53+03:00",
+				"startDateTime": "2020-05-29T18:57:53+03:00"
+			}
+		}
+	],
+	"targetServiceSchema": null,
+	"id": "0399516f-e9ae-4c8e-8f7a-b13ad9a1bd00"
+}
