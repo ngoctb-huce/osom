@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
+  <process id="OrderSchedulerProcess" name="My process" isExecutable="true">
+    <startEvent id="timerstartevent1" name="Timer start">
+      <timerEventDefinition>
+        <timeCycle>0 0/1 * * * ?</timeCycle>
+      </timerEventDefinition>
+    </startEvent>
+    <serviceTask id="stFetchAcknowledgedOrders" name="Fetch Acknowledged Orders" activiti:delegateExpression="${fetchAcknowledgedOrders}"></serviceTask>
+    <sequenceFlow id="flow1" sourceRef="timerstartevent1" targetRef="stFetchAcknowledgedOrders"></sequenceFlow>
+    <serviceTask id="stInitializeProcessOrder" name="Initialize Process Order" activiti:delegateExpression="${initializeProcessOrders}"></serviceTask>
+    <sequenceFlow id="flow2" sourceRef="stFetchAcknowledgedOrders" targetRef="stInitializeProcessOrder"></sequenceFlow>
+    <endEvent id="endevent1" name="End"></endEvent>
+    <callActivity id="paralletActivityStartOrderProcess" name="Start Order Process" activiti:async="true" calledElement="StartOrderProcess" activiti:inheritVariables="true">
+      <multiInstanceLoopCharacteristics isSequential="false" activiti:collection="ordersToBeProcessed" activiti:elementVariable="orderid"></multiInstanceLoopCharacteristics>
+    </callActivity>
+    <sequenceFlow id="flow3" sourceRef="stInitializeProcessOrder" targetRef="paralletActivityStartOrderProcess"></sequenceFlow>
+    <sequenceFlow id="flow4" sourceRef="paralletActivityStartOrderProcess" targetRef="endevent1"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_OrderSchedulerProcess">
+    <bpmndi:BPMNPlane bpmnElement="OrderSchedulerProcess" id="BPMNPlane_OrderSchedulerProcess">
+      <bpmndi:BPMNShape bpmnElement="timerstartevent1" id="BPMNShape_timerstartevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="171.0" y="143.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="stFetchAcknowledgedOrders" id="BPMNShape_stFetchAcknowledgedOrders">
+        <omgdc:Bounds height="60.0" width="121.0" x="310.0" y="131.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="stInitializeProcessOrder" id="BPMNShape_stInitializeProcessOrder">
+        <omgdc:Bounds height="68.0" width="105.0" x="530.0" y="126.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent1" id="BPMNShape_endevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="900.0" y="143.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="paralletActivityStartOrderProcess" id="BPMNShape_paralletActivityStartOrderProcess">
+        <omgdc:Bounds height="71.0" width="141.0" x="720.0" y="124.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
+        <omgdi:waypoint x="206.0" y="160.0"></omgdi:waypoint>
+        <omgdi:waypoint x="310.0" y="161.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
+        <omgdi:waypoint x="431.0" y="161.0"></omgdi:waypoint>
+        <omgdi:waypoint x="530.0" y="160.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3">
+        <omgdi:waypoint x="635.0" y="160.0"></omgdi:waypoint>
+        <omgdi:waypoint x="720.0" y="159.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow4" id="BPMNEdge_flow4">
+        <omgdi:waypoint x="861.0" y="159.0"></omgdi:waypoint>
+        <omgdi:waypoint x="900.0" y="160.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

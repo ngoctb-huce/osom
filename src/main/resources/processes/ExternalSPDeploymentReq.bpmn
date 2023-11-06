@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
+  <process id="externalSPDeploymentReqProcess" name="External Service Provider Deployment Request process" isExecutable="true">
+    <startEvent id="startevent1" name="Start"></startEvent>
+    <serviceTask id="submitOrderToExternalSPTask" name="Submit Order To External Service Provider Task" activiti:delegateExpression="${externalPartnerSubmitOrderService}"></serviceTask>
+    <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="submitOrderToExternalSPTask"></sequenceFlow>
+    <serviceTask id="checkExternalServiceOrderFulfilmentTask" name="Check external service order fulfilment task" activiti:delegateExpression="${externalPartnerCheckDeploymentService}"></serviceTask>
+    <sequenceFlow id="flow2" sourceRef="submitOrderToExternalSPTask" targetRef="checkExternalServiceOrderFulfilmentTask"></sequenceFlow>
+    <exclusiveGateway id="exclusivegateway1" name="Exclusive Gateway"></exclusiveGateway>
+    <sequenceFlow id="flow3" sourceRef="checkExternalServiceOrderFulfilmentTask" targetRef="exclusivegateway1"></sequenceFlow>
+    <intermediateCatchEvent id="timerintermediatecatchevent1" name="Timer start wait 60 secs">
+      <timerEventDefinition>
+        <timeDuration>PT60S</timeDuration>
+      </timerEventDefinition>
+    </intermediateCatchEvent>
+    <sequenceFlow id="flowExtServiceOrderReqNotFinished" name="ExtServiceOrderReq Not Finished" sourceRef="exclusivegateway1" targetRef="timerintermediatecatchevent1">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${!serviceDeploymentFinished}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow5" sourceRef="timerintermediatecatchevent1" targetRef="checkExternalServiceOrderFulfilmentTask"></sequenceFlow>
+    <endEvent id="endevent1" name="End"></endEvent>
+    <sequenceFlow id="flowExtServiceOrderReqFinished" name="flowExtServiceOrderReq Finished" sourceRef="exclusivegateway1" targetRef="endevent1">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${serviceDeploymentFinished}]]></conditionExpression>
+    </sequenceFlow>
+    <textAnnotation id="textannotation1">
+      <text>Timer start wait 60 secs</text>
+    </textAnnotation>
+    <association id="association1" sourceRef="textannotation1" targetRef="timerintermediatecatchevent1" associationDirection="None"></association>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_externalSPDeploymentReqProcess">
+    <bpmndi:BPMNPlane bpmnElement="externalSPDeploymentReqProcess" id="BPMNPlane_externalSPDeploymentReqProcess">
+      <bpmndi:BPMNShape bpmnElement="startevent1" id="BPMNShape_startevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="200.0" y="140.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="submitOrderToExternalSPTask" id="BPMNShape_submitOrderToExternalSPTask">
+        <omgdc:Bounds height="83.0" width="131.0" x="330.0" y="116.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="checkExternalServiceOrderFulfilmentTask" id="BPMNShape_checkExternalServiceOrderFulfilmentTask">
+        <omgdc:Bounds height="79.0" width="141.0" x="570.0" y="118.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegateway1" id="BPMNShape_exclusivegateway1">
+        <omgdc:Bounds height="40.0" width="40.0" x="880.0" y="137.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="timerintermediatecatchevent1" id="BPMNShape_timerintermediatecatchevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="760.0" y="290.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent1" id="BPMNShape_endevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="1050.0" y="140.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="textannotation1" id="BPMNShape_textannotation1">
+        <omgdc:Bounds height="71.0" width="100.0" x="830.0" y="370.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
+        <omgdi:waypoint x="235.0" y="157.0"></omgdi:waypoint>
+        <omgdi:waypoint x="330.0" y="157.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
+        <omgdi:waypoint x="461.0" y="157.0"></omgdi:waypoint>
+        <omgdi:waypoint x="570.0" y="157.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3">
+        <omgdi:waypoint x="711.0" y="157.0"></omgdi:waypoint>
+        <omgdi:waypoint x="880.0" y="157.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flowExtServiceOrderReqNotFinished" id="BPMNEdge_flowExtServiceOrderReqNotFinished">
+        <omgdi:waypoint x="900.0" y="177.0"></omgdi:waypoint>
+        <omgdi:waypoint x="899.0" y="307.0"></omgdi:waypoint>
+        <omgdi:waypoint x="795.0" y="307.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="42.0" width="100.0" x="911.0" y="189.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow5" id="BPMNEdge_flow5">
+        <omgdi:waypoint x="760.0" y="307.0"></omgdi:waypoint>
+        <omgdi:waypoint x="640.0" y="307.0"></omgdi:waypoint>
+        <omgdi:waypoint x="640.0" y="197.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flowExtServiceOrderReqFinished" id="BPMNEdge_flowExtServiceOrderReqFinished">
+        <omgdi:waypoint x="920.0" y="157.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1050.0" y="157.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="42.0" width="100.0" x="919.0" y="110.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="association1" id="BPMNEdge_association1">
+        <omgdi:waypoint x="880.0" y="370.0"></omgdi:waypoint>
+        <omgdi:waypoint x="777.0" y="325.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

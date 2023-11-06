@@ -1,0 +1,613 @@
+{
+  "uuid": "f2b74f90-4140-4895-80d1-ef243398117b",
+  "lastUpdate": "2021-08-18T01:22:31+03:00",
+  "@baseType": "BaseEntity",
+  "@schemaLocation": null,
+  "@type": "CustomerFacingServiceSpecification",
+  "href": null,
+  "name": "Cirros Test",
+  "description": "A Cirros Test",
+  "lifecycleStatus": "In design",
+  "version": "0.1.0",
+  "validFor": {
+    "endDateTime": "2040-09-06T23:51:05+03:00",
+    "startDateTime": "2020-09-06T23:51:05+03:00"
+  },
+  "isBundle": true,
+  "attachment": [],
+  "relatedParty": [
+    {
+      "uuid": "76b0a43c-1d13-4c1e-bcb9-d9ed1bc96f42",
+      "@baseType": "BaseRootEntity",
+      "@schemaLocation": null,
+      "@type": "org.etsi.osl.tmf.prm669.model.RelatedParty",
+      "href": null,
+      "name": "admin",
+      "role": "OWNER",
+      "@referredType": "SimpleUsername_Individual",
+      "id": "admin",
+      "extendedInfo": ""
+    }
+  ],
+  "resourceSpecification": [],
+  "serviceLevelSpecification": [],
+  "serviceSpecCharacteristic": [
+    {
+      "uuid": "32ec48ae-9cef-4c1d-a395-60d0edd54929",
+      "@baseType": "BaseRootEntity",
+      "@schemaLocation": null,
+      "@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecCharacteristic",
+      "href": null,
+      "name": "cirros_2vnf_ns::Vendor",
+      "configurable": false,
+      "description": "NSD Vendor",
+      "extensible": null,
+      "isUnique": null,
+      "maxCardinality": 1,
+      "minCardinality": 1,
+      "regex": null,
+      "valueType": "TEXT",
+      "serviceSpecCharRelationship": [],
+      "serviceSpecCharacteristicValue": [
+        {
+          "uuid": "31fab415-4c81-4908-a5ee-e6174aa858d1",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": true,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": "N/A",
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": null,
+          "validFor": {
+            "endDateTime": "2040-09-06T23:48:24+03:00",
+            "startDateTime": "2020-09-06T23:48:24+03:00"
+          },
+          "value": {
+            "value": "OSM",
+            "alias": "Vendor"
+          }
+        }
+      ],
+      "validFor": {
+        "endDateTime": "2040-09-06T23:48:24+03:00",
+        "startDateTime": "2020-09-06T23:48:24+03:00"
+      },
+      "@valueSchemaLocation": null,
+      "id": "32ec48ae-9cef-4c1d-a395-60d0edd54929"
+    },
+    {
+      "uuid": "11a2b2fe-52fe-47bd-818d-0446fbb50121",
+      "@baseType": "BaseRootEntity",
+      "@schemaLocation": null,
+      "@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecCharacteristic",
+      "href": null,
+      "name": "Quality Class",
+      "configurable": true,
+      "description": "define the Quality Class of the service",
+      "extensible": null,
+      "isUnique": null,
+      "maxCardinality": 1,
+      "minCardinality": 0,
+      "regex": null,
+      "valueType": "ENUM",
+      "serviceSpecCharRelationship": [],
+      "serviceSpecCharacteristicValue": [
+        {
+          "uuid": "1c15c037-1356-4292-865d-5cd72b38906e",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": true,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": null,
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": "INTEGER",
+          "validFor": {
+            "endDateTime": "2041-08-18T01:22:31+03:00",
+            "startDateTime": "2021-08-18T01:22:31+03:00"
+          },
+          "value": {
+            "value": "0",
+            "alias": "SILVER"
+          }
+        },
+        {
+          "uuid": "248dc9c4-3205-4200-8bf8-15802f9b82fd",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": false,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": null,
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": "INTEGER",
+          "validFor": {
+            "endDateTime": "2041-08-18T01:22:31+03:00",
+            "startDateTime": "2021-08-18T01:22:31+03:00"
+          },
+          "value": {
+            "value": "1",
+            "alias": "GOLD"
+          }
+        },
+        {
+          "uuid": "c698dc35-268c-497b-9f4c-d49744610694",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": false,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": null,
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": "INTEGER",
+          "validFor": {
+            "endDateTime": "2041-08-18T01:22:31+03:00",
+            "startDateTime": "2021-08-18T01:22:31+03:00"
+          },
+          "value": {
+            "value": "2",
+            "alias": "PLATINUM"
+          }
+        }
+      ],
+      "validFor": {
+        "endDateTime": "2041-08-18T01:21:23+03:00",
+        "startDateTime": "2021-08-18T01:21:23+03:00"
+      },
+      "@valueSchemaLocation": null,
+      "id": "11a2b2fe-52fe-47bd-818d-0446fbb50121"
+    },
+    {
+      "uuid": "be37567e-6942-41e5-8b5c-d824f9a2b77e",
+      "@baseType": "BaseRootEntity",
+      "@schemaLocation": null,
+      "@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecCharacteristic",
+      "href": null,
+      "name": "cirros_2vnf_ns::ObMANOprovider_Name",
+      "configurable": false,
+      "description": "NSD Onboarded MANO provider Name",
+      "extensible": null,
+      "isUnique": null,
+      "maxCardinality": 1,
+      "minCardinality": 1,
+      "regex": null,
+      "valueType": "TEXT",
+      "serviceSpecCharRelationship": [],
+      "serviceSpecCharacteristicValue": [
+        {
+          "uuid": "6ab1e22e-b52d-4ca2-94db-9f0df9cd0587",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": true,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": "N/A",
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": null,
+          "validFor": {
+            "endDateTime": "2040-09-06T23:48:24+03:00",
+            "startDateTime": "2020-09-06T23:48:24+03:00"
+          },
+          "value": {
+            "value": "GenericSOL005",
+            "alias": ""
+          }
+        }
+      ],
+      "validFor": {
+        "endDateTime": "2040-09-06T23:48:24+03:00",
+        "startDateTime": "2020-09-06T23:48:24+03:00"
+      },
+      "@valueSchemaLocation": null,
+      "id": "be37567e-6942-41e5-8b5c-d824f9a2b77e"
+    },
+    {
+      "uuid": "bcf790f3-7dbd-4384-8c94-ba775bd87c6a",
+      "@baseType": "BaseRootEntity",
+      "@schemaLocation": null,
+      "@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecCharacteristic",
+      "href": null,
+      "name": "cirros_2vnf_ns::NSDID",
+      "configurable": false,
+      "description": "NSD id",
+      "extensible": null,
+      "isUnique": null,
+      "maxCardinality": 1,
+      "minCardinality": 1,
+      "regex": null,
+      "valueType": "TEXT",
+      "serviceSpecCharRelationship": [],
+      "serviceSpecCharacteristicValue": [
+        {
+          "uuid": "5e015c50-6947-415a-8c12-bfe820a62d7d",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": true,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": "N/A",
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": null,
+          "validFor": {
+            "endDateTime": "2040-09-06T23:48:24+03:00",
+            "startDateTime": "2020-09-06T23:48:24+03:00"
+          },
+          "value": {
+            "value": "33",
+            "alias": "id"
+          }
+        }
+      ],
+      "validFor": {
+        "endDateTime": "2040-09-06T23:48:24+03:00",
+        "startDateTime": "2020-09-06T23:48:24+03:00"
+      },
+      "@valueSchemaLocation": null,
+      "id": "bcf790f3-7dbd-4384-8c94-ba775bd87c6a"
+    },
+    {
+      "uuid": "54ca7576-50de-4991-a903-0b044a71eb20",
+      "@baseType": "BaseRootEntity",
+      "@schemaLocation": null,
+      "@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecCharacteristic",
+      "href": null,
+      "name": "cirros_2vnf_ns::SSHKEY",
+      "configurable": false,
+      "description": "SSH public key",
+      "extensible": null,
+      "isUnique": null,
+      "maxCardinality": 1,
+      "minCardinality": 1,
+      "regex": null,
+      "valueType": "TEXT",
+      "serviceSpecCharRelationship": [],
+      "serviceSpecCharacteristicValue": [
+        {
+          "uuid": "e5e5d906-44ed-40ad-933d-cde48a240ad6",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": true,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": "N/A",
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": null,
+          "validFor": {
+            "endDateTime": "2040-09-06T23:48:24+03:00",
+            "startDateTime": "2020-09-06T23:48:24+03:00"
+          },
+          "value": {
+            "value": "MYKEYX",
+            "alias": ""
+          }
+        }
+      ],
+      "validFor": {
+        "endDateTime": "2040-09-06T23:48:24+03:00",
+        "startDateTime": "2020-09-06T23:48:24+03:00"
+      },
+      "@valueSchemaLocation": null,
+      "id": "54ca7576-50de-4991-a903-0b044a71eb20"
+    },
+    {
+      "uuid": "c4446fd0-0608-4192-99da-cebd21b10114",
+      "@baseType": "BaseRootEntity",
+      "@schemaLocation": null,
+      "@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecCharacteristic",
+      "href": null,
+      "name": "cirros_2vnf_ns::MemberVNFIndex_1",
+      "configurable": false,
+      "description": "Member VNF Index",
+      "extensible": null,
+      "isUnique": null,
+      "maxCardinality": 1,
+      "minCardinality": 1,
+      "regex": null,
+      "valueType": "TEXT",
+      "serviceSpecCharRelationship": [],
+      "serviceSpecCharacteristicValue": [
+        {
+          "uuid": "1cfb7d8c-8fe6-4549-8306-ed448534e325",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": true,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": "N/A",
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": null,
+          "validFor": {
+            "endDateTime": "2040-09-06T23:48:24+03:00",
+            "startDateTime": "2020-09-06T23:48:24+03:00"
+          },
+          "value": {
+            "value": "1",
+            "alias": "cirros_vnfd"
+          }
+        }
+      ],
+      "validFor": {
+        "endDateTime": "2040-09-06T23:48:24+03:00",
+        "startDateTime": "2020-09-06T23:48:24+03:00"
+      },
+      "@valueSchemaLocation": null,
+      "id": "c4446fd0-0608-4192-99da-cebd21b10114"
+    },
+    {
+      "uuid": "f87cb321-818b-4297-9cb7-092ff1c7eb18",
+      "@baseType": "BaseRootEntity",
+      "@schemaLocation": null,
+      "@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecCharacteristic",
+      "href": null,
+      "name": "cirros_2vnf_ns::OSM_CONFIG",
+      "configurable": false,
+      "description": "Initial config to OSM",
+      "extensible": null,
+      "isUnique": null,
+      "maxCardinality": 1,
+      "minCardinality": 1,
+      "regex": null,
+      "valueType": "TEXT",
+      "serviceSpecCharRelationship": [],
+      "serviceSpecCharacteristicValue": [
+        {
+          "uuid": "8d25851f-b1e5-4969-8ce6-1a6339322faf",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": true,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": "N/A",
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": null,
+          "validFor": {
+            "endDateTime": "2041-08-18T01:18:01+03:00",
+            "startDateTime": "2021-08-18T01:18:01+03:00"
+          },
+          "value": {
+            "value": "{ \"nsdId\": \"0b6853fc-8219-4580-9697-bf4a8f0a08f9\", \"vimAccountId\": \"c224eb48-419e-4097-8a1d-11ec1bba087f\", \"wimAccountId\": false } ",
+            "alias": ""
+          }
+        }
+      ],
+      "validFor": {
+        "endDateTime": "2040-09-06T23:48:24+03:00",
+        "startDateTime": "2020-09-06T23:48:24+03:00"
+      },
+      "@valueSchemaLocation": null,
+      "id": "f87cb321-818b-4297-9cb7-092ff1c7eb18"
+    },
+    {
+      "uuid": "556707f7-b30a-4e48-b1ea-35ec5f8e3500",
+      "@baseType": "BaseRootEntity",
+      "@schemaLocation": null,
+      "@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecCharacteristic",
+      "href": null,
+      "name": "cirros_2vnf_ns::PackagingFormat",
+      "configurable": false,
+      "description": "NSD PackagingFormat",
+      "extensible": null,
+      "isUnique": null,
+      "maxCardinality": 1,
+      "minCardinality": 1,
+      "regex": null,
+      "valueType": "TEXT",
+      "serviceSpecCharRelationship": [],
+      "serviceSpecCharacteristicValue": [
+        {
+          "uuid": "24692f3a-2780-48de-8f1b-719a3d19c08c",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": true,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": "N/A",
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": null,
+          "validFor": {
+            "endDateTime": "2040-09-06T23:48:24+03:00",
+            "startDateTime": "2020-09-06T23:48:24+03:00"
+          },
+          "value": {
+            "value": "GenericSOL005",
+            "alias": "PackagingFormat"
+          }
+        }
+      ],
+      "validFor": {
+        "endDateTime": "2040-09-06T23:48:24+03:00",
+        "startDateTime": "2020-09-06T23:48:24+03:00"
+      },
+      "@valueSchemaLocation": null,
+      "id": "556707f7-b30a-4e48-b1ea-35ec5f8e3500"
+    },
+    {
+      "uuid": "c85ef980-bc81-47ec-afc3-d5d6e35a18be",
+      "@baseType": "BaseRootEntity",
+      "@schemaLocation": null,
+      "@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecCharacteristic",
+      "href": null,
+      "name": "cirros_2vnf_ns::PackageLocation",
+      "configurable": false,
+      "description": "NSD PackageLocation",
+      "extensible": null,
+      "isUnique": null,
+      "maxCardinality": 1,
+      "minCardinality": 1,
+      "regex": null,
+      "valueType": "TEXT",
+      "serviceSpecCharRelationship": [],
+      "serviceSpecCharacteristicValue": [
+        {
+          "uuid": "03867f58-3d3d-4c04-bf92-39115b6ca9bc",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": true,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": "N/A",
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": null,
+          "validFor": {
+            "endDateTime": "2040-09-06T23:48:24+03:00",
+            "startDateTime": "2020-09-06T23:48:24+03:00"
+          },
+          "value": {
+            "value": "http://openslice-portalapi:13000/osapi/packages/5afddb42-9edc-40d0-9d9a-76a4621660db/cirros_2vnf_ns.tar.gz",
+            "alias": "PackageLocation"
+          }
+        }
+      ],
+      "validFor": {
+        "endDateTime": "2040-09-06T23:48:24+03:00",
+        "startDateTime": "2020-09-06T23:48:24+03:00"
+      },
+      "@valueSchemaLocation": null,
+      "id": "c85ef980-bc81-47ec-afc3-d5d6e35a18be"
+    },
+    {
+      "uuid": "eca01dab-3c77-48c5-8c9b-61ce442f6b1c",
+      "@baseType": "BaseRootEntity",
+      "@schemaLocation": null,
+      "@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecCharacteristic",
+      "href": null,
+      "name": "cirros_2vnf_ns::OnBoardingStatus",
+      "configurable": false,
+      "description": "NSDtOnBoardingStatus",
+      "extensible": null,
+      "isUnique": null,
+      "maxCardinality": 1,
+      "minCardinality": 1,
+      "regex": null,
+      "valueType": "TEXT",
+      "serviceSpecCharRelationship": [],
+      "serviceSpecCharacteristicValue": [
+        {
+          "uuid": "ece1a0d0-8fcd-4cfa-9eb6-f5e63370c88a",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": true,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": "N/A",
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": null,
+          "validFor": {
+            "endDateTime": "2040-09-06T23:48:24+03:00",
+            "startDateTime": "2020-09-06T23:48:24+03:00"
+          },
+          "value": {
+            "value": "ONBOARDED",
+            "alias": ""
+          }
+        }
+      ],
+      "validFor": {
+        "endDateTime": "2040-09-06T23:48:24+03:00",
+        "startDateTime": "2020-09-06T23:48:24+03:00"
+      },
+      "@valueSchemaLocation": null,
+      "id": "eca01dab-3c77-48c5-8c9b-61ce442f6b1c"
+    },
+    {
+      "uuid": "80e50d90-4cf9-4b6f-a29b-c4bf1a26af2c",
+      "@baseType": "BaseRootEntity",
+      "@schemaLocation": null,
+      "@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecCharacteristic",
+      "href": null,
+      "name": "cirros_2vnf_ns::MemberVNFIndex_2",
+      "configurable": false,
+      "description": "Member VNF Index",
+      "extensible": null,
+      "isUnique": null,
+      "maxCardinality": 1,
+      "minCardinality": 1,
+      "regex": null,
+      "valueType": "TEXT",
+      "serviceSpecCharRelationship": [],
+      "serviceSpecCharacteristicValue": [
+        {
+          "uuid": "7ecbec2a-2bdf-460e-a117-d0d90aa9a6a7",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": true,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": "N/A",
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": null,
+          "validFor": {
+            "endDateTime": "2040-09-06T23:48:24+03:00",
+            "startDateTime": "2020-09-06T23:48:24+03:00"
+          },
+          "value": {
+            "value": "2",
+            "alias": "cirros_vnfd"
+          }
+        }
+      ],
+      "validFor": {
+        "endDateTime": "2040-09-06T23:48:24+03:00",
+        "startDateTime": "2020-09-06T23:48:24+03:00"
+      },
+      "@valueSchemaLocation": null,
+      "id": "80e50d90-4cf9-4b6f-a29b-c4bf1a26af2c"
+    }
+  ],
+  "serviceSpecRelationship": [
+    {
+      "uuid": "3cd8129e-ec2c-43b6-9879-2a4cec20a5ad",
+      "@baseType": "BaseRootEntity",
+      "@schemaLocation": null,
+      "@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecRelationship",
+      "href": null,
+      "name": "cirros_2vnf_ns",
+      "id": "99176116-17cf-464f-96f7-86e685914666",
+      "relationshipType": null,
+      "role": null,
+      "validFor": null
+    }
+  ],
+  "targetServiceSchema": null,
+  "id": "f2b74f90-4140-4895-80d1-ef243398117b"
+}
