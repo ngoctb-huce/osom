@@ -115,7 +115,7 @@ public class CROrchestrationService implements JavaDelegate {
         String response = null;
         if (crspec != null) {
           response = createNewDeploymentRequest(aService, resourceCR, sorder.getId(), sorder.getStartDate(),
-              sorder.getExpectedCompletionDate(), sorder.getId(), crspec);
+              sorder.getExpectedCompletionDate(), crspec);
         }
         
         if ( response!=null && response.equals("OK")) {
@@ -172,6 +172,15 @@ public class CROrchestrationService implements JavaDelegate {
   }
 
 
+  /**
+   * 
+   * THe resource has a temporary name.
+   * later on the name and its characteristics are updated via cridge 
+   * @param rSpecRef
+   * @param sOrder
+   * @param aService
+   * @return
+   */
   private Resource createRelatedResource(ResourceSpecificationRef rSpecRef, ServiceOrder sOrder, Service aService) {
     
     ResourceCreate resCreate = new ResourceCreate();
@@ -190,9 +199,40 @@ public class CROrchestrationService implements JavaDelegate {
   }
 
 
+  /**
+   * 
+   * This function makes a new deployment request for a custom resource  specification.
+   * The request is performed via the message queue.
+   * The function sends also some headers that are related and needed for deployment
+   * These are the headers, that some of them are also added as metadata labels in CR:
+   * <br>
+   * <br><b>currentContextCluster:</b> current context of cluster
+   * <br><b>clusterMasterURL:</b> current master url of the cluster
+   * <br><b>org.etsi.osl.serviceId:</b> This is the related service id that the created resource has a reference
+   * <br><b>org.etsi.osl.resourceId:</b> This is the related resource id that the created CR will wrap and reference. There
+   * <br><b>org.etsi.osl.prefixName:</b> we need to add a short prefix (default is cr) to various places. For example in K8s cannot start with a number
+   * <br><b>org.etsi.osl.serviceOrderId:</b> the related service order id of this deployment request
+   * <br><b>org.etsi.osl.namespace:</b> requested namespace name
+   * <br><b>org.etsi.osl.statusCheckFieldName:</b> The name of the field that is needed to be monitored in order to monitor the status of the service and translate it to TMF resource statys (RESERVED AVAILABLE, etc)
+   * <br><b>org.etsi.osl.statusCheckValueStandby:</b> The CR specific value (of the CheckFieldName) that needs to me mapped to the TMF resource state STANDBY (see org.etsi.osl.tmf.ri639.model.ResourceStatusType)
+   * <br><b>org.etsi.osl.statusCheckValueAlarm:</b> The CR specific value (of the CheckFieldName) that needs to me mapped to the TMF resource state ALARMS (see org.etsi.osl.tmf.ri639.model.ResourceStatusType)
+   * <br><b>org.etsi.osl.statusCheckValueAvailable:</b> The CR specific value (of the CheckFieldName) that needs to me mapped to the TMF resource state AVAILABLE (see org.etsi.osl.tmf.ri639.model.ResourceStatusType)
+   * <br><b>org.etsi.osl.statusCheckValueReserved:</b> The CR specific value (of the CheckFieldName) that needs to me mapped to the TMF resource state RESERVED (see org.etsi.osl.tmf.ri639.model.ResourceStatusType)
+   * <br><b>org.etsi.osl.statusCheckValueUnknown:</b> The CR specific value (of the CheckFieldName) that needs to me mapped to the TMF resource state UNKNOWN (see org.etsi.osl.tmf.ri639.model.ResourceStatusType)
+   * <br><b>org.etsi.osl.statusCheckValueSuspended:</b> The CR specific value (of the CheckFieldName) that needs to me mapped to the TMF resource state SUSPENDED (see org.etsi.osl.tmf.ri639.model.ResourceStatusType)
+   * <br>
+   * 
+   * @param aService reference to the service that the resource and the CR belongs to
+   * @param resourceCR reference the equivalent resource in TMF repo of the target CR. One to one mapping
+   * @param orderId related service order ID
+   * @param startDate start date of the deployment  (not used currently)
+   * @param endDate end date of the deployment (not used currently)
+   * @param _CR_SPEC the spec that is sent to cridge (in json)
+   * @return a string respons from cridge. It might return "OK" if everything is ok. "SEE OTHER" if there are multiple CRIDGEs then some other cridge will handle the request for the equivalent cluster. Any other response is handled as error
+   */
   private String createNewDeploymentRequest(Service aService, Resource resourceCR, String orderId,
       OffsetDateTime startDate,
-      OffsetDateTime endDate, String orderid, String _CR_SPEC) {
+      OffsetDateTime endDate, String _CR_SPEC) {
 
     try {
       Map<String, Object> map = new HashMap<>();
