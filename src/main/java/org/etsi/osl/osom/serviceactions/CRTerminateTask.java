@@ -65,30 +65,31 @@ public class CRTerminateTask  implements JavaDelegate {
             String crspec = aService.getServiceCharacteristicByName( "_CR_SPEC" ).getValue().getValue();
 
             if (crspec != null) {
-              logger.info("Will terminate CR related to service. We need to fetchthe underlying resource"  );
+              logger.info("Will terminate CR related to service"  );
 
               //we need to get the equivalent resource spec. since ServiceSpec is an RFS
+              Map<String, Object> map = new HashMap<>();
+              map.put("currentContextCluster",getServiceCharacteristic(aService, "currentContextCluster")    );
+              map.put("clusterMasterURL",getServiceCharacteristic(aService, "clusterMasterURL")    );
+              map.put("org.etsi.osl.serviceId", aService.getId() );
+              map.put("org.etsi.osl.serviceOrderId", aService.getServiceOrder().stream().findFirst().get().getId() );
+              map.put("org.etsi.osl.namespace", aService.getServiceOrder().stream().findFirst().get().getId() );
+              map.put("org.etsi.osl.statusCheckFieldName",  getServiceCharacteristic(aService, "_CR_CHECK_FIELD")    );
+              map.put("org.etsi.osl.statusCheckValueStandby", getServiceCharacteristic(aService, "_CR_CHECKVAL_STANDBY")  );
+              map.put("org.etsi.osl.statusCheckValueAlarm", getServiceCharacteristic(aService, "_CR_CHECKVAL_ALARM")  );
+              map.put("org.etsi.osl.statusCheckValueAvailable", getServiceCharacteristic(aService, "_CR_CHECKVAL_AVAILABLE")  );
+              map.put("org.etsi.osl.statusCheckValueReserved", getServiceCharacteristic(aService, "_CR_CHECKVAL_RESERVED")  );
+              map.put("org.etsi.osl.statusCheckValueUnknown", getServiceCharacteristic(aService, "_CR_CHECKVAL_UNKNOWN")  );
+              map.put("org.etsi.osl.statusCheckValueSuspended", getServiceCharacteristic(aService, "_CR_CHECKVAL_SUSPENDED")  );
+              for (ResourceRef resRef : aService.getSupportingResource()) {
+                if (resRef.getName().contains("+_cr_temp")) {
+                  map.put("org.etsi.osl.resourceId", resRef.getId() );                    
+                }
+              }
               
               try {
-                for (ResourceRef resRef : aService.getSupportingResource()) {
-                  Map<String, Object> map = new HashMap<>();
-                  map.put("currentContextCluster",getServiceCharacteristic(aService, "currentContextCluster")    );
-                  map.put("clusterMasterURL",getServiceCharacteristic(aService, "clusterMasterURL")    );
-                  map.put("org.etsi.osl.serviceId", aService.getId() );
-                  map.put("org.etsi.osl.resourceId", resRef.getId() );
-                  map.put("org.etsi.osl.serviceOrderId", aService.getServiceOrder().stream().findFirst().get().getId() );
-                  map.put("org.etsi.osl.namespace", aService.getServiceOrder().stream().findFirst().get().getId() );
-                  map.put("org.etsi.osl.statusCheckFieldName",  getServiceCharacteristic(aService, "_CR_CHECK_FIELD")    );
-                  map.put("org.etsi.osl.statusCheckValueStandby", getServiceCharacteristic(aService, "_CR_CHECKVAL_STANDBY")  );
-                  map.put("org.etsi.osl.statusCheckValueAlarm", getServiceCharacteristic(aService, "_CR_CHECKVAL_ALARM")  );
-                  map.put("org.etsi.osl.statusCheckValueAvailable", getServiceCharacteristic(aService, "_CR_CHECKVAL_AVAILABLE")  );
-                  map.put("org.etsi.osl.statusCheckValueReserved", getServiceCharacteristic(aService, "_CR_CHECKVAL_RESERVED")  );
-                  map.put("org.etsi.osl.statusCheckValueUnknown", getServiceCharacteristic(aService, "_CR_CHECKVAL_UNKNOWN")  );
-                  map.put("org.etsi.osl.statusCheckValueSuspended", getServiceCharacteristic(aService, "_CR_CHECKVAL_SUSPENDED")  );
-                  
-                  serviceOrderManager.cridgeDeletionRequest( map, crspec);
-                  
-                }
+                serviceOrderManager.cridgeDeletionRequest( map, crspec);
+                
               } catch (Exception e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

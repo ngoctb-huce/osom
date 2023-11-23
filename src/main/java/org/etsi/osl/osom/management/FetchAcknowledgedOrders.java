@@ -70,7 +70,7 @@ public class FetchAcknowledgedOrders implements JavaDelegate {
 					
 
 					ServiceOrder sor = serviceOrderManager.retrieveServiceOrder( orderid );
-					if ( sor.getStartDate() != null ) {
+					if ( sor !=null && sor.getStartDate() != null ) {
 						Instant instant = Instant.now() ;                          // Capture the current moment as seen in UTC.
 						boolean canStart = sor.getStartDate().toInstant().isBefore( instant ) ;
 						
