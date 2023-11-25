@@ -3,22 +3,19 @@ package org.etsi.osl.osom.management;
 import java.io.IOException;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import org.apache.camel.CamelContext;
 import org.apache.camel.ProducerTemplate;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-
 import org.etsi.osl.tmf.am642.model.AlarmCreate;
 import org.etsi.osl.tmf.am642.model.AlarmStateType;
 import org.etsi.osl.tmf.am642.model.AlarmUpdate;
 import org.etsi.osl.tmf.am642.model.Comment;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 @Service
 public class AlarmsService {

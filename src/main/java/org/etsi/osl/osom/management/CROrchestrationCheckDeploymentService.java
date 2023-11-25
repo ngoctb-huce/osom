@@ -21,22 +21,15 @@ package org.etsi.osl.osom.management;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.etsi.osl.tmf.common.model.service.ResourceRef;
+import org.etsi.osl.tmf.common.model.service.ServiceStateType;
+import org.etsi.osl.tmf.ri639.model.Resource;
+import org.etsi.osl.tmf.sim638.model.Service;
+import org.etsi.osl.tmf.sim638.model.ServiceUpdate;
 import org.flowable.engine.delegate.DelegateExecution;
 import org.flowable.engine.delegate.JavaDelegate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import org.etsi.osl.model.DeploymentDescriptor;
-import org.etsi.osl.model.DeploymentDescriptorStatus;
-import org.etsi.osl.model.DeploymentDescriptorVxFInstanceInfo;
-import org.etsi.osl.tmf.common.model.Any;
-import org.etsi.osl.tmf.common.model.service.Characteristic;
-import org.etsi.osl.tmf.common.model.service.ResourceRef;
-import org.etsi.osl.tmf.common.model.service.ServiceStateType;
-import org.etsi.osl.tmf.ri639.model.Resource;
-import org.etsi.osl.tmf.ri639.model.ResourceStatusType;
-import org.etsi.osl.tmf.sim638.model.Service;
-import org.etsi.osl.tmf.sim638.model.ServiceUpdate;
 import jakarta.validation.Valid;
 
 

@@ -2,15 +2,8 @@ package org.etsi.osl.osom.management;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.flowable.engine.delegate.DelegateExecution;
-import org.flowable.engine.delegate.JavaDelegate;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-
 import org.etsi.osl.tmf.common.model.Any;
 import org.etsi.osl.tmf.common.model.EValueType;
 import org.etsi.osl.tmf.common.model.service.Characteristic;
@@ -27,6 +20,11 @@ import org.etsi.osl.tmf.stm653.model.ServiceTest;
 import org.etsi.osl.tmf.stm653.model.ServiceTestCreate;
 import org.etsi.osl.tmf.stm653.model.ServiceTestSpecification;
 import org.etsi.osl.tmf.stm653.model.ServiceTestSpecificationRef;
+import org.flowable.engine.delegate.DelegateExecution;
+import org.flowable.engine.delegate.JavaDelegate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import jakarta.validation.Valid;
 
 @Component(value = "checkServiceTestDeployment") //bean name

@@ -4,20 +4,18 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import org.apache.camel.ProducerTemplate;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.etsi.osl.osom.management.ServiceOrderManager;
+import org.etsi.osl.tmf.lcm.model.ELCMRulePhase;
+import org.etsi.osl.tmf.lcm.model.LCMRuleSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.etsi.osl.tmf.lcm.model.ELCMRulePhase;
-import org.etsi.osl.tmf.lcm.model.LCMRuleSpecification;
 
 /**
  * @author ctranoris

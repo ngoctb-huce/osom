@@ -3,11 +3,6 @@ package org.etsi.osl.osom.management;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.etsi.osl.osom.lcm.LCMRulesController;
-import org.flowable.engine.delegate.DelegateExecution;
-import org.flowable.engine.delegate.JavaDelegate;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 import org.etsi.osl.tmf.common.model.service.Characteristic;
 import org.etsi.osl.tmf.common.model.service.ServiceRef;
 import org.etsi.osl.tmf.common.model.service.ServiceStateType;
@@ -19,6 +14,11 @@ import org.etsi.osl.tmf.so641.model.ServiceOrderItem;
 import org.etsi.osl.tmf.so641.model.ServiceOrderStateType;
 import org.etsi.osl.tmf.so641.model.ServiceOrderUpdate;
 import org.etsi.osl.tmf.so641.model.ServiceRestriction;
+import org.flowable.engine.delegate.DelegateExecution;
+import org.flowable.engine.delegate.JavaDelegate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 @Component(value = "processOrderItemActionModify") // bean name
 public class ProcessOrderItemActionModify implements JavaDelegate {
