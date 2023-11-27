@@ -34,9 +34,9 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import org.etsi.osl.model.DeploymentDescriptor;
-import org.etsi.osl.model.DeploymentDescriptorStatus;
-import org.etsi.osl.model.NetworkServiceDescriptor;
+import org.etsi.osl.model.nfv.DeploymentDescriptor;
+import org.etsi.osl.model.nfv.DeploymentDescriptorStatus;
+import org.etsi.osl.model.nfv.NetworkServiceDescriptor;
 import org.etsi.osl.tmf.lcm.model.LCMRuleSpecification;
 import org.etsi.osl.tmf.so641.model.ServiceOrder;
 import jakarta.validation.Valid;

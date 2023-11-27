@@ -2,18 +2,16 @@ package org.etsi.osl.osom.serviceactions;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.etsi.osl.osom.management.ServiceOrderManager;
+import org.etsi.osl.tmf.sim638.model.ServiceActionQueueItem;
 import org.flowable.engine.delegate.DelegateExecution;
 import org.flowable.engine.delegate.JavaDelegate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.etsi.osl.tmf.sim638.model.ServiceActionQueueItem;
 
 @Component(value = "fetchServiceQueueItems") // bean name
 public class FetchServiceQueueItems implements JavaDelegate {

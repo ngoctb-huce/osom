@@ -26,28 +26,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import org.apache.camel.ProducerTemplate;
-import org.apache.camel.model.dataformat.JsonLibrary;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.etsi.osl.model.nfv.DeploymentDescriptor;
+import org.etsi.osl.model.nfv.NetworkServiceDescriptor;
+import org.etsi.osl.model.nfv.ScaleDescriptor;
 import org.etsi.osl.osom.serviceactions.NSActionRequestPayload;
-import org.flowable.engine.RuntimeService;
-import org.flowable.engine.TaskService;
-import org.flowable.task.api.Task;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import org.etsi.osl.model.DeploymentDescriptor;
-import org.etsi.osl.model.NetworkServiceDescriptor;
-import org.etsi.osl.model.ScaleDescriptor;
 import org.etsi.osl.tmf.pm632.model.Organization;
-import org.etsi.osl.tmf.rcm634.model.ResourceSpecification;
 import org.etsi.osl.tmf.ri639.model.LogicalResource;
 import org.etsi.osl.tmf.ri639.model.PhysicalResource;
 import org.etsi.osl.tmf.ri639.model.Resource;
@@ -64,6 +52,13 @@ import org.etsi.osl.tmf.stm653.model.ServiceTest;
 import org.etsi.osl.tmf.stm653.model.ServiceTestCreate;
 import org.etsi.osl.tmf.stm653.model.ServiceTestSpecification;
 import org.etsi.osl.tmf.stm653.model.ServiceTestUpdate;
+import org.flowable.engine.RuntimeService;
+import org.flowable.engine.TaskService;
+import org.flowable.task.api.Task;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import jakarta.validation.constraints.NotNull;
 
 /**

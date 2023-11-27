@@ -2,23 +2,21 @@ package org.etsi.osl.osom.serviceactions;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.etsi.osl.osom.management.ServiceOrderManager;
+import org.etsi.osl.tmf.common.model.service.Note;
+import org.etsi.osl.tmf.sim638.model.Service;
+import org.etsi.osl.tmf.sim638.model.ServiceActionQueueItem;
+import org.etsi.osl.tmf.sim638.model.ServiceUpdate;
 import org.flowable.engine.delegate.DelegateExecution;
 import org.flowable.engine.delegate.JavaDelegate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.etsi.osl.tmf.common.model.service.Note;
-import org.etsi.osl.tmf.sim638.model.Service;
-import org.etsi.osl.tmf.sim638.model.ServiceActionQueueItem;
-import org.etsi.osl.tmf.sim638.model.ServiceUpdate;
 
 @Component(value = "HandleManuallyAction") //bean name
 public class HandleManuallyAction  implements JavaDelegate {

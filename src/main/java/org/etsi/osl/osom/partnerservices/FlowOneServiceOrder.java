@@ -21,7 +21,6 @@ package org.etsi.osl.osom.partnerservices;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import org.etsi.osl.tmf.so641.model.ServiceOrderItem;
 
 @JsonIgnoreProperties(ignoreUnknown=true)

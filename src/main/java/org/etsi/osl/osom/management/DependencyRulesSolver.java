@@ -21,17 +21,15 @@ package org.etsi.osl.osom.management;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.flowable.dmn.engine.DmnEngine;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import org.etsi.osl.tmf.common.model.service.Characteristic;
 import org.etsi.osl.tmf.scm633.model.ServiceSpecification;
 import org.etsi.osl.tmf.so641.model.ServiceOrder;
 import org.etsi.osl.tmf.so641.model.ServiceOrderItem;
+import org.flowable.dmn.engine.DmnEngine;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * @author ctranoris

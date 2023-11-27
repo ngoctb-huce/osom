@@ -21,19 +21,16 @@ package org.etsi.osl.osom.partnerservices;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.etsi.osl.tmf.pm632.model.Organization;
 import org.flowable.engine.TaskService;
 import org.flowable.engine.delegate.DelegateExecution;
 import org.flowable.engine.delegate.JavaDelegate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import org.etsi.osl.tmf.pm632.model.Organization;
 
 @Component(value = "fetchPartnerOrganizations") // bean name
 public class FetchPartnerOrganizations implements JavaDelegate {

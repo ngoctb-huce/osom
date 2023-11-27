@@ -5,9 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
-
 import javax.net.ssl.SSLException;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -17,15 +15,9 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.Option;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.etsi.osl.osom.partnerservices.GenericClient;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.web.reactive.function.client.WebClient;
 import org.etsi.osl.tmf.common.model.Any;
 import org.etsi.osl.tmf.common.model.EValueType;
 import org.etsi.osl.tmf.common.model.service.Characteristic;
@@ -39,6 +31,10 @@ import org.etsi.osl.tmf.so641.model.ServiceOrder;
 import org.etsi.osl.tmf.so641.model.ServiceOrderCreate;
 import org.etsi.osl.tmf.so641.model.ServiceOrderItemRelationship;
 import org.etsi.osl.tmf.so641.model.ServiceOrderStateType;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.web.reactive.function.client.WebClient;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import reactor.core.publisher.Mono;

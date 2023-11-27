@@ -21,17 +21,15 @@ package org.etsi.osl.osom.management;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.etsi.osl.tmf.so641.model.ServiceOrderStateType;
+import org.etsi.osl.tmf.so641.model.ServiceOrderUpdate;
 import org.flowable.engine.RuntimeService;
 import org.flowable.engine.delegate.DelegateExecution;
 import org.flowable.engine.delegate.JavaDelegate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import org.etsi.osl.tmf.so641.model.ServiceOrderStateType;
-import org.etsi.osl.tmf.so641.model.ServiceOrderUpdate;
 
 @Component(value = "initializeProcessOrders") // bean name
 public class InitializeProcessOrders implements JavaDelegate {

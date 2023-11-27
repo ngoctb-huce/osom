@@ -6,22 +6,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.etsi.osl.model.nfv.ScaleDescriptor;
 import org.etsi.osl.osom.management.AlarmsService;
 import org.etsi.osl.osom.management.ServiceOrderManager;
-import org.flowable.engine.delegate.DelegateExecution;
-import org.flowable.engine.delegate.JavaDelegate;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-
-import org.etsi.osl.model.ScaleDescriptor;
 import org.etsi.osl.tmf.common.model.Any;
 import org.etsi.osl.tmf.common.model.EValueType;
 import org.etsi.osl.tmf.common.model.service.Characteristic;
@@ -29,6 +21,11 @@ import org.etsi.osl.tmf.common.model.service.Note;
 import org.etsi.osl.tmf.sim638.model.Service;
 import org.etsi.osl.tmf.sim638.model.ServiceActionQueueItem;
 import org.etsi.osl.tmf.sim638.model.ServiceUpdate;
+import org.flowable.engine.delegate.DelegateExecution;
+import org.flowable.engine.delegate.JavaDelegate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 @Component(value = "NFVODAY2config") //bean name
 public class NFVODAY2config implements JavaDelegate {

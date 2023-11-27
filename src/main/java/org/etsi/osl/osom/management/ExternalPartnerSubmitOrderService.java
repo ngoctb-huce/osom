@@ -21,15 +21,9 @@ package org.etsi.osl.osom.management;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.etsi.osl.osom.partnerservices.PartnerOrganizationServicesManager;
-import org.flowable.engine.delegate.DelegateExecution;
-import org.flowable.engine.delegate.JavaDelegate;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 import org.etsi.osl.tmf.common.model.Any;
 import org.etsi.osl.tmf.common.model.UserPartRoleType;
 import org.etsi.osl.tmf.common.model.service.Characteristic;
@@ -46,6 +40,11 @@ import org.etsi.osl.tmf.so641.model.ServiceOrderCreate;
 import org.etsi.osl.tmf.so641.model.ServiceOrderItem;
 import org.etsi.osl.tmf.so641.model.ServiceOrderStateType;
 import org.etsi.osl.tmf.so641.model.ServiceRestriction;
+import org.flowable.engine.delegate.DelegateExecution;
+import org.flowable.engine.delegate.JavaDelegate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 @Component(value = "externalPartnerSubmitOrderService") //bean name
 public class ExternalPartnerSubmitOrderService  implements JavaDelegate {

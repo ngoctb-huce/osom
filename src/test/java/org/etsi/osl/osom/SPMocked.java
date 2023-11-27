@@ -36,8 +36,8 @@ import org.apache.commons.logging.LogFactory;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.etsi.osl.model.DeploymentDescriptor;
-import org.etsi.osl.model.DeploymentDescriptorStatus;
+import org.etsi.osl.model.nfv.DeploymentDescriptor;
+import org.etsi.osl.model.nfv.DeploymentDescriptorStatus;
 import org.etsi.osl.tmf.common.model.Any;
 import org.etsi.osl.tmf.pm632.model.Characteristic;
 import org.etsi.osl.tmf.pm632.model.ContactMedium;
