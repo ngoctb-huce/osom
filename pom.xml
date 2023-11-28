@@ -68,7 +68,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.etsi.osl</groupId>
-			<artifactId>org.etsi.osl.tmf.api</artifactId>
+			<artifactId>org.etsi.osl.model.tmf</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		
