@@ -1,0 +1,57 @@
+spring:
+  application:
+    name: openslice-osom
+ # datasource:
+    #url: jdbc:h2:mem:db;DB_CLOSE_DELAY=-1
+    #password: sa
+    #username: sa
+  #jpa:
+    #database-platform: org.hibernate.dialect.H2Dialect
+    #hibernate:
+      #ddl-auto: create-drop
+      #hbm2ddl.auto: create-drop
+    #show-sql: false
+    #generate-ddl: true
+ # Embedded ActiveMQ Configuration Example
+  activemq:
+      broker-url: vm://embedded?broker.persistent=false,useShutdownHook=false
+      in-memory: true
+      non-blocking-redelivery: true
+      pool:
+        block-if-full: true
+        block-if-full-timeout: -1
+        create-connection-on-startup: true
+        enabled: false
+        expiry-timeout: 0
+        idle-timeout: 30000
+        max-connections: 1
+        maximum-active-session-per-connection: 500
+        reconnect-on-exception: true
+        time-between-expiration-check: -1
+        use-anonymous-producers: true
+  # Spring JMS Settings
+  jms:
+    listener:
+      acknowledge-mode: auto
+      auto-startup: true
+      concurrency: 5
+      max-concurrency: 10
+    pub-sub-domain: false
+    template:
+      default-destination:
+      delivery-mode: non_persistent
+      priority: 100
+      qos-enabled: true
+      receive-timeout: 1000
+      time-to-live: 36000
+      
+logging:
+  level:
+    root: INFO
+    org.springframework: INFO
+    org.hibernate.SQL: INFO
+    org.hibernate.type.descriptor.sql.BasicBinder: INFO
+    org.etsi.osl.osom: DEBUG
+  pattern:
+    console: "%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"
+    file: "%d %p %c{1.} [%t] %m%n"

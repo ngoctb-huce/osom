@@ -1,0 +1,275 @@
+{
+  "uuid": "cd9be2d7-cce4-4f29-af74-8d8a0b3bdf07",
+  "orderDate": "2021-09-04T10:06:53.548738882Z",
+  "completionDate": null,
+  "expectedCompletionDate": "2021-09-05T10:06:42.048Z",
+  "requestedCompletionDate": "2021-09-05T10:06:42.048Z",
+  "requestedStartDate": "2021-09-04T10:06:42.048Z",
+  "startDate": "2021-09-04T10:06:42.048Z",
+  "@baseType": "BaseRootEntity",
+  "@schemaLocation": null,
+  "@type": "ServiceOrder",
+  "href": null,
+  "id": "cd9be2d7-cce4-4f29-af74-8d8a0b3bdf07",
+  "category": null,
+  "description": null,
+  "externalId": null,
+  "notificationContact": null,
+  "priority": null,
+  "note": [
+    {
+      "uuid": "6ddde22f-2452-40bc-8642-2c15e081972b",
+      "date": "2021-09-04T10:06:53.548975510Z",
+      "@baseType": "BaseEntity",
+      "@schemaLocation": null,
+      "@type": null,
+      "href": null,
+      "author": "SO641API-addServiceOrder",
+      "system": null,
+      "text": "Service Order INITIAL"
+    }
+  ],
+  "orderItem": [
+    {
+      "uuid": "b1032fac-ba32-4841-b9c4-3aa1527bf447",
+      "@baseType": "BaseEntity",
+      "@schemaLocation": null,
+      "@type": null,
+      "href": null,
+      "id": "b1032fac-ba32-4841-b9c4-3aa1527bf447",
+      "action": "add",
+      "orderItemRelationship": [],
+      "state": "INITIAL",
+      "service": {
+        "uuid": "6fa9f003-981f-4def-88d6-f4b3be29521e",
+        "serviceSpecification": {
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "name": "Upstream journalist case",
+          "version": "0.1.0",
+          "targetServiceSchema": null,
+          "@referredType": null,
+          "id": "0d5551e6-069f-43b7-aa71-10530f290239"
+        },
+        "@baseType": "BaseEntity",
+        "@schemaLocation": null,
+        "@type": null,
+        "href": null,
+        "name": "Upstream journalist case",
+        "id": "6fa9f003-981f-4def-88d6-f4b3be29521e",
+        "category": null,
+        "serviceType": null,
+        "place": [],
+        "relatedParty": [],
+        "serviceCharacteristic": [
+          {
+            "uuid": "0e8490aa-a0ed-4715-af7a-1015a8495442",
+            "value": {
+              "value": "[{\"value\":\"GR\",\"alias\":\"Greece\"}]",
+              "alias": null
+            },
+            "@baseType": "BaseEntity",
+            "@schemaLocation": null,
+            "@type": null,
+            "href": null,
+            "name": "Area of Service",
+            "valueType": "SET"
+          },
+          {
+            "uuid": "9c432354-3154-432c-a21d-03d1071ea270",
+            "value": {
+              "value": "691c8956-0369-4b91-b914-b61dccba74db",
+              "alias": "Cloudville"
+            },
+            "@baseType": "BaseEntity",
+            "@schemaLocation": null,
+            "@type": null,
+            "href": null,
+            "name": "Open5GCore-2enb_nsd::VIM",
+            "valueType": "ENUM"
+          },
+          {
+            "uuid": "0daafce5-1e87-40a8-a6aa-1ac4f8e5ffb4",
+            "value": {
+              "value": "5",
+              "alias": "id"
+            },
+            "@baseType": "BaseEntity",
+            "@schemaLocation": null,
+            "@type": null,
+            "href": null,
+            "name": "cirros_2vnf_nsd::NSDID",
+            "valueType": "TEXT"
+          },
+          {
+            "uuid": "87cd43d8-bb38-4ce6-b014-de49d768d543",
+            "value": {
+              "value": "0",
+              "alias": "Audio"
+            },
+            "@baseType": "BaseEntity",
+            "@schemaLocation": null,
+            "@type": null,
+            "href": null,
+            "name": "Director return channel to cameras",
+            "valueType": "ENUM"
+          },
+          {
+            "uuid": "7baa0a5b-7215-4878-b7e5-e157a25410b4",
+            "value": {
+              "value": "3",
+              "alias": null
+            },
+            "@baseType": "BaseEntity",
+            "@schemaLocation": null,
+            "@type": null,
+            "href": null,
+            "name": "Maximum Number of cameras",
+            "valueType": "SMALLINT"
+          },
+          {
+            "uuid": "e1dba003-4bf8-4c10-984a-66320254b034",
+            "value": {
+              "value": "[{\"value\":\"22\",\"alias\":\"param2\"},{\"value\":\"100\",\"alias\":\"PARAM1\"},{\"value\":\"33\",\"alias\":\"param3\"}]",
+              "alias": null
+            },
+            "@baseType": "BaseEntity",
+            "@schemaLocation": null,
+            "@type": null,
+            "href": null,
+            "name": "test actions_array",
+            "valueType": "ARRAY"
+          },
+          {
+            "uuid": "d97ed3fc-c73a-466d-82eb-ab0e01b0e238",
+            "value": {
+              "value": "2",
+              "alias": "2"
+            },
+            "@baseType": "BaseEntity",
+            "@schemaLocation": null,
+            "@type": null,
+            "href": null,
+            "name": "Number of reserved hours",
+            "valueType": "SMALLINT"
+          },
+          {
+            "uuid": "6f80e380-c54f-44be-bc08-d176f30d8175",
+            "value": {
+              "value": "1",
+              "alias": "Live (1s)"
+            },
+            "@baseType": "BaseEntity",
+            "@schemaLocation": null,
+            "@type": null,
+            "href": null,
+            "name": "Video response time of the mobile cameras",
+            "valueType": "ENUM"
+          },
+          {
+            "uuid": "bab8dbb8-f0c8-4ef9-a8e3-fbb60c6049dc",
+            "value": {
+          	
+             "value":"[{\"value\":\"1\",\"alias\":\"member_vnf_index\"},{\"value\":\"fsetup\",\"alias\":\"primitive\"},{\"value\":\"{      \\\"tvg\\\": {         \\\"ip\\\": \\\"\\\",         \\\"channel1\\\": {             \\\"mode\\\": \\\"0\\\"         }     } }\",\"alias\":\"confjson\"}]",
+              "alias": null
+            },
+            "@baseType": "BaseEntity",
+            "@schemaLocation": null,
+            "@type": null,
+            "href": null,
+            "name": "cirros_2vnf_nsd::Primitive::fsetup",
+            "valueType": "ARRAY"
+          },
+          {
+            "uuid": "48d89de5-06ce-4ebd-8227-4f6164325a0a",
+            "value": {
+              "value": "[{\"value\":\"1000\",\"alias\":\"test param 4\"},{\"value\":\"10\",\"alias\":\"test param 3\"}]",
+              "alias": null
+            },
+            "@baseType": "BaseEntity",
+            "@schemaLocation": null,
+            "@type": null,
+            "href": null,
+            "name": "test actions_set",
+            "valueType": "SET"
+          },
+          {
+            "uuid": "b2ba3428-5832-445b-953c-f263ff6d5b64",
+            "value": {
+              "value": "0",
+              "alias": "SD"
+            },
+            "@baseType": "BaseEntity",
+            "@schemaLocation": null,
+            "@type": null,
+            "href": null,
+            "name": "Video quality of the mobile cameras",
+            "valueType": "ENUM"
+          },
+          {
+            "uuid": "13e096ee-8aaa-4400-b163-15fbd6999e54",
+            "value": {
+              "value": "2310",
+              "alias": "Patras"
+            },
+            "@baseType": "BaseEntity",
+            "@schemaLocation": null,
+            "@type": null,
+            "href": null,
+            "name": "Location of NASS",
+            "valueType": "ENUM"
+          },
+          {
+            "uuid": "48168bda-16ad-4f05-bf43-1b89de2e7796",
+            "value": {
+              "value": "2610",
+              "alias": "Patras"
+            },
+            "@baseType": "BaseEntity",
+            "@schemaLocation": null,
+            "@type": null,
+            "href": null,
+            "name": "Location of Mobile Cameras",
+            "valueType": "ENUM"
+          },
+          {
+            "uuid": "bc4d869c-e542-42ec-9ea9-6e6d9cabc8db",
+            "value": {
+              "value": "FALSE",
+              "alias": null
+            },
+            "@baseType": "BaseEntity",
+            "@schemaLocation": null,
+            "@type": null,
+            "href": null,
+            "name": "High Availability",
+            "valueType": "BOOLEAN"
+          }
+        ],
+        "state": "feasibilityChecked",
+        "supportingResource": [],
+        "serviceRelationship": [],
+        "supportingService": []
+      },
+      "appointment": null
+    }
+  ],
+  "orderRelationship": [],
+  "relatedParty": [
+    {
+      "uuid": "93a0a564-8ed0-45c4-9be6-7b03ad6d2d5d",
+      "@baseType": "BaseRootEntity",
+      "@schemaLocation": null,
+      "@type": "org.etsi.osl.tmf.prm669.model.RelatedParty",
+      "href": null,
+      "name": "admin",
+      "role": "REQUESTER",
+      "@referredType": "SimpleUsername_Individual",
+      "id": "admin",
+      "extendedInfo": null
+    }
+  ],
+  "state": "INITIAL"
+}

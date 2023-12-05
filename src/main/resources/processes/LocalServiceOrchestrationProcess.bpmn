@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
+  <process id="localServiceOrchestrationProcess" name="Local Service Orchestration Process" isExecutable="true">
+    <startEvent id="startevent1" name="Start"></startEvent>
+    <serviceTask id="lsoInitializeServicetask" name="Initialize Service Orchestration Task" activiti:delegateExpression="${localSoInitialize}"></serviceTask>
+    <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="lsoInitializeServicetask"></sequenceFlow>
+    <serviceTask id="lsoCheckServiceDeployment" name="Check Service Deployment Task" activiti:delegateExpression="${localSoCheckDeployment}"></serviceTask>
+    <exclusiveGateway id="exclusivegatewayCheckLSODeployment" name="Exclusive Gateway CheckLSODeployment"></exclusiveGateway>
+    <sequenceFlow id="flow2" sourceRef="lsoInitializeServicetask" targetRef="lsoCheckServiceDeployment"></sequenceFlow>
+    <sequenceFlow id="flow3" sourceRef="lsoCheckServiceDeployment" targetRef="exclusivegatewayCheckLSODeployment"></sequenceFlow>
+    <endEvent id="endevent1" name="End"></endEvent>
+    <sequenceFlow id="flowLSODeploymentFinished" name="Local SO Deployment Finished" sourceRef="exclusivegatewayCheckLSODeployment" targetRef="endevent1">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${lsoServiceDeploymentFinished}]]></conditionExpression>
+    </sequenceFlow>
+    <intermediateCatchEvent id="timerintermediatecatcheventLSODeploymentCheck" name="Timer start wait 30 secs">
+      <timerEventDefinition>
+        <timeDuration>PT30S</timeDuration>
+      </timerEventDefinition>
+    </intermediateCatchEvent>
+    <sequenceFlow id="flowLSODeploymentNOTFinished" name="Local SO Deployment NOT Finished" sourceRef="exclusivegatewayCheckLSODeployment" targetRef="timerintermediatecatcheventLSODeploymentCheck">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${!lsoServiceDeploymentFinished}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow6" sourceRef="timerintermediatecatcheventLSODeploymentCheck" targetRef="lsoCheckServiceDeployment"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_localServiceOrchestrationProcess">
+    <bpmndi:BPMNPlane bpmnElement="localServiceOrchestrationProcess" id="BPMNPlane_localServiceOrchestrationProcess">
+      <bpmndi:BPMNShape bpmnElement="startevent1" id="BPMNShape_startevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="170.0" y="190.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="lsoInitializeServicetask" id="BPMNShape_lsoInitializeServicetask">
+        <omgdc:Bounds height="71.0" width="111.0" x="310.0" y="172.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="lsoCheckServiceDeployment" id="BPMNShape_lsoCheckServiceDeployment">
+        <omgdc:Bounds height="71.0" width="111.0" x="510.0" y="172.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegatewayCheckLSODeployment" id="BPMNShape_exclusivegatewayCheckLSODeployment">
+        <omgdc:Bounds height="40.0" width="40.0" x="720.0" y="187.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent1" id="BPMNShape_endevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="890.0" y="190.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="timerintermediatecatcheventLSODeploymentCheck" id="BPMNShape_timerintermediatecatcheventLSODeploymentCheck">
+        <omgdc:Bounds height="35.0" width="35.0" x="640.0" y="290.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
+        <omgdi:waypoint x="205.0" y="207.0"></omgdi:waypoint>
+        <omgdi:waypoint x="310.0" y="207.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
+        <omgdi:waypoint x="421.0" y="207.0"></omgdi:waypoint>
+        <omgdi:waypoint x="510.0" y="207.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3">
+        <omgdi:waypoint x="621.0" y="207.0"></omgdi:waypoint>
+        <omgdi:waypoint x="720.0" y="207.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flowLSODeploymentFinished" id="BPMNEdge_flowLSODeploymentFinished">
+        <omgdi:waypoint x="760.0" y="207.0"></omgdi:waypoint>
+        <omgdi:waypoint x="890.0" y="207.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="42.0" width="100.0" x="760.0" y="207.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flowLSODeploymentNOTFinished" id="BPMNEdge_flowLSODeploymentNOTFinished">
+        <omgdi:waypoint x="740.0" y="227.0"></omgdi:waypoint>
+        <omgdi:waypoint x="739.0" y="307.0"></omgdi:waypoint>
+        <omgdi:waypoint x="675.0" y="307.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="42.0" width="100.0" x="741.0" y="264.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow6" id="BPMNEdge_flow6">
+        <omgdi:waypoint x="640.0" y="307.0"></omgdi:waypoint>
+        <omgdi:waypoint x="565.0" y="307.0"></omgdi:waypoint>
+        <omgdi:waypoint x="565.0" y="243.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

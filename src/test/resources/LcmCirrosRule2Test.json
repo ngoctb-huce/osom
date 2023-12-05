@@ -1,0 +1,30 @@
+{
+  "uuid": "75cebf16-1699-486f-8304-d6512f90c910",
+  "lastUpdate": null,
+  "@baseType": "BaseRootEntity",
+  "@schemaLocation": null,
+  "@type": "BaseEntity",
+  "href": null,
+  "name": "LCM Rule Cirros Test rule2",
+  "description": "LCM Rule for specification Cirros Test rule 2 example",
+  "lifecycleStatus": "In study",
+  "version": null,
+  "validFor": null,
+  "id": "75cebf16-1699-486f-8304-d6512f90c910",
+  "lcmrulephase": "PRE_PROVISION",
+  "content": "<xml xmlns=\"https://developers.google.com/blockly/xml\"><block type=\"setcharval_string\" id=\"UhX=sPY_nuxL8]8b?C-J\" x=\"19\" y=\"49\"><field name=\"NAMELBL\">cirros_2vnf_ns::SSHKEY</field><value name=\"AVALUE\"><block type=\"text_join\" id=\"A^XCWBEaA*!yqB.0~)Nj\"><mutation items=\"2\"></mutation><value name=\"ADD0\"><block type=\"getcharval_string\" id=\"q;/i073P}-f4IvK[kLz)\"><field name=\"AVALUE\">cirros_2vnf_ns::SSHKEY</field></block></value><value name=\"ADD1\"><block type=\"literal_text\" id=\"0YWe5.MONXu#4A,sVaiw\"><field name=\"TEXT\">ExampleConcatSSHKEY_EnhancedByRule</field></block></value></block></value></block></xml>",
+  "code": "setCharValFromStringType(\"cirros_2vnf_ns::SSHKEY\", getCharValFromStringType(\"cirros_2vnf_ns::SSHKEY\")+\"ExampleConcatSSHKEY_EnhancedByRule\");\n",
+  "serviceSpecs": [
+    {
+      "@baseType": "BaseEntity",
+      "@schemaLocation": null,
+      "@type": null,
+      "href": null,
+      "name": "Cirros Test",
+      "version": null,
+      "targetServiceSchema": null,
+      "@referredType": null,
+      "id": "f2b74f90-4140-4895-80d1-ef243398117b"
+    }
+  ]
+}

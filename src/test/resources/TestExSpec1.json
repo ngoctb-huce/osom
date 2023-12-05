@@ -1,0 +1,113 @@
+{
+  "uuid": "59d08753-e1b1-418b-9e3e-d3a3bb573051",
+  "lastUpdate": "2019-11-19T08:18:17.811Z",
+  "@baseType": "BaseEntity",
+  "@type": "CustomerFacingServiceSpecification",
+  "name": "Spec1",
+  "description": "Test Spec example",
+  "lifecycleStatus": "In study",
+  "version": "1.8.0",
+  "isBundle": false,
+  "attachment": [],
+  "relatedParty": [
+    {
+      "uuid": "2d1b0321-bcb5-4bca-807e-9b3923c5e4dd",
+      "@baseType": "BaseRootEntity",
+      "@type": "org.etsi.osl.tmf.prm669.model.RelatedParty",
+      "name": "osadmin",
+      "role": "OWNER",
+      "@referredType": "SimpleUsername_Individual",
+      "id": "2d1b0321-bcb5-4bca-807e-9b3923c5e4dd"
+    }
+  ],
+  "resourceSpecification": [],
+  "serviceLevelSpecification": [],
+  "serviceSpecCharacteristic": [
+    {
+      "uuid": "8a9462f3-ec03-4fe7-80ae-52c30708a0ec",
+      "@baseType": "BaseRootEntity",
+      "@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecCharacteristic",
+      "name": "Coverage",
+      "configurable": true,
+      "description": "This attribute specifies the coverage area of the network slice - the area where the terminals can access a particular network slice",
+      "isUnique": true,
+      "maxCardinality": 1,
+      "minCardinality": 1,
+      "valueType": "ENUM",
+      "serviceSpecCharRelationship": [
+        {
+          "uuid": "a53c4c8b-2e84-404e-85f2-b7284222c399",
+          "id": "Spec1-Character Attribute",
+          "name": "Character Attribute",
+          "relationshipType": "dependency",
+          "@baseType": "BaseEntity",
+          "role": "tag",
+          "validFor": {
+            "endDateTime": "2039-11-19T08:18:17.811Z",
+            "startDateTime": "2019-11-19T08:18:17.811Z"
+          }
+        },
+        {
+          "uuid": "7c582b92-bf23-4587-b765-4b8ed85abbcd",
+          "id": "Spec1-KPI",
+          "name": "KPI",
+          "relationshipType": "dependency",
+          "@baseType": "BaseEntity",
+          "role": "tag",
+          "validFor": {
+            "endDateTime": "2039-11-19T08:18:17.811Z",
+            "startDateTime": "2019-11-19T08:18:17.811Z"
+          }
+        },
+        {
+          "uuid": "ae7f7b55-bdb7-415c-95be-bd19392fd31f",
+          "id": "Spec1-Operational",
+          "name": "Operational",
+          "relationshipType": "dependency",
+          "@baseType": "BaseEntity",
+          "role": "tag",
+          "validFor": {
+            "endDateTime": "2039-11-19T08:18:17.811Z",
+            "startDateTime": "2019-11-19T08:18:17.811Z"
+          }
+        },
+        {
+          "uuid": "70fdbebd-e5d3-4a1d-a2dd-7ffb3b3729c1",
+          "id": "Spec1-Scalability Attribute",
+          "name": "Scalability Attribute",
+          "relationshipType": "dependency",
+          "@baseType": "BaseEntity",
+          "role": "tag",
+          "validFor": {
+            "endDateTime": "2039-11-19T08:18:17.811Z",
+            "startDateTime": "2019-11-19T08:18:17.811Z"
+          }
+        }
+      ],
+      "serviceSpecCharacteristicValue": [
+        {
+          "uuid": "7507f32b-d80d-4795-bc3a-330866e86b61",
+          "@baseType": "BaseEntity",
+          "isDefault": true,
+          "unitOfMeasure": "N/A",
+          "valueType": "SMALLINT",
+          "validFor": {
+            "endDateTime": "2039-11-19T08:18:17.811Z",
+            "startDateTime": "2019-11-19T08:18:17.811Z"
+          },
+          "value": {
+            "value": "4",
+            "alias": "Local (outdoor)"
+          }
+        }
+      ],
+      "validFor": {
+        "endDateTime": "2039-11-19T08:18:17.811Z",
+        "startDateTime": "2019-11-19T08:18:17.811Z"
+      },
+      "id": "8a9462f3-ec03-4fe7-80ae-52c30708a0ec"
+    }
+  ],
+  "serviceSpecRelationship": [],
+  "id": "59d08753-e1b1-418b-9e3e-d3a3bb573051"
+}

@@ -1,0 +1,31 @@
+{
+  "uuid": "c1bd362d-011f-485b-a7d9-3bb05a2f6868",
+  "lastUpdate": null,
+  "@baseType": "BaseRootEntity",
+  "@schemaLocation": null,
+  "@type": "BaseEntity",
+  "href": null,
+  "name": "LCM Rule Upstream journalist case Web get response",
+  "description": "LCM Rule for specification Upstream journalist case",
+  "lifecycleStatus": "In study",
+  "version": null,
+  "validFor": null,
+  "id": "c1bd362d-011f-485b-a7d9-3bb05a2f6868",
+  "lcmrulephase": "PRE_PROVISION",
+  "content": "<xml xmlns=\"https://developers.google.com/blockly/xml\"><variables><variable type=\"string\" id=\"XwWC[yL,VS5[HI%q4B:|\">strResponse</variable></variables><block type=\"variable_declare_string\" id=\"WV[hs9b24p:_f_]kJ4=u\" x=\"40\" y=\"154\"><field name=\"VAR\" id=\"XwWC[yL,VS5[HI%q4B:|\" variabletype=\"string\">strResponse</field><value name=\"VALUE\"><block type=\"rest_block\" id=\"%lw$39)O@*nnzZ?9}rxn\"><field name=\"VERBOPTION\">GET</field><value name=\"arest_config_client\"><block type=\"rest_config_client\" id=\"Te(*erD[ccwSi5vsW#eo\"><value name=\"baseurl\"><block type=\"literal_text\" id=\"p?^rf4j}y2o|jQkV(Vm7\"><field name=\"TEXT\">http://portal.openslice.io</field></block></value><value name=\"aOAUTH2CLIENTID\"><block type=\"literal_text\" id=\"-?HG:W{gV~4lE0N7Fi9K\"><field name=\"TEXT\">osapiWebClientId</field></block></value><value name=\"aOAUTHSECRET\"><block type=\"literal_text\" id=\"np.:ad`sONU4xpV,h?eX\"><field name=\"TEXT\">secret</field></block></value><value name=\"scopes\"><block type=\"literal_text\" id=\"Y}Sp#vIo@.YZZ-~=it{g\"><field name=\"TEXT\">admin;read</field></block></value><value name=\"aTOKENURI\"><block type=\"literal_text\" id=\"uE6*w1!k%|4J!OOtQXUY\"><field name=\"TEXT\">http://portal.openslice.io/auth/realms/openslice/protocol/openid-connect/token</field></block></value><value name=\"aUSERNAME\"><block type=\"literal_text\" id=\"fx].b[}sh@`_$OrJ|oiq\"><field name=\"TEXT\">admin</field></block></value><value name=\"aPASSWORD\"><block type=\"literal_text\" id=\"IQgJ_tI#X8Lz6gNBds/2\"><field name=\"TEXT\">openslice</field></block></value></block></value><value name=\"url\"><block type=\"literal_text\" id=\"B{!2=BitxQ;I=]y]idFO\"><field name=\"TEXT\">http://portal.openslice.io/tmf-api/serviceInventory/v4/service/ead09790-6dcc-4fff-a1de-4eb5d104aaa3</field></block></value></block></value><next><block type=\"so_log_string\" id=\"R.bWRfU?f*=cKrp7:%2O\"><value name=\"txtlog\"><block type=\"payloadToService\" id=\"}dWrsCp}0om7J)F|P1Im\"><mutation xmlns=\"http://www.w3.org/1999/xhtml\" column_type=\"name\"></mutation><field name=\"VERBOPTION\">name</field><value name=\"jsonpayload\"><block type=\"variable_get_string\" id=\"l1IaHwwO*3ceqs)nBnV9\"><field name=\"VAR\" id=\"XwWC[yL,VS5[HI%q4B:|\" variabletype=\"string\">strResponse</field></block></value></block></value><next><block type=\"so_log_string\" id=\"1[N?3Q0UirQem`%eAT~8\"><value name=\"txtlog\"><block type=\"payloadToService\" id=\"[:h%rYF2wdq|)R5A5@z#\"><mutation xmlns=\"http://www.w3.org/1999/xhtml\" column_type=\"serviceCharacteristicValue\"></mutation><field name=\"VERBOPTION\">serviceCharacteristicValue</field><value name=\"jsonpayload\"><block type=\"variable_get_string\" id=\"q{ZrjAb?nF)4r}u:H;7v\"><field name=\"VAR\" id=\"XwWC[yL,VS5[HI%q4B:|\" variabletype=\"string\">strResponse</field></block></value><value name=\"characteristicName\"><block type=\"literal_text\" id=\"4$7|[N!0k|!-otpgD/%F\"><field name=\"TEXT\">VIM</field></block></value></block></value></block></next></block></next></block></xml>",
+  "code": "String strResponse = rest_block(\"GET\", \"http://portal.openslice.io/tmf-api/serviceInventory/v4/service/ead09790-6dcc-4fff-a1de-4eb5d104aaa3\", null, null, \"http://portal.openslice.io\", \"osapiWebClientId\", \"secret\", \"admin;read\", \"http://portal.openslice.io/auth/realms/openslice/protocol/openid-connect/token\", \"admin\", \"openslice\");\nlogtext(getFromPayloadServicePropValue(strResponse, \"name\", \"\"));\nlogtext(getFromPayloadServicePropValue(strResponse, \"serviceCharacteristicValue\", \"VIM\"));\n",
+  "priority": 4,
+  "serviceSpecs": [
+    {
+      "@baseType": "BaseEntity",
+      "@schemaLocation": null,
+      "@type": null,
+      "href": null,
+      "name": "Upstream journalist case",
+      "version": null,
+      "targetServiceSchema": null,
+      "@referredType": null,
+      "id": "0d5551e6-069f-43b7-aa71-10530f290239"
+    }
+  ]
+}

@@ -1,0 +1,319 @@
+{
+  "uuid": "c00446ac-c8af-47ad-ac94-518d4bdd4c13",
+  "lastUpdate": "2019-12-30T18:33:43Z",
+  "@baseType": "BaseEntity",
+  "@schemaLocation": null,
+  "@type": "ResourceFacingServiceSpecification",
+  "href": null,
+  "name": "cirros_2vnf_nsd",
+  "description": "cirros_2vnf_ns",
+  "lifecycleStatus": "In study",
+  "version": "1.0",
+  "validFor": {
+    "endDateTime": "2039-12-30T18:33:43Z",
+    "startDateTime": "2019-12-30T18:33:43Z"
+  },
+  "isBundle": null,
+  "attachment": [],
+  "relatedParty": [],
+  "resourceSpecification": [
+    {
+      "@baseType": "BaseRootEntity",
+      "@schemaLocation": null,
+      "@type": "org.etsi.osl.tmf.rcm634.model.ResourceSpecificationRef",
+      "href": null,
+      "name": "cirros_2vnf_nsd",
+      "version": "1.0",
+      "@referredType": null,
+      "id": "6f584ef4-9787-4af8-94b5-c319d7df4995"
+    }
+  ],
+  "serviceLevelSpecification": [],
+  "serviceSpecCharacteristic": [
+    {
+      "uuid": "3c03b224-0487-4a10-be21-59e7f8817dcf",
+      "@baseType": "BaseRootEntity",
+      "@schemaLocation": null,
+      "@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecCharacteristic",
+      "href": null,
+      "name": "PackagingFormat",
+      "configurable": false,
+      "description": "NSD PackagingFormat",
+      "extensible": null,
+      "isUnique": null,
+      "maxCardinality": 1,
+      "minCardinality": 1,
+      "regex": null,
+      "valueType": "TEXT",
+      "serviceSpecCharRelationship": [],
+      "serviceSpecCharacteristicValue": [
+        {
+          "uuid": "b6eee9a4-cf0f-49d3-952a-d1380288fe0b",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": true,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": "N/A",
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": null,
+          "validFor": {
+            "endDateTime": "2039-12-30T18:33:43Z",
+            "startDateTime": "2019-12-30T18:33:43Z"
+          },
+          "value": {
+            "value": "OSMvFIVE",
+            "alias": "PackagingFormat"
+          }
+        }
+      ],
+      "validFor": {
+        "endDateTime": "2039-12-30T18:33:43Z",
+        "startDateTime": "2019-12-30T18:33:43Z"
+      },
+      "@valueSchemaLocation": null,
+      "id": "3c03b224-0487-4a10-be21-59e7f8817dcf"
+    },
+    {
+      "uuid": "f415cee9-5543-441c-a0e5-5f1a9b1b15ee",
+      "@baseType": "BaseRootEntity",
+      "@schemaLocation": null,
+      "@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecCharacteristic",
+      "href": null,
+      "name": "NSDID",
+      "configurable": false,
+      "description": "NSD id",
+      "extensible": null,
+      "isUnique": null,
+      "maxCardinality": 1,
+      "minCardinality": 1,
+      "regex": null,
+      "valueType": "TEXT",
+      "serviceSpecCharRelationship": [],
+      "serviceSpecCharacteristicValue": [
+        {
+          "uuid": "97ccb1e5-26f0-4cfc-a8d7-0e1b478a8016",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": true,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": "N/A",
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": null,
+          "validFor": {
+            "endDateTime": "2039-12-30T18:33:43Z",
+            "startDateTime": "2019-12-30T18:33:43Z"
+          },
+          "value": {
+            "value": "3",
+            "alias": "id"
+          }
+        }
+      ],
+      "validFor": {
+        "endDateTime": "2039-12-30T18:33:43Z",
+        "startDateTime": "2019-12-30T18:33:43Z"
+      },
+      "@valueSchemaLocation": null,
+      "id": "f415cee9-5543-441c-a0e5-5f1a9b1b15ee"
+    },
+    {
+      "uuid": "b4d57f8e-fd29-4beb-9da4-26333f3bb963",
+      "@baseType": "BaseRootEntity",
+      "@schemaLocation": null,
+      "@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecCharacteristic",
+      "href": null,
+      "name": "Vendor",
+      "configurable": false,
+      "description": "NSD Vendor",
+      "extensible": null,
+      "isUnique": null,
+      "maxCardinality": 1,
+      "minCardinality": 1,
+      "regex": null,
+      "valueType": "TEXT",
+      "serviceSpecCharRelationship": [],
+      "serviceSpecCharacteristicValue": [
+        {
+          "uuid": "8588d23a-e8ce-48ae-a18a-2a663aa14f6a",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": true,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": "N/A",
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": null,
+          "validFor": {
+            "endDateTime": "2039-12-30T18:33:43Z",
+            "startDateTime": "2019-12-30T18:33:43Z"
+          },
+          "value": {
+            "value": "OSM",
+            "alias": "Vendor"
+          }
+        }
+      ],
+      "validFor": {
+        "endDateTime": "2039-12-30T18:33:43Z",
+        "startDateTime": "2019-12-30T18:33:43Z"
+      },
+      "@valueSchemaLocation": null,
+      "id": "b4d57f8e-fd29-4beb-9da4-26333f3bb963"
+    },
+    {
+      "uuid": "7febc0ba-f63d-4442-9b0b-549680210614",
+      "@baseType": "BaseRootEntity",
+      "@schemaLocation": null,
+      "@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecCharacteristic",
+      "href": null,
+      "name": "OnBoardingStatus",
+      "configurable": false,
+      "description": "NSDtOnBoardingStatus",
+      "extensible": null,
+      "isUnique": null,
+      "maxCardinality": 1,
+      "minCardinality": 1,
+      "regex": null,
+      "valueType": "TEXT",
+      "serviceSpecCharRelationship": [],
+      "serviceSpecCharacteristicValue": [
+        {
+          "uuid": "162b623b-9d64-4f0e-9a3f-978bd65f663d",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": true,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": "N/A",
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": null,
+          "validFor": {
+            "endDateTime": "2039-12-30T18:33:43Z",
+            "startDateTime": "2019-12-30T18:33:43Z"
+          },
+          "value": {
+            "value": "FAILED",
+            "alias": ""
+          }
+        }
+      ],
+      "validFor": {
+        "endDateTime": "2039-12-30T18:33:43Z",
+        "startDateTime": "2019-12-30T18:33:43Z"
+      },
+      "@valueSchemaLocation": null,
+      "id": "7febc0ba-f63d-4442-9b0b-549680210614"
+    },
+    {
+      "uuid": "6faf2d50-9af1-4544-bfd7-0b1e25b6a939",
+      "@baseType": "BaseRootEntity",
+      "@schemaLocation": null,
+      "@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecCharacteristic",
+      "href": null,
+      "name": "ObMANOprovider_Name",
+      "configurable": false,
+      "description": "NSD Onboarded MANO provider Name",
+      "extensible": null,
+      "isUnique": null,
+      "maxCardinality": 1,
+      "minCardinality": 1,
+      "regex": null,
+      "valueType": "TEXT",
+      "serviceSpecCharRelationship": [],
+      "serviceSpecCharacteristicValue": [
+        {
+          "uuid": "e03d89f9-4446-4f0e-aab4-140b7f95e2e1",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": true,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": "N/A",
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": null,
+          "validFor": {
+            "endDateTime": "2039-12-30T18:33:43Z",
+            "startDateTime": "2019-12-30T18:33:43Z"
+          },
+          "value": {
+            "value": "osm test",
+            "alias": ""
+          }
+        }
+      ],
+      "validFor": {
+        "endDateTime": "2039-12-30T18:33:43Z",
+        "startDateTime": "2019-12-30T18:33:43Z"
+      },
+      "@valueSchemaLocation": null,
+      "id": "6faf2d50-9af1-4544-bfd7-0b1e25b6a939"
+    },
+    {
+      "uuid": "f459472b-c1ea-4d35-a1e9-dcbdc27e019e",
+      "@baseType": "BaseRootEntity",
+      "@schemaLocation": null,
+      "@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecCharacteristic",
+      "href": null,
+      "name": "PackageLocation",
+      "configurable": false,
+      "description": "NSD PackageLocation",
+      "extensible": null,
+      "isUnique": null,
+      "maxCardinality": 1,
+      "minCardinality": 1,
+      "regex": null,
+      "valueType": "TEXT",
+      "serviceSpecCharRelationship": [],
+      "serviceSpecCharacteristicValue": [
+        {
+          "uuid": "8041c1f2-a95d-4f86-b410-ce1df498d8d0",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": true,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": "N/A",
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": null,
+          "validFor": {
+            "endDateTime": "2039-12-30T18:33:43Z",
+            "startDateTime": "2019-12-30T18:33:43Z"
+          },
+          "value": {
+            "value": "/osapi/packages/cbc45a7a-55d5-4fa1-b32d-444256677f8f/cirros_2vnf_ns.tar.gz",
+            "alias": "PackageLocation"
+          }
+        }
+      ],
+      "validFor": {
+        "endDateTime": "2039-12-30T18:33:43Z",
+        "startDateTime": "2019-12-30T18:33:43Z"
+      },
+      "@valueSchemaLocation": null,
+      "id": "f459472b-c1ea-4d35-a1e9-dcbdc27e019e"
+    }
+  ],
+  "serviceSpecRelationship": [],
+  "targetServiceSchema": null,
+  "id": "c00446ac-c8af-47ad-ac94-518d4bdd4c13"
+}

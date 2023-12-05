@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
+  <process id="StartOrderProcess" name="Start OrderProcess Order Items" isExecutable="true">
+    <startEvent id="startevent1" name="Start"></startEvent>
+    <serviceTask id="stFindOrderItems" name="FindOrderItems" activiti:async="true" activiti:delegateExpression="${findOrderItems}"></serviceTask>
+    <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="stFindOrderItems"></sequenceFlow>
+    <callActivity id="parallelActivityProcessOrderItem" name="parallel Activity Process Order Item" activiti:async="true" calledElement="ProcessOrderItem" activiti:inheritVariables="true">
+      <multiInstanceLoopCharacteristics isSequential="false" activiti:collection="orderItemsToBeProcessed" activiti:elementVariable="orderItemId"></multiInstanceLoopCharacteristics>
+    </callActivity>
+    <sequenceFlow id="flow2" sourceRef="stFindOrderItems" targetRef="parallelActivityProcessOrderItem"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_StartOrderProcess">
+    <bpmndi:BPMNPlane bpmnElement="StartOrderProcess" id="BPMNPlane_StartOrderProcess">
+      <bpmndi:BPMNShape bpmnElement="startevent1" id="BPMNShape_startevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="200.0" y="200.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="stFindOrderItems" id="BPMNShape_stFindOrderItems">
+        <omgdc:Bounds height="55.0" width="105.0" x="310.0" y="190.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="parallelActivityProcessOrderItem" id="BPMNShape_parallelActivityProcessOrderItem">
+        <omgdc:Bounds height="101.0" width="191.0" x="520.0" y="167.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
+        <omgdi:waypoint x="235.0" y="217.0"></omgdi:waypoint>
+        <omgdi:waypoint x="310.0" y="217.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
+        <omgdi:waypoint x="415.0" y="217.0"></omgdi:waypoint>
+        <omgdi:waypoint x="520.0" y="217.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

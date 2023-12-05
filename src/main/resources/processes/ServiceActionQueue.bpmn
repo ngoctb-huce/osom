@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
+  <process id="ServiceActionQueueProcess" name="My process" isExecutable="true">
+    <startEvent id="timerstartevent1" name="Timer start">
+      <timerEventDefinition>
+        <timeCycle>0/30 * * * * ?</timeCycle>
+      </timerEventDefinition>
+    </startEvent>
+    <serviceTask id="fetchServiceQueueItems" name="Fetch Service Queue Items" activiti:delegateExpression="${fetchServiceQueueItems}"></serviceTask>
+    <sequenceFlow id="flow1" sourceRef="timerstartevent1" targetRef="fetchServiceQueueItems"></sequenceFlow>
+    <callActivity id="callactivityServiceActionProcess" name="Activity Service Action Process" activiti:async="true" calledElement="ServiceActionProcess" activiti:inheritVariables="true">
+      <multiInstanceLoopCharacteristics isSequential="false" activiti:collection="serviceActionsToBeProcessed" activiti:elementVariable="serviceActionItem"></multiInstanceLoopCharacteristics>
+    </callActivity>
+    <sequenceFlow id="flow2" sourceRef="fetchServiceQueueItems" targetRef="callactivityServiceActionProcess"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_ServiceActionQueueProcess">
+    <bpmndi:BPMNPlane bpmnElement="ServiceActionQueueProcess" id="BPMNPlane_ServiceActionQueueProcess">
+      <bpmndi:BPMNShape bpmnElement="timerstartevent1" id="BPMNShape_timerstartevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="170.0" y="160.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="fetchServiceQueueItems" id="BPMNShape_fetchServiceQueueItems">
+        <omgdc:Bounds height="71.0" width="105.0" x="280.0" y="140.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="callactivityServiceActionProcess" id="BPMNShape_callactivityServiceActionProcess">
+        <omgdc:Bounds height="71.0" width="121.0" x="500.0" y="140.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
+        <omgdi:waypoint x="205.0" y="177.0"></omgdi:waypoint>
+        <omgdi:waypoint x="280.0" y="175.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
+        <omgdi:waypoint x="385.0" y="175.0"></omgdi:waypoint>
+        <omgdi:waypoint x="500.0" y="175.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
