@@ -1024,7 +1024,36 @@ public class ServiceOrderManager {
       return null;
       
   }
+  
+  
 
+  /**
+   * @param rFS_CRSPEC 
+   * @param serviceId 
+   * 
+   */
+  public String cridgeDeploymentUpdateRequest(Map<String, Object> map, String CR_SPEC) {
+      
+
+      try {
+        
+        Object response = template.requestBodyAndHeaders( "direct:retriesCRD_PATCH_CR_REQ", CR_SPEC , map );
+          
+
+          if ( !(response instanceof String)) {
+              logger.error("cridgeDeploymentUpdateRequest response object is wrong.");
+              return null;
+          }
+          logger.debug("cridgeDeploymentUpdateRequest response is: " + response);
+          return (String) response;
+          
+      }catch (Exception e) {
+          logger.error("Cannot retrieve cridgeDeploymentUpdateRequest response. " + e.toString());
+          e.printStackTrace();
+      }
+      return null;
+      
+  }
   
 
   /**
