@@ -49,7 +49,9 @@ public class OSOMRouteBuilder extends RouteBuilder {
     @Value("${CRD_DEPLOY_CR_REQ}")
     private String CRD_DEPLOY_CR_REQ = "";
     
-    
+
+    @Value("${CRD_PATCH_CR_REQ}")
+    private String CRD_PATCH_CR_REQ = "";
     
 	public void configure() {
 		
@@ -68,6 +70,20 @@ public class OSOMRouteBuilder extends RouteBuilder {
               //.retriesExhaustedLogLevel(LoggingLevel.WARN)
               .retryAttemptedLogLevel( LoggingLevel.WARN) )
       .to(CRD_DEPLOY_CR_REQ);
+      
+      
+      from("direct:retriesCRD_PATCH_CR_REQ")
+      .errorHandler(deadLetterChannel("direct:retriesDeadLetters")
+              .maximumRedeliveries( 10 ) //let's try 10 times to send it....
+              .redeliveryDelay( 30000 ).useOriginalMessage()
+              //.deadLetterHandleNewException( false )
+              //.logExhaustedMessageHistory(false)
+              .logExhausted(true)
+              .logHandled(true)
+              //.retriesExhaustedLogLevel(LoggingLevel.WARN)
+              .retryAttemptedLogLevel( LoggingLevel.WARN) )
+      .to(CRD_PATCH_CR_REQ);
+      
       
       
       /**
