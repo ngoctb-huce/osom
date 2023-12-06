@@ -91,20 +91,44 @@ public class CRPatchTask implements JavaDelegate {
       String response = null;
       Characteristic servicecrspec = aService.getServiceCharacteristicByName("_CR_SPEC");
       String crspec = servicecrspec.getValue().getValue();
+      
 
+      Characteristic servicecrspecLast = aService.getServiceCharacteristicByName("_CR_SPEC_LASTSEND");
+      String crspecLast = servicecrspecLast.getValue().getValue();
+      
+      if (crspec.equals(crspecLast)) {
+        logger.debug("CRPatchTask: ignore this patch request. Seems they are the same as the last one send");
+        serviceOrderManager.deleteServiceActionQueueItem(item);
+        return;        
+      }
+
+        int retries = 0;
         response = createNewDeploymentUpdateRequest(aService, crspec);
+        while ( response.equals("SEE OTHER")) {
+          response = createNewDeploymentUpdateRequest(aService, crspec);
+          Thread.sleep(1000);
+          retries++;
+          if (retries>100) { //will support maximum 100 registered CRIDGE in queue
+            break;
+          }
+        }
+        
+        
         Note n = new Note();
         n.setAuthor(compname);
         n.setDate(OffsetDateTime.now(ZoneOffset.UTC).toString());
 
         if ( response!=null && response.equals("OK")) {
-
           n.setText("Service Action CRPatchTask successful . Action: " + item.getAction() + ". ");
         } else {
           n.setText("Service Action CRPatchTask failed . Action: " + item.getAction() + ". Response = " + response);
         }
 
         supd.addNoteItem(n);
+        
+        servicecrspecLast.getValue().setValue( crspec );
+        supd.addServiceCharacteristicItem(servicecrspecLast);
+        
         serviceOrderManager.deleteServiceActionQueueItem(item);
         serviceOrderManager.updateService(aService.getId(), supd, false);
         

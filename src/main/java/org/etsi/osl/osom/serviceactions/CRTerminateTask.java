@@ -83,7 +83,17 @@ public class CRTerminateTask  implements JavaDelegate {
               }
               
               try {
-                serviceOrderManager.cridgeDeletionRequest( map, crspec);
+                String response = serviceOrderManager.cridgeDeletionRequest( map, crspec);
+
+                int retries = 0;
+                while ( response.equals("SEE OTHER")) {
+                  response = serviceOrderManager.cridgeDeletionRequest( map, crspec);
+                  Thread.sleep(1000);
+                  retries++;
+                  if (retries>100) { //will support maximum 100 registered CRIDGE in queue
+                    break;
+                  }
+                }
                 
               } catch (Exception e) {
                 // TODO Auto-generated catch block

@@ -115,6 +115,11 @@ public class CROrchestrationService implements JavaDelegate {
               sorder.getExpectedCompletionDate(), crspec);
         }
         
+
+        Characteristic servicecrspecLast = aService.getServiceCharacteristicByName("_CR_SPEC_LASTSEND");
+        servicecrspecLast.getValue().setValue( crspec );
+        su.addServiceCharacteristicItem(servicecrspecLast);
+        
         if ( response!=null && response.equals("OK")) {
           su.setState(ServiceStateType.RESERVED);
           Note successNoteItem = new Note();
