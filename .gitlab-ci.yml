@@ -1,0 +1,8 @@
+stages:
+  - deploy
+
+deploy:
+  stage: deploy
+  image: maven:3.9.5-ibm-semeru-17-focal
+  script:
+    - mvn deploy -s ci_settings.xml -DskipTests
