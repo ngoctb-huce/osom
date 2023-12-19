@@ -1,8 +1,26 @@
-stages:
-  - deploy
+include:
+  - project: osl/code/org.etsi.osl.main
+    ref: 12-update-gitlab-ci-file-to-use-inherited-jobs-from-main
+    file: 
+      - ci-templates/default.yml
+      - ci-templates/build.yml
+    only:
+      - main
+      - develop
 
-deploy:
-  stage: deploy
-  image: maven:3.9.5-ibm-semeru-17-focal
-  script:
-    - mvn deploy -s ci_settings.xml -DskipTests
+  - project: osl/code/org.etsi.osl.main
+    ref: 12-update-gitlab-ci-file-to-use-inherited-jobs-from-main
+    file: 
+      - ci-templates/default.yml
+      - ci-templates/build_unprotected.yml
+    except:
+      - main
+      - develop
+
+maven_build:
+  extends: .maven_build
+
+docker_build:
+  extends: .docker_build
+  needs:
+    - maven_build
