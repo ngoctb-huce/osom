@@ -1,21 +1,27 @@
 include:
   - project: osl/code/org.etsi.osl.main
-    ref: 12-update-gitlab-ci-file-to-use-inherited-jobs-from-main
+    ref: main
     file: 
       - ci-templates/default.yml
       - ci-templates/build.yml
-    only:
-      - main
-      - develop
+    rules:
+      - if: '$CI_COMMIT_REF_NAME == "main"'
+  
+  - project: osl/code/org.etsi.osl.main
+    ref: develop
+    file: 
+      - ci-templates/default.yml
+      - ci-templates/build.yml
+    rules:
+      - if: '$CI_COMMIT_REF_NAME == "develop"'
 
   - project: osl/code/org.etsi.osl.main
-    ref: 12-update-gitlab-ci-file-to-use-inherited-jobs-from-main
+    ref: develop
     file: 
       - ci-templates/default.yml
       - ci-templates/build_unprotected.yml
-    except:
-      - main
-      - develop
+    rules:
+      - if: '$CI_COMMIT_REF_NAME != "main" && $CI_COMMIT_REF_NAME != "develop"'
 
 maven_build:
   extends: .maven_build
