@@ -1,8 +1,32 @@
-stages:
-  - deploy
+include:
+  - project: osl/code/org.etsi.osl.main
+    ref: main
+    file: 
+      - ci-templates/default.yml
+      - ci-templates/build.yml
+    rules:
+      - if: '$CI_COMMIT_REF_NAME == "main"'
+  
+  - project: osl/code/org.etsi.osl.main
+    ref: develop
+    file: 
+      - ci-templates/default.yml
+      - ci-templates/build.yml
+    rules:
+      - if: '$CI_COMMIT_REF_NAME == "develop"'
 
-deploy:
-  stage: deploy
-  image: maven:3.9.5-ibm-semeru-17-focal
-  script:
-    - mvn deploy -s ci_settings.xml -DskipTests
+  - project: osl/code/org.etsi.osl.main
+    ref: develop
+    file: 
+      - ci-templates/default.yml
+      - ci-templates/build_unprotected.yml
+    rules:
+      - if: '$CI_COMMIT_REF_NAME != "main" && $CI_COMMIT_REF_NAME != "develop"'
+
+maven_build:
+  extends: .maven_build
+
+docker_build:
+  extends: .docker_build
+  needs:
+    - maven_build
