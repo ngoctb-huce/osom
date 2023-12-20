@@ -67,7 +67,7 @@ public class CROrchestrationCheckDeploymentService implements JavaDelegate {
 
 
 		ServiceUpdate supd = new ServiceUpdate();
-		boolean propagateToSO = false;
+		boolean triggerServiceActionQueue = false;
 
 		//retrieve the related supporting resource by id and check its status
 		//ResourceRef supresourceRef = aService.getSupportingResource().stream().findFirst().get();//we assume for now we have only one related resource
@@ -84,7 +84,7 @@ public class CROrchestrationCheckDeploymentService implements JavaDelegate {
 	        if ( res == null ) {
 	          supd.setState( ServiceStateType.TERMINATED);
 	          execution.setVariable("serviceDeploymentFinished", Boolean.TRUE);
-	          Service serviceResult = serviceOrderManager.updateService( aService.getId(), supd, propagateToSO );
+	          Service serviceResult = serviceOrderManager.updateService( aService.getId(), supd, triggerServiceActionQueue );
 	          return;
 	        }
 
@@ -145,7 +145,7 @@ public class CROrchestrationCheckDeploymentService implements JavaDelegate {
           supd.setState( ServiceStateType.INACTIVE ); 
         }
 		
-		Service serviceResult = serviceOrderManager.updateService( aService.getId(), supd, propagateToSO );
+		Service serviceResult = serviceOrderManager.updateService( aService.getId(), supd, triggerServiceActionQueue );
 		
 		if ( serviceResult!= null ) {
 			if ( serviceResult.getState().equals(ServiceStateType.ACTIVE)

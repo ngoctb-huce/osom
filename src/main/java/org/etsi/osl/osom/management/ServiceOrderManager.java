@@ -448,16 +448,16 @@ public class ServiceOrderManager {
 	/**
 	 * @param serviceId
 	 * @param s
-	 * @param propagateToSO is a cryptic thing. However it is used as follows: if FALSE, to just update the service status in catalog without further taking any action.
+	 * @param triggerServiceActionQueue is a cryptic thing. However it is used as follows: if FALSE, to just update the service status in catalog without further taking any action.
 	 * if TRUE then the ServiceUpdate will trigger a ServiceActionQueue to further process the update. So this is needed to avoid these kinds of deadlocks
 	 * @return
 	 */
-	public org.etsi.osl.tmf.sim638.model.Service updateService(String serviceId, ServiceUpdate s, boolean propagateToSO) {
+	public org.etsi.osl.tmf.sim638.model.Service updateService(String serviceId, ServiceUpdate s, boolean triggerServiceActionQueue) {
 		logger.info("will update Service : " + serviceId );
 		try {
 			Map<String, Object> map = new HashMap<>();
 			map.put("serviceid", serviceId );
-			map.put("propagateToSO", propagateToSO );
+			map.put("triggerServiceActionQueue", triggerServiceActionQueue );
 			
 			Object response = template.requestBodyAndHeaders( CATALOG_UPD_SERVICE, toJsonString(s), map);
 

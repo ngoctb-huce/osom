@@ -160,8 +160,6 @@ public class CreateReservedService implements JavaDelegate {
 		
 		if ( partnerOrg != null  ) {
 			createdServ = createServiceByServiceSpec(sor, soi, specrel, EServiceStartMode.AUTOMATICALLY_MANAGED, partnerOrg, parentService);
-			
-			
 		}	
 		else if (specrel.getType().equals("ResourceFacingServiceSpecification")) {
 			createdServ = createServiceByServiceSpec(sor, soi, specrel, EServiceStartMode.AUTOMATICALLY_MANAGED, null, parentService);
@@ -329,7 +327,7 @@ public class CreateReservedService implements JavaDelegate {
 					}
 				}				
 			}
-								
+
 
 			//also add parent service as relationship to parent
 			ServiceRelationship srelationship = new ServiceRelationship();

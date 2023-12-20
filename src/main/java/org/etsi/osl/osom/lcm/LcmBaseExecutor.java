@@ -1,7 +1,10 @@
 package org.etsi.osl.osom.lcm;
 
 import java.io.IOException;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -27,6 +30,8 @@ import org.etsi.osl.tmf.lcm.model.LCMRuleSpecification;
 import org.etsi.osl.tmf.prm669.model.RelatedParty;
 import org.etsi.osl.tmf.scm633.model.ServiceSpecRelationship;
 import org.etsi.osl.tmf.sim638.model.Service;
+import org.etsi.osl.tmf.sim638.model.ServiceCreate;
+import org.etsi.osl.tmf.sim638.model.ServiceUpdate;
 import org.etsi.osl.tmf.so641.model.ServiceOrder;
 import org.etsi.osl.tmf.so641.model.ServiceOrderCreate;
 import org.etsi.osl.tmf.so641.model.ServiceOrderItemRelationship;
@@ -788,10 +793,151 @@ public abstract class LcmBaseExecutor {
 
 		return "";
 	}
+	
+	
+	
+    /**
+     * Set the value to a characteristics of a referenced service
+     * @param serviceName the name of the service reference
+     * @param characteristics map with name.value
+     * @param value
+     */
+    public void setServiceRefCharacteristicsValues(String serviceName, HashMap<String, String> charvals) {
+      
+      //logger.debug( String.format( "setServiceRefPropValue %s %s %s ", serviceName, characteristicName, value ) );
+      logger.debug( String.format( "setServiceRefCharacteristicsValues for %s ", serviceName ) );
+      
+      Service ctxService = this.vars.getService();      
+      
+      if (ctxService == null) {
+        ServiceCreate scre = this.vars.getServiceToCreate();
+        if (scre != null) {
+          for (String charname : charvals.keySet()) {
+            setCharacteristicOfCurrentService(  serviceName + "::" + charname, charvals.get(charname) ); 
+          }
+        }
+        return;
+      }
+      
+      @NotNull @Valid ServiceRef refSrvice = null;
+      
+      for (ServiceRef sr : ctxService.getSupportingService()) {
+          if ( sr.getName().equals(serviceName) ) {
+              refSrvice = sr;
+              break;
+          }
+      }
+
+      
+      if (refSrvice == null) {
+          return;
+      }
+      
+      if (this.vars.getServiceOrderManager() != null) {
+        Service aService = this.vars.getServiceOrderManager().retrieveService(refSrvice.getId());
+        if (aService != null) {
+
+          ServiceUpdate supd = new ServiceUpdate();
+          Note n = new Note();
+          n.setAuthor("LCMRULE " + this.lcmspec.getName());
+          n.setDate(OffsetDateTime.now(ZoneOffset.UTC).toString());
+          String note = "";
+          for (String charname : charvals.keySet()) {            
+            setCharacteristicOfCurrentService(  serviceName + "::" + charname, charvals.get(charname) );
+            
+            Characteristic servicecrspecLast = aService.getServiceCharacteristicByName(charname);            
+            if (servicecrspecLast != null) {
+              servicecrspecLast.getValue().setValue( charvals.get(charname) );
+              supd.addServiceCharacteristicItem(servicecrspecLast);              
+              note += charname + "=" + charvals.get(charname)+ ", ";
+            }  
+          }
+          
+          
+          n.setText( String.format( "New characterisictic values for ServiceRef %s: %s" , serviceName, note ));
+          supd.addNoteItem(n);
+          this.vars.getServiceOrderManager().updateService(aService.getId(), supd, true);
+
+        }
+        
+      }
+    
+    }
+	
+//	/**
+//	 * Set the value to a characteristic of a referenced service
+//	 * @param serviceName the name of the service reference
+//	 * @param characteristicName
+//	 * @param value
+//	 */
+//	public void setServiceRefPropValue( String serviceName, String characteristicName, String value ) {
+//      logger.debug( String.format( "setServiceRefPropValue %s %s %s ", serviceName, characteristicName, value ) );
+//      Service ctxService = this.vars.getService();
+//      
+//      
+//      if (ctxService == null) {
+//        ServiceCreate scre = this.vars.getServiceToCreate();
+//        if (scre != null) {
+//          setCharacteristicOfCurrentService(  serviceName + "::" + characteristicName, value);          
+//        }
+//        return;
+//      }
+//      
+//      
+//
+//      
+//      
+//      
+//      @NotNull @Valid ServiceRef refSrvice = null;
+//      
+//      for (ServiceRef sr : ctxService.getSupportingService()) {
+//          if ( sr.getName().equals(serviceName) ) {
+//              refSrvice = sr;
+//              break;
+//          }
+//      }
+//
+//
+//      setCharacteristicOfCurrentService(  serviceName + "::" + characteristicName, value);
+//      
+//      if (refSrvice == null) {
+//          return;
+//      }
+//      
+//      if (this.vars.getServiceOrderManager() != null) {
+//        Service aService = this.vars.getServiceOrderManager().retrieveService(refSrvice.getId());
+//        if (aService != null) {
+//
+//          ServiceUpdate supd = new ServiceUpdate();
+//
+//          Characteristic servicecrspecLast =
+//              aService.getServiceCharacteristicByName(characteristicName);
+//          if (servicecrspecLast != null) {
+//            servicecrspecLast.getValue().setValue(value);
+//            supd.addServiceCharacteristicItem(servicecrspecLast);
+//            Note n = new Note();
+//            n.setAuthor("LCMRULE " + this.lcmspec.getName());
+//            n.setDate(OffsetDateTime.now(ZoneOffset.UTC).toString());
+//            n.setText("Set new value (" + value + ") to ref Service (" + serviceName
+//                + ") Characteristic: " + characteristicName);
+//            supd.addNoteItem(n);
+//            this.vars.getServiceOrderManager().updateService(aService.getId(), supd, true);
+//            
+//            
+//          }
+//
+//        }
+//        
+//      }
+//      
+//	}
 
 
 
-	//createServiceRefIf("Bundle B", getServiceRefPropValue("BundleA", "state", "").equals("active")==true);
+	
+	
+
+  //createServiceRefIf("Bundle B", getServiceRefPropValue("BundleA", "state", "").equals("active")==true);
 	public boolean createServiceRefIf(String serviceName, boolean b) {
 
 		logger.debug( String.format("createServiceRefwhen serviceName=%s = %s", serviceName, b ) );

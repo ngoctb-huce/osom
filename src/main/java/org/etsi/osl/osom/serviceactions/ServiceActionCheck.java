@@ -79,7 +79,9 @@ public class ServiceActionCheck implements JavaDelegate {
 				execution.setVariable("saction", "HandleActiveStateChanged");
 			} else if ( item.getAction().equals( ServiceActionQueueAction.EVALUATE_STATE_CHANGE_TOINACTIVE  ) ) {
 				execution.setVariable("saction", "HandleInactiveStateChanged");
-			} else if ( item.getAction().equals( ServiceActionQueueAction.EVALUATE_CHARACTERISTIC_CHANGED  ) || item.getAction().equals( ServiceActionQueueAction.EVALUATE_CHARACTERISTIC_CHANGED_MANODAY2  ) ) {
+			} else if ( item.getAction().equals( ServiceActionQueueAction.EVALUATE_CHARACTERISTIC_CHANGED  ) 
+			              || item.getAction().equals( ServiceActionQueueAction.EVALUATE_CHILD_CHARACTERISTIC_CHANGED  ) 
+			              || item.getAction().equals( ServiceActionQueueAction.EVALUATE_CHARACTERISTIC_CHANGED_MANODAY2  ) ) {
 				
 				execution.setVariable("saction", "HandleEvaluateService");// default
 				
