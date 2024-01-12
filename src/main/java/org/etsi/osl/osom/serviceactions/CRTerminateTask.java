@@ -68,6 +68,7 @@ public class CRTerminateTask  implements JavaDelegate {
               map.put("clusterMasterURL",getServiceCharacteristic(aService, "clusterMasterURL")    );
               map.put("org.etsi.osl.serviceId", aService.getId() );
               map.put("org.etsi.osl.serviceOrderId", aService.getServiceOrder().stream().findFirst().get().getId() );
+              map.put("org.etsi.osl.prefixName",getServiceCharacteristic(aService, "org.etsi.osl.prefixName")    );
               map.put("org.etsi.osl.namespace", aService.getServiceOrder().stream().findFirst().get().getId() );
               map.put("org.etsi.osl.statusCheckFieldName",  getServiceCharacteristic(aService, "_CR_CHECK_FIELD")    );
               map.put("org.etsi.osl.statusCheckValueStandby", getServiceCharacteristic(aService, "_CR_CHECKVAL_STANDBY")  );
