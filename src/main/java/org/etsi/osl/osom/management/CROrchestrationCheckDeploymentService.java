@@ -94,16 +94,20 @@ public class CROrchestrationCheckDeploymentService implements JavaDelegate {
           rlist.add(res);
           
         }
-
-	    ServiceStateType nextState = aService.findNextStateBasedOnSupportingResources(rlist);
-	    supd.setState( nextState ); 	
-	    Note n = new Note();
-        n.setText("Service Status Changed to: " +  nextState);
-        n.setAuthor(compname);
-        n.setDate(OffsetDateTime.now(ZoneOffset.UTC).toString());
-        supd.addNoteItem(n);
+        @Valid
+        ServiceStateType currentState = aService.getState();
         
-		aService = serviceOrderManager.updateService( aService.getId(), supd, propagateToSO );
+	    ServiceStateType nextState = aService.findNextStateBasedOnSupportingResources(rlist);
+	    
+	    if (!currentState.equals(nextState)) {
+	        supd.setState( nextState );     
+	        Note n = new Note();
+	        n.setText("Service Status Changed to: " +  nextState);
+	        n.setAuthor(compname);
+	        n.setDate(OffsetDateTime.now(ZoneOffset.UTC).toString());
+	        supd.addNoteItem(n);	        
+	        aService = serviceOrderManager.updateService( aService.getId(), supd, propagateToSO );	      
+	    }
 		
 		if ( aService!= null ) {
 			if ( aService.getState().equals(ServiceStateType.ACTIVE)
