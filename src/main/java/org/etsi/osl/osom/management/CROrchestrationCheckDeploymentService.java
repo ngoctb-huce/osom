@@ -95,8 +95,7 @@ public class CROrchestrationCheckDeploymentService implements JavaDelegate {
           
         }
         @Valid
-        ServiceStateType currentState = aService.getState();
-        
+        ServiceStateType currentState = aService.getState();        
         
 	    ServiceStateType nextState = aService.findNextStateBasedOnSupportingResources(rlist);
 	    
