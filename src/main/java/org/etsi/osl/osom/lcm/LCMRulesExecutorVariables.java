@@ -28,7 +28,7 @@ public class LCMRulesExecutorVariables {
 	private Service service;
 	private List<String> compileDiagnosticErrors;
 	private ServiceOrderManager serviceOrderManager;
-	private Map<String, String> outParams;
+	private Map<String, Map<String, String> > outParams;
 
 	/**
 	 * @param spec
@@ -50,6 +50,7 @@ public class LCMRulesExecutorVariables {
 		this.service = serviceInstance;
 		this.serviceOrderManager = aServiceOrderManager;
 		this.compileDiagnosticErrors = new ArrayList<>();
-		this.outParams = new HashMap<String,String>();
+		
+		this.outParams = new HashMap<>();
 	}
 }

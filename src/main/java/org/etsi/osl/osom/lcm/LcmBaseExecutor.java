@@ -938,7 +938,7 @@ public abstract class LcmBaseExecutor {
 	
 
   //createServiceRefIf("Bundle B", getServiceRefPropValue("BundleA", "state", "").equals("active")==true);
-	public boolean createServiceRefIf(String serviceName, boolean b) {
+	public boolean createServiceRefIf(String serviceName, boolean b, HashMap<String, String> charvals) {
 
 		logger.debug( String.format("createServiceRefwhen serviceName=%s = %s", serviceName, b ) );
 		
@@ -952,7 +952,8 @@ public abstract class LcmBaseExecutor {
 		
 		
 		if (serviceIDToCheckDependcy != null) {		
-			this.vars.getOutParams().put( serviceIDToCheckDependcy, Boolean.toString(b) );
+		  charvals.put("_CREATESERVICEREF_", Boolean.toString(b));
+		  this.vars.getOutParams().put( serviceIDToCheckDependcy, charvals );
 		}
 		
 		return false;
