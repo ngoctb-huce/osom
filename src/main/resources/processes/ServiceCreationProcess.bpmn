@@ -29,7 +29,7 @@
     <exclusiveGateway id="exclusivegateway2" name="Exclusive Gateway"></exclusiveGateway>
     <sequenceFlow id="flow26" sourceRef="stAutomationCheck" targetRef="exclusivegateway2"></sequenceFlow>
     <sequenceFlow id="flow27" name="brokeActivity==&quot;RFS_OSM&quot;" sourceRef="exclusivegateway2" targetRef="parallelActivityNFVODeploymentReq">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${brokeActivity=='RFS'}]]></conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${brokeActivity=='RFS_OSM'}]]></conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="flow28" name="brokeActivity==&quot;PARTNER&quot;" sourceRef="exclusivegateway2" targetRef="parallelExternalSPDeploymentReqProcess">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${brokeActivity=='PARTNER'}]]></conditionExpression>
