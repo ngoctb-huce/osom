@@ -211,6 +211,9 @@ public class CROrchestrationService implements JavaDelegate {
       map.put("org.etsi.osl.statusCheckValueUnknown", getServiceCharacteristic(aService, "_CR_CHECKVAL_UNKNOWN")  );
       map.put("org.etsi.osl.statusCheckValueSuspended", getServiceCharacteristic(aService, "_CR_CHECKVAL_SUSPENDED")  );
       
+
+      logger.debug("createNewDeploymentRequest _CR_SPEC = " + _CR_SPEC);
+      
       String response  = serviceOrderManager.cridgeDeploymentRequest( map, _CR_SPEC);
       int retries = 0;
       while ( response.equals("SEE OTHER")) {
