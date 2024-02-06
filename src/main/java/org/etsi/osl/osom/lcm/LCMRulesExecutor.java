@@ -21,6 +21,7 @@ import javax.tools.ToolProvider;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.etsi.osl.tmf.lcm.model.LCMRuleSpecification;
+import org.springframework.boot.system.ApplicationHome;
 
 /**
  * @author ctranoris
@@ -162,10 +163,12 @@ public class LCMRulesExecutor {
          * This is the location of the jar inside the running container 
          */
         
-        File classesJar = new File("/opt/openslice/lib/org.etsi.osl.osom-1.2.0-SNAPSHOT.jar");        
+        ApplicationHome home = new ApplicationHome(LCMRulesExecutor.class);        
+        File classesJar =  home.getSource();     
         if ( classesJar.exists()  ) {
-            optionList.addAll(Arrays.asList("-classpath", classesJar.getAbsoluteFile().toString() ));
-        } 
+            optionList.addAll(Arrays.asList("-classpath", classesJar.getAbsoluteFile().toString().replace("-exec", "") ));
+        }
+        logger.debug("classesJar =  "+ classesJar); 
         logger.debug("optionList =  "+ optionList.toString());
         
 
