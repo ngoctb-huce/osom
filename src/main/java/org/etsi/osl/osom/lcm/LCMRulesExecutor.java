@@ -6,7 +6,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.net.URLDecoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -22,6 +21,7 @@ import javax.tools.ToolProvider;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.etsi.osl.tmf.lcm.model.LCMRuleSpecification;
+import org.springframework.boot.system.ApplicationHome;
 
 /**
  * @author ctranoris
@@ -163,13 +163,12 @@ public class LCMRulesExecutor {
          * This is the location of the jar inside the running container 
          */
         
-        String jarpath = new File(ClassLoader.getSystemClassLoader().getResource(".").getPath()).getAbsolutePath();
-        File classesJar =  new File(jarpath); 
-        //File classesJar = new File("/opt/openslice/lib/org.etsi.osl.osom-1.2.0-SNAPSHOT.jar");        
+        ApplicationHome home = new ApplicationHome(LCMRulesExecutor.class);        
+        File classesJar =  home.getSource();     
         if ( classesJar.exists()  ) {
             optionList.addAll(Arrays.asList("-classpath", classesJar.getAbsoluteFile().toString() ));
         }
-        logger.debug("jarpath =  "+ jarpath); 
+        logger.debug("classesJar =  "+ classesJar); 
         logger.debug("optionList =  "+ optionList.toString());
         
 
