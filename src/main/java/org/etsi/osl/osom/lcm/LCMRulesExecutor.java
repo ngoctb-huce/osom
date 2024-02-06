@@ -166,7 +166,7 @@ public class LCMRulesExecutor {
         ApplicationHome home = new ApplicationHome(LCMRulesExecutor.class);        
         File classesJar =  home.getSource();     
         if ( classesJar.exists()  ) {
-            optionList.addAll(Arrays.asList("-classpath", classesJar.getAbsoluteFile().toString() ));
+            optionList.addAll(Arrays.asList("-classpath", classesJar.getAbsoluteFile().toString().replace("-exec", "") ));
         }
         logger.debug("classesJar =  "+ classesJar); 
         logger.debug("optionList =  "+ optionList.toString());
