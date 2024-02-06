@@ -163,16 +163,13 @@ public class LCMRulesExecutor {
          * This is the location of the jar inside the running container 
          */
         
- 
-        String path = LCMRulesExecutor.class.getProtectionDomain().getCodeSource().getLocation().getPath();
-        String decodedPath = URLDecoder.decode(path, "UTF-8");
-
-        File classesJar =  new File(decodedPath); 
+        String jarpath = new File(ClassLoader.getSystemClassLoader().getResource(".").getPath()).getAbsolutePath();
+        File classesJar =  new File(jarpath); 
         //File classesJar = new File("/opt/openslice/lib/org.etsi.osl.osom-1.2.0-SNAPSHOT.jar");        
         if ( classesJar.exists()  ) {
             optionList.addAll(Arrays.asList("-classpath", classesJar.getAbsoluteFile().toString() ));
         }
-        logger.debug("jarpath =  "+ decodedPath); 
+        logger.debug("jarpath =  "+ jarpath); 
         logger.debug("optionList =  "+ optionList.toString());
         
 
