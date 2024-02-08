@@ -153,7 +153,7 @@ public class ProcessCreateServiceRules implements JavaDelegate {
 		
 		List<String> servicesToCreate = new ArrayList<>();
 		for (String specid : tobeCreated.keySet()) {
-			if ( tobeCreated.get(specid) !=null ) {
+			if ( tobeCreated.containsKey(specid)  ) {
 				servicesToCreate.add(specid);
 				allSupportingServicesCreated = false;				
 			}
