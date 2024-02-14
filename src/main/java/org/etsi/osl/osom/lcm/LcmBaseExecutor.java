@@ -396,8 +396,10 @@ public abstract class LcmBaseExecutor {
 		
 
 		System.out.println("============================================================================= \n");
-		System.out.println("The value length is apayload= \n" + apayload.length());
-		System.out.println("The value is apayload= \n" + apayload);
+        System.out.println("The value is apayload= \n" + apayload);
+        if (apayload!=null) {
+          System.out.println("The value length is apayload= \n" + apayload.length());          
+        }
 		System.out.println("============================================================================= \n");
 
 		if (baseurl != null) {

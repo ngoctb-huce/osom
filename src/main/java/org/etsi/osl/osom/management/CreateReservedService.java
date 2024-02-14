@@ -313,6 +313,7 @@ public class CreateReservedService implements JavaDelegate {
 			        .value( new Any( initCharValues.get( c.getName() ), initCharValues.get( c.getName() ))) ;
                 serviceToCreate.addServiceCharacteristicItem( helperCreateCharacteristicItem(c, orderCharacteristic ) );
                 characteristicFound = true;
+                continue;
 			    
 			  }
 			}
