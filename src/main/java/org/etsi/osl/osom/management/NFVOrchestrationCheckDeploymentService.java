@@ -87,7 +87,7 @@ public class NFVOrchestrationCheckDeploymentService implements JavaDelegate {
 		ServiceUpdate supd = new ServiceUpdate();
 		boolean aVNFINDEXREFadded = false;
 		
-		boolean propagateToSO = false;
+		boolean triggerServiceActionQueue = false;
 		
 		if ( aService.getServiceCharacteristic() != null ) {
 			for (Characteristic c : aService.getServiceCharacteristic()) {
@@ -103,17 +103,17 @@ public class NFVOrchestrationCheckDeploymentService implements JavaDelegate {
 					c.setValue( new Any( dd.getInstanceId() + "" ));
 				} else if ( c.getName().equals("NSR")) {
 					c.setValue( new Any( dd.getNsr() + "" ));
-					propagateToSO = true;
+					triggerServiceActionQueue = true;
 				} else if ( c.getName().equals("NSLCM")) {
 					c.setValue( new Any( dd.getNs_nslcm_details() + "" ));
-					propagateToSO = true;
+					triggerServiceActionQueue = true;
 				}				
 				if ( dd.getDeploymentDescriptorVxFInstanceInfo() !=null ) {
 					for ( DeploymentDescriptorVxFInstanceInfo vnfinfo : dd.getDeploymentDescriptorVxFInstanceInfo() ) {
 						if ( c.getName().equals(  "VNFINDEXREF_INFO_" + vnfinfo.getMemberVnfIndexRef() )) {
 							c.setValue( new Any( vnfinfo.getVxfInstanceInfo()  + "" ));
 							aVNFINDEXREFadded = true;
-							propagateToSO = true;
+							triggerServiceActionQueue = true;
 						} 
 						
 					}
@@ -153,7 +153,7 @@ public class NFVOrchestrationCheckDeploymentService implements JavaDelegate {
 			supd.setState( ServiceStateType.TERMINATED );
 		}
 		
-		Service serviceResult = serviceOrderManager.updateService( aService.getId(), supd, propagateToSO );
+		Service serviceResult = serviceOrderManager.updateService( aService.getId(), supd, triggerServiceActionQueue );
 		
 		if ( serviceResult!= null ) {
 			if ( serviceResult.getState().equals(ServiceStateType.ACTIVE)

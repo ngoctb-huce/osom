@@ -165,7 +165,7 @@ public class LCMRulesExecutor {
         
         ApplicationHome home = new ApplicationHome(LCMRulesExecutor.class);        
         File classesJar =  home.getSource();     
-        if ( classesJar.exists()  ) {
+        if ( classesJar != null && classesJar.exists()  ) {
             optionList.addAll(Arrays.asList("-classpath", classesJar.getAbsoluteFile().toString().replace("-exec", "") ));
         }
         logger.debug("classesJar =  "+ classesJar); 
@@ -213,7 +213,7 @@ public class LCMRulesExecutor {
 
         URL[] classpath = new URL[] { temp.toUri().toURL()  };
             
-        if ( classesJar.exists()  ) {
+        if ( classesJar != null && classesJar.exists()  ) {
         	classpath = new URL[] { temp.toUri().toURL(), classesJar.toURI().toURL()  };
         } 
         logger.debug("classpath =  "+ classpath.toString());

@@ -1,0 +1,9 @@
+[
+  {
+    "uuid": "89e027b5-24a9-4db7-b422-a963c9feeb7a",
+    "id": "89e027b5-24a9-4db7-b422-a963c9feeb7a",
+    "name": "OSM config depending on class",
+    "description": "LCM Rule for specification Cirros Test OSM config depending on class",
+    "lcmrulephase": "CREATION"
+  }
+]

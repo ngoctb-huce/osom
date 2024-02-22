@@ -48,6 +48,9 @@ public class ProcessCreateServiceRules implements JavaDelegate {
 		execution.setVariable("allSupportingServicesCreated", allSupportingServicesCreated ); //by default
 		
 
+
+        
+        
 		Service contextService = null;
 		String contextServiceId = (String) execution.getVariable("contextServiceId"); 
 		if ( contextServiceId != null ) {
@@ -69,29 +72,18 @@ public class ProcessCreateServiceRules implements JavaDelegate {
 		 * first find all referenced ServiceSpecs of a ServiceSpec to be created
 		 */
 		boolean foundCreatedButNOTACTIVEServices = false;
-		Map<String, Boolean> tobeCreated = new HashMap<>();
+		
+		//this map contains as key the id of the serviceSpecs to be created
+		//and as value a Map of initial characteristics and their values
+		Map<String, Map<String,String>> tobeCreated = new HashMap<>();
+		
 		for (ServiceSpecRelationship specRels : spec.getServiceSpecRelationship()) {
 			logger.debug("\tService specRelsId:" + specRels.getId());
-			tobeCreated.put(specRels.getId(), true);
+			tobeCreated.put(specRels.getId(), null);
 		}
 		
 		
-		for ( ServiceRef serviceRef: contextService.getSupportingService()  ) {
-			
-			Service theServiceReferenced = serviceOrderManager.retrieveService( serviceRef.getId() );
-			
-			if ( tobeCreated.get(theServiceReferenced.getServiceSpecificationRef().getId() ) != null ) {	
-				tobeCreated.put( theServiceReferenced.getServiceSpecificationRef().getId(), false);
-			}
-			
 
-			if ( theServiceReferenced != null ) {
-				if ( theServiceReferenced.getState().equals( ServiceStateType.RESERVED) ) {
-					foundCreatedButNOTACTIVEServices = true;
-				}
-			}
-			
-		}
 		
 		
 		/**
@@ -123,20 +115,45 @@ public class ProcessCreateServiceRules implements JavaDelegate {
 
 		for (String serviceId : vars.getOutParams().keySet()) {
 			if (  vars.getOutParams().get(serviceId) !=null) {
-				if (  vars.getOutParams().get(serviceId).equals( "true")  ) {	
-					tobeCreated.put( serviceId, true && tobeCreated.get(serviceId) );				
-				} else {
-					tobeCreated.put( serviceId, false);
-					allSupportingServicesCreated = false;	
-				}				
+			  
+
+			  if (  vars.getOutParams().get(serviceId) != null && vars.getOutParams().get(serviceId).get("_CREATESERVICEREF_") !=null) {
+                
+                if (  vars.getOutParams().get(serviceId).get("_CREATESERVICEREF_").equals( "true")  ) {   
+                  vars.getOutParams().get(serviceId).remove( "_CREATESERVICEREF_" );
+                  HashMap<String, String> myChars = new HashMap< String , String >( vars.getOutParams().get(serviceId) );
+                  tobeCreated.put( serviceId, myChars  );               
+                } else {
+                    tobeCreated.remove( serviceId);
+                    allSupportingServicesCreated = false;   
+                }
+              }
+			  
 			}
 		}
+		
+		
+		//now compare those to be created, with those already created
+        for ( ServiceRef serviceRef: contextService.getSupportingService()  ) {            
+            Service theServiceReferenced = serviceOrderManager.retrieveService( serviceRef.getId() );            
+            if ( tobeCreated.containsKey(theServiceReferenced.getServiceSpecificationRef().getId() )  ) {               
+                tobeCreated.remove( theServiceReferenced.getServiceSpecificationRef().getId());
+            }           
+
+            if ( theServiceReferenced != null ) {
+                if ( theServiceReferenced.getState().equals( ServiceStateType.RESERVED) ) {
+                    foundCreatedButNOTACTIVEServices = true;
+                }
+            }
+            
+        }
+      
 
 		serviceOrderManager.updateService( contextService.getId() , supd, false); //update context service
 		
 		List<String> servicesToCreate = new ArrayList<>();
 		for (String specid : tobeCreated.keySet()) {
-			if ( tobeCreated.get(specid) ) {
+			if ( tobeCreated.containsKey(specid)  ) {
 				servicesToCreate.add(specid);
 				allSupportingServicesCreated = false;				
 			}
@@ -161,11 +178,21 @@ public class ProcessCreateServiceRules implements JavaDelegate {
 			
 		}
 		
+		if ( contextService.getState().equals( ServiceStateType.INACTIVE ) || contextService.getState().equals( ServiceStateType.TERMINATED ) ) {
+          allSupportingServicesCreatedAndActive = true;
+          allSupportingServicesCreated = true;    
+         // this will help us to avoid a deadlock if a failure occurs
+      } 
+		
 
 		execution.setVariable("allSupportingServicesCreated", allSupportingServicesCreated ); 
 		execution.setVariable("allSupportingServicesCreatedAndActive", allSupportingServicesCreatedAndActive && allSupportingServicesCreated ); //by default
 		execution.setVariable("parentServiceId", contextServiceId);
-		execution.setVariable("serviceSpecsToCreate", servicesToCreate);
+        execution.setVariable("serviceSpecsToCreate", servicesToCreate);
+        execution.setVariable("serviceSpecsToCreateInitialCharValues", tobeCreated);
+		
+		
+		
 	}
 
 	

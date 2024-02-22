@@ -222,7 +222,12 @@ public class SCMocked {
 			InputStream in = new FileInputStream( sspec );
 			sspectext = IOUtils.toString(in, "UTF-8");
 			return sspectext;			
-		}
+		} else if ( id.equals("89e027b5-24a9-4db7-b422-a963c9feeb7a") ) {
+          File sspec = new File( "src/test/resources/LcmCirrosRule1Test_CREATION.json" );
+          InputStream in = new FileInputStream( sspec );
+          sspectext = IOUtils.toString(in, "UTF-8");
+          return sspectext;           
+      }
 		
 		
 		
@@ -241,13 +246,24 @@ public class SCMocked {
 				
 		String sspectext = null;
 
-		if ( specid.equals("f2b74f90-4140-4895-80d1-ef243398117b") ) {
-			File sspec = new File( "src/test/resources/LcmRuleListSpecTest.json" );
-			InputStream in = new FileInputStream( sspec );
-			sspectext = IOUtils.toString(in, "UTF-8");
-			return sspectext;		
-			
-		}
+		if ( phaseName.equals("PRE_PROVISION") ) {
+	        if ( specid.equals("f2b74f90-4140-4895-80d1-ef243398117b") ) {
+	            File sspec = new File( "src/test/resources/LcmRuleListSpecTest.json" );
+	            InputStream in = new FileInputStream( sspec );
+	            sspectext = IOUtils.toString(in, "UTF-8");
+	            return sspectext;       
+	            
+	        }		  
+		} else if ( phaseName.equals("CREATION") ) {
+          if ( specid.equals("f2b74f90-4140-4895-80d1-ef243398117b") ) {
+              File sspec = new File( "src/test/resources/LcmRuleListSpecTest_CREATION.json" );
+              InputStream in = new FileInputStream( sspec );
+              sspectext = IOUtils.toString(in, "UTF-8");
+              return sspectext;     
+
+            
+        }         
+    }
 		
 
 		return "[]";	
