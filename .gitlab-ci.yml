@@ -13,7 +13,7 @@ include:
       - ci-templates/default.yml
       - ci-templates/build.yml
     rules:
-      - if: '$CI_COMMIT_REF_NAME == "develop"'
+      - if: '$CI_COMMIT_REF_NAME == "develop" || $CI_COMMIT_REF_PROTECTED'
 
   - project: osl/code/org.etsi.osl.main
     ref: develop
@@ -21,7 +21,7 @@ include:
       - ci-templates/default.yml
       - ci-templates/build_unprotected.yml
     rules:
-      - if: '$CI_COMMIT_REF_NAME != "main" && $CI_COMMIT_REF_NAME != "develop"'
+      - if: '$CI_COMMIT_REF_NAME != "main" && $CI_COMMIT_REF_NAME != "develop" && !$CI_COMMIT_REF_PROTECTED'
 
 maven_build:
   extends: .maven_build
