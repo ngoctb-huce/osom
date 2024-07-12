@@ -43,6 +43,10 @@ public class ProcessOrderItemActionCheck implements JavaDelegate {
 		}
 		
 		if ( soi == null ) {
+            logger.error("In ProcessOrderItemActionCheck cannot find ServiceOrderItem orderItemIdToProcess=:" + orderItemIdToProcess);
+            logger.error("In ProcessOrderItemActionCheck cannot find ServiceOrderItem sor.getUuid()=:" + sor.getUuid() );
+            logger.error("In ProcessOrderItemActionCheck cannot find ServiceOrderItem sor()=:" + sor.toString() );
+            execution.setVariable("saction", "NONE");            
 			return;
 		}
 		
