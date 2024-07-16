@@ -3,14 +3,14 @@ package org.etsi.osl.osom.management;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.etsi.osl.osom.lcm.LCMRulesController;
+import org.etsi.osl.tmf.so641.model.ServiceOrder;
+import org.etsi.osl.tmf.so641.model.ServiceOrderActionType;
+import org.etsi.osl.tmf.so641.model.ServiceOrderItem;
 import org.flowable.engine.delegate.DelegateExecution;
 import org.flowable.engine.delegate.JavaDelegate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.etsi.osl.tmf.so641.model.ServiceOrder;
-import org.etsi.osl.tmf.so641.model.ServiceOrderActionType;
-import org.etsi.osl.tmf.so641.model.ServiceOrderItem;
 
 @Component(value = "processOrderItemActionCheck") // bean name
 public class ProcessOrderItemActionCheck implements JavaDelegate {
@@ -43,6 +43,10 @@ public class ProcessOrderItemActionCheck implements JavaDelegate {
 		}
 		
 		if ( soi == null ) {
+            logger.error("In ProcessOrderItemActionCheck cannot find ServiceOrderItem orderItemIdToProcess=:" + orderItemIdToProcess);
+            logger.error("In ProcessOrderItemActionCheck cannot find ServiceOrderItem sor.getUuid()=:" + sor.getUuid() );
+            logger.error("In ProcessOrderItemActionCheck cannot find ServiceOrderItem sor()=:" + sor.toString() );
+            execution.setVariable("saction", "NONE");            
 			return;
 		}
 		

@@ -20,20 +20,17 @@
 package org.etsi.osl.osom.partnerservices;
 
 import java.util.List;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import org.flowable.engine.delegate.DelegateExecution;
-import org.flowable.engine.delegate.JavaDelegate;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import org.etsi.osl.tmf.common.model.Any;
 import org.etsi.osl.tmf.pm632.model.Characteristic;
 import org.etsi.osl.tmf.pm632.model.Organization;
 import org.etsi.osl.tmf.scm633.model.ServiceSpecification;
+import org.flowable.engine.delegate.DelegateExecution;
+import org.flowable.engine.delegate.JavaDelegate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 @Component(value = "fetchUpdateExternalPartnerServices") // bean name
 public class FetchUpdateExternalPartnerServices  implements JavaDelegate {

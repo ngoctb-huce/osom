@@ -3,17 +3,13 @@ package org.etsi.osl.osom.management;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.etsi.osl.osom.lcm.LCMRulesController;
 import org.etsi.osl.osom.lcm.LCMRulesExecutorVariables;
-import org.flowable.engine.delegate.DelegateExecution;
-import org.flowable.engine.delegate.JavaDelegate;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 import org.etsi.osl.tmf.common.model.Any;
 import org.etsi.osl.tmf.common.model.EValueType;
 import org.etsi.osl.tmf.common.model.UserPartRoleType;
@@ -37,6 +33,11 @@ import org.etsi.osl.tmf.so641.model.ServiceOrder;
 import org.etsi.osl.tmf.so641.model.ServiceOrderItem;
 import org.etsi.osl.tmf.so641.model.ServiceOrderStateType;
 import org.etsi.osl.tmf.so641.model.ServiceOrderUpdate;
+import org.flowable.engine.delegate.DelegateExecution;
+import org.flowable.engine.delegate.JavaDelegate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import jakarta.validation.Valid;
 
 @Component(value = "createReservedService") // bean name
@@ -97,9 +98,16 @@ public class CreateReservedService implements JavaDelegate {
 		logger.debug("Retrieved Service ID:" + spec.getId());
 		logger.debug("Retrieved Service Name:" + spec.getName());
 		
+	      //this map contains as key the id of the serviceSpecs to be created
+        //and as value a Map of initial characteristics and their values
+        Map<String, Map<String,String>> tobeCreatedInitialCharValues = new HashMap<>();
+        
+        if ( execution.getVariable("serviceSpecsToCreateInitialCharValues") != null ) {
+          tobeCreatedInitialCharValues = (Map<String, Map<String, String>>) execution.getVariable("serviceSpecsToCreateInitialCharValues");
+        }
 		
 		//this is a main underlying service for the requested service (restriction)					
-		Service createdUnderlService = addServicesToVariables( spec, sor, soi,  parentService );
+		Service createdUnderlService = addServicesToVariables( spec, sor, soi,  parentService, tobeCreatedInitialCharValues );
 		
 		soi.getService().setState( ServiceStateType.RESERVED );
 		soi.setState(ServiceOrderStateType.INPROGRESS);
@@ -146,11 +154,12 @@ public class CreateReservedService implements JavaDelegate {
 	 * @param servicesHandledByNFVOAutomated
 	 * @param servicesLocallyAutomated
 	 * @param parentService 
+	 * @param tobeCreatedInitialCharValues 
 	 * @return 
 	 */
 	private Service addServicesToVariables(ServiceSpecification specrel, 
 			ServiceOrder sor, ServiceOrderItem soi, 
-			Service parentService) {
+			Service parentService, Map<String, Map<String, String>> tobeCreatedInitialCharValues) {
 		
 		logger.debug("\tService spec name :" + specrel.getName());
 		logger.debug("\tService spec type :" + specrel.getType());
@@ -160,25 +169,23 @@ public class CreateReservedService implements JavaDelegate {
 		
 		
 		if ( partnerOrg != null  ) {
-			createdServ = createServiceByServiceSpec(sor, soi, specrel, EServiceStartMode.AUTOMATICALLY_MANAGED, partnerOrg, parentService);
-			
-			
+			createdServ = createServiceByServiceSpec(sor, soi, specrel, EServiceStartMode.AUTOMATICALLY_MANAGED, partnerOrg, parentService, tobeCreatedInitialCharValues);
 		}	
 		else if (specrel.getType().equals("ResourceFacingServiceSpecification")) {
-			createdServ = createServiceByServiceSpec(sor, soi, specrel, EServiceStartMode.AUTOMATICALLY_MANAGED, null, parentService);
+			createdServ = createServiceByServiceSpec(sor, soi, specrel, EServiceStartMode.AUTOMATICALLY_MANAGED, null, parentService, tobeCreatedInitialCharValues);
 			
 		} else if ( specrel.getType().equals("CustomerFacingServiceSpecification") && (specrel.isIsBundle()!=null) && specrel.isIsBundle() ) {
-			createdServ = createServiceByServiceSpec(sor, soi, specrel, EServiceStartMode.AUTOMATICALLY_MANAGED, null, parentService);			
+			createdServ = createServiceByServiceSpec(sor, soi, specrel, EServiceStartMode.AUTOMATICALLY_MANAGED, null, parentService, tobeCreatedInitialCharValues);			
 			
 		} else if ( specrel.getType().equals("CustomerFacingServiceSpecification") && (specrel.findSpecCharacteristicByName("OSAUTOMATED") != null )  ) {
-			createdServ = createServiceByServiceSpec(sor, soi, specrel, EServiceStartMode.AUTOMATICALLY_MANAGED, null, parentService);			
+			createdServ = createServiceByServiceSpec(sor, soi, specrel, EServiceStartMode.AUTOMATICALLY_MANAGED, null, parentService, tobeCreatedInitialCharValues);			
 			
 		} else if ( specrel.getType().equals("CustomerFacingServiceSpecification") && (specrel.findSpecCharacteristicByName("testSpecRef") != null )  ) {
-			createdServ = createServiceByServiceSpec(sor, soi, specrel, EServiceStartMode.AUTOMATICALLY_MANAGED, null, parentService);			
+			createdServ = createServiceByServiceSpec(sor, soi, specrel, EServiceStartMode.AUTOMATICALLY_MANAGED, null, parentService, tobeCreatedInitialCharValues);			
 			
 		}	
 		else {
-			createdServ = createServiceByServiceSpec(sor, soi, specrel, EServiceStartMode.MANUALLY_BY_SERVICE_PROVIDER, null, parentService);			
+			createdServ = createServiceByServiceSpec(sor, soi, specrel, EServiceStartMode.MANUALLY_BY_SERVICE_PROVIDER, null, parentService, tobeCreatedInitialCharValues);			
 		}		
 		
 		//add now the serviceRef
@@ -229,16 +236,20 @@ public class CreateReservedService implements JavaDelegate {
 		
 	}
 	
-	
+
 	/**
 	 * @param sor
-	 * @param soi 
+	 * @param soi
 	 * @param spec
-	 * @return 
+	 * @param startMode
+	 * @param partnerOrg
+	 * @param parentService
+	 * @param tobeCreatedInitialCharValues
+	 * @return
 	 */
 	private Service createServiceByServiceSpec(ServiceOrder sor, ServiceOrderItem soi,
 			ServiceSpecification spec, EServiceStartMode startMode, 
-			RelatedParty partnerOrg, Service parentService) {
+			RelatedParty partnerOrg, Service parentService, Map<String, Map<String, String>> tobeCreatedInitialCharValues) {
 
 		ServiceCreate serviceToCreate = new ServiceCreate();
 		String servicename = spec.getName();
@@ -285,15 +296,33 @@ public class CreateReservedService implements JavaDelegate {
 			}			
 		}
 		
+	    //this map contains as key the id of the serviceSpecs to be created
+        //and as value a Map of initial characteristics and their values
+		Map<String, String> initCharValues = tobeCreatedInitialCharValues.get( spec.getId() );
+		
 		//we need to be careful here with the bundle and the related Service Specs, to properly propagate the rules inside
 		//first copy into the newly created service any characteristic values from the order
 		for (ServiceSpecCharacteristic c : spec.getServiceSpecCharacteristic()) {
 			
 			boolean characteristicFound = false;
+			
+			//pass any initial value. This has high priority
+			if ( initCharValues != null ) {
+			  if ( initCharValues.get( c.getName() ) != null ) {
+			    Characteristic orderCharacteristic = new Characteristic()
+			        .value( new Any( initCharValues.get( c.getName() ), initCharValues.get( c.getName() ))) ;
+                serviceToCreate.addServiceCharacteristicItem( helperCreateCharacteristicItem(c, orderCharacteristic ) );
+                characteristicFound = true;
+                continue;
+			    
+			  }
+			}
+			
+			
 			for (Characteristic orderCharacteristic : soi.getService().getServiceCharacteristic()) {
 				String specCharacteristicToSearch = spec.getName() + "::" +c.getName();
 				 if ( orderCharacteristic.getName().equals( specCharacteristicToSearch )) { //copy only characteristics that are related from the order
-					serviceToCreate.addServiceCharacteristicItem( addServiceCharacteristicItem(c, orderCharacteristic) );
+					serviceToCreate.addServiceCharacteristicItem( helperCreateCharacteristicItem(c, orderCharacteristic) );
 					characteristicFound = true;
 					break;
 				}
@@ -304,13 +333,15 @@ public class CreateReservedService implements JavaDelegate {
 					String specCharacteristicToSearch = c.getName();
 					 if ( orderCharacteristic.getName().equals( specCharacteristicToSearch )) { //copy only characteristics that are related from the order							 
 						
-						serviceToCreate.addServiceCharacteristicItem( addServiceCharacteristicItem(c, orderCharacteristic) );
+						serviceToCreate.addServiceCharacteristicItem( helperCreateCharacteristicItem(c, orderCharacteristic) );
 						characteristicFound = true;
 						break;
 					}
 				}
 				
 			}
+			
+			
 			
 		}	
 		
@@ -330,7 +361,7 @@ public class CreateReservedService implements JavaDelegate {
 					}
 				}				
 			}
-								
+
 
 			//also add parent service as relationship to parent
 			ServiceRelationship srelationship = new ServiceRelationship();
@@ -386,7 +417,7 @@ public class CreateReservedService implements JavaDelegate {
 		return null;
 	}
 	
-	private Characteristic addServiceCharacteristicItem(ServiceSpecCharacteristic c, Characteristic orderCharacteristic) {
+	private Characteristic helperCreateCharacteristicItem(ServiceSpecCharacteristic c, Characteristic orderCharacteristic) {
 		Characteristic serviceCharacteristicItem =  new Characteristic();
 		serviceCharacteristicItem.setName( c.getName() );
 		serviceCharacteristicItem.setValueType( c.getValueType() );

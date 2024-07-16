@@ -21,14 +21,13 @@ package org.etsi.osl.osom.management;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.etsi.osl.tmf.common.model.service.ServiceStateType;
+import org.etsi.osl.tmf.sim638.model.Service;
 import org.flowable.engine.delegate.DelegateExecution;
 import org.flowable.engine.delegate.JavaDelegate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
-import org.etsi.osl.tmf.common.model.service.ServiceStateType;
-import org.etsi.osl.tmf.sim638.model.Service;
 
 
 @Component(value = "userOrderCompleteService") //bean name

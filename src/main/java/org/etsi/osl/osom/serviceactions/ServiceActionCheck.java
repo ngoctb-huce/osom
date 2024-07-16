@@ -3,15 +3,9 @@ package org.etsi.osl.osom.serviceactions;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.etsi.osl.osom.management.ServiceOrderManager;
-import org.flowable.engine.delegate.DelegateExecution;
-import org.flowable.engine.delegate.JavaDelegate;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 import org.etsi.osl.tmf.common.model.UserPartRoleType;
 import org.etsi.osl.tmf.common.model.service.ResourceRef;
 import org.etsi.osl.tmf.common.model.service.ServiceRef;
@@ -19,6 +13,11 @@ import org.etsi.osl.tmf.prm669.model.RelatedParty;
 import org.etsi.osl.tmf.sim638.model.Service;
 import org.etsi.osl.tmf.sim638.model.ServiceActionQueueAction;
 import org.etsi.osl.tmf.sim638.model.ServiceActionQueueItem;
+import org.flowable.engine.delegate.DelegateExecution;
+import org.flowable.engine.delegate.JavaDelegate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 @Component(value = "serviceActionCheck") //bean name
 public class ServiceActionCheck implements JavaDelegate {
@@ -80,7 +79,9 @@ public class ServiceActionCheck implements JavaDelegate {
 				execution.setVariable("saction", "HandleActiveStateChanged");
 			} else if ( item.getAction().equals( ServiceActionQueueAction.EVALUATE_STATE_CHANGE_TOINACTIVE  ) ) {
 				execution.setVariable("saction", "HandleInactiveStateChanged");
-			} else if ( item.getAction().equals( ServiceActionQueueAction.EVALUATE_CHARACTERISTIC_CHANGED  ) || item.getAction().equals( ServiceActionQueueAction.EVALUATE_CHARACTERISTIC_CHANGED_MANODAY2  ) ) {
+			} else if ( item.getAction().equals( ServiceActionQueueAction.EVALUATE_CHARACTERISTIC_CHANGED  ) 
+			              || item.getAction().equals( ServiceActionQueueAction.EVALUATE_CHILD_CHARACTERISTIC_CHANGED  ) 
+			              || item.getAction().equals( ServiceActionQueueAction.EVALUATE_CHARACTERISTIC_CHANGED_MANODAY2  ) ) {
 				
 				execution.setVariable("saction", "HandleEvaluateService");// default
 				

@@ -181,10 +181,10 @@ public class ProcessOrderIntegrationTest {
 		assertThat(spec).isInstanceOf(ServiceSpecification.class);
 
 		assertThat(spec.getServiceSpecCharacteristic().size()  ).isEqualTo(11);
-		assertThat(specCirros.getServiceSpecCharacteristic().size()  ).isEqualTo(10);
+		assertThat(specCirros.getServiceSpecCharacteristic().size()  ).isEqualTo(12);
 		assertThat(sorder.getOrderItem().stream().findFirst().get().getService().getServiceCharacteristic().size()  ).isEqualTo(2);
-		
-		assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(14);
+
+		assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(15);
 		assertThat(taskService.createTaskQuery().count()).isEqualTo(0);
 
 		assertThat( scmocked.getRequeestedDescriptor() ).isNull();
@@ -224,15 +224,17 @@ public class ProcessOrderIntegrationTest {
 		assertThat( aservice  ).isNotNull();
 		assertThat( aservice.getServiceCharacteristic().size()  ).isEqualTo(11);
 		assertThat( aserviceCirros  ).isNotNull();
-		assertThat( aserviceCirros.getServiceCharacteristic().size()  ).isEqualTo(10);
+		assertThat( aserviceCirros.getServiceCharacteristic().size()  ).isEqualTo(12);
 
 		assertThat(  aservice.getServiceCharacteristicByName("Quality Class").getValue().getValue() ).isEqualTo( "1" );
 		assertThat(  aservice.getServiceCharacteristicByName("cirros_2vnf_ns::OSM_CONFIG").getValue().getValue() ).contains( "eeeeeeee-8219-4580-9697-bf4a8f0a08f9" );
 		assertThat(  aservice.getServiceCharacteristicByName("cirros_2vnf_ns::SSHKEY").getValue().getValue() ).isEqualTo( "MCKEYTESTINORDERExampleConcatSSHKEY_EnhancedByRule" );
 		//check that the cirros_2vnf_ns::SSHKEY value from the service order has been passed properly to the related RFS service
 		assertThat(  aserviceCirros.getServiceCharacteristicByName("OSM_CONFIG").getValue().getValue() ).contains( "eeeeeeee-8219-4580-9697-bf4a8f0a08f9" );
-		assertThat(  aserviceCirros.getServiceCharacteristicByName("SSHKEY").getValue().getValue() ).isEqualTo( "MCKEYTESTINORDERExampleConcatSSHKEY_EnhancedByRule" );
-		
+        assertThat(  aserviceCirros.getServiceCharacteristicByName("SSHKEY").getValue().getValue() ).isEqualTo( "MCKEYTESTINORDERExampleConcatSSHKEY_EnhancedByRule" );
+        assertThat(  aserviceCirros.getServiceCharacteristicByName("AProgrammaticChar").getValue().getValue() ).isEqualTo( "AProgrammaticNSDIDValue" );
+        assertThat(  aserviceCirros.getServiceCharacteristicByName("Another ProgrammaticChar").getValue().getValue() ).isEqualTo( "AnotherValue" );
+        
 		
 		//we will further check LCM rules!
 		

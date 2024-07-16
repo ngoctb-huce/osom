@@ -1,0 +1,40 @@
+include:
+  - project: osl/code/org.etsi.osl.main
+    ref: main
+    file: 
+      - ci-templates/default.yml
+      - ci-templates/build.yml
+    rules:
+      - if: '$CI_COMMIT_REF_NAME == "main"'
+  
+  - project: osl/code/org.etsi.osl.main
+    ref: develop
+    file: 
+      - ci-templates/default.yml
+      - ci-templates/build.yml
+    rules:
+      - if: '$CI_COMMIT_REF_NAME == "develop"'
+
+  - project: osl/code/org.etsi.osl.main
+    ref: $CI_COMMIT_REF_NAME
+    file: 
+      - ci-templates/default.yml
+      - ci-templates/build.yml
+    rules:
+      - if: '$CI_COMMIT_REF_PROTECTED && $CI_COMMIT_REF_NAME != "main" && $CI_COMMIT_REF_NAME != "develop"'
+
+  - project: osl/code/org.etsi.osl.main
+    ref: develop
+    file: 
+      - ci-templates/default.yml
+      - ci-templates/build_unprotected.yml
+    rules:
+      - if: '$CI_COMMIT_REF_NAME != "main" && $CI_COMMIT_REF_NAME != "develop" && !$CI_COMMIT_REF_PROTECTED'
+
+maven_build:
+  extends: .maven_build
+
+docker_build:
+  extends: .docker_build
+  needs:
+    - maven_build

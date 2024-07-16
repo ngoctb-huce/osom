@@ -22,7 +22,6 @@ package org.etsi.osl.osom.configuration;
 import org.apache.camel.component.activemq.ActiveMQComponent;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
 import jakarta.jms.ConnectionFactory;
 
 /**

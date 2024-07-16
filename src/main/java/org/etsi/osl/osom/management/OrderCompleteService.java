@@ -21,24 +21,26 @@ package org.etsi.osl.osom.management;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
-
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.etsi.osl.tmf.common.model.service.Note;
+import org.etsi.osl.tmf.common.model.service.ResourceRef;
+import org.etsi.osl.tmf.common.model.service.ServiceRef;
+import org.etsi.osl.tmf.common.model.service.ServiceStateType;
+import org.etsi.osl.tmf.ri639.model.Resource;
+import org.etsi.osl.tmf.sim638.model.Service;
+import org.etsi.osl.tmf.sim638.model.ServiceUpdate;
+import org.etsi.osl.tmf.so641.model.ServiceOrder;
+import org.etsi.osl.tmf.so641.model.ServiceOrderItem;
+import org.etsi.osl.tmf.so641.model.ServiceOrderStateType;
+import org.etsi.osl.tmf.so641.model.ServiceOrderUpdate;
 import org.flowable.engine.delegate.DelegateExecution;
 import org.flowable.engine.delegate.JavaDelegate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
-import org.etsi.osl.tmf.common.model.service.Note;
-import org.etsi.osl.tmf.common.model.service.ResourceRef;
-import org.etsi.osl.tmf.common.model.service.ServiceRef;
-import org.etsi.osl.tmf.common.model.service.ServiceStateType;
-import org.etsi.osl.tmf.sim638.model.Service;
-import org.etsi.osl.tmf.so641.model.ServiceOrder;
-import org.etsi.osl.tmf.so641.model.ServiceOrderItem;
-import org.etsi.osl.tmf.so641.model.ServiceOrderStateType;
-import org.etsi.osl.tmf.so641.model.ServiceOrderUpdate;
 import jakarta.validation.Valid;
 
 
@@ -127,6 +129,20 @@ public class OrderCompleteService implements JavaDelegate {
 				if ( soi.getService().getSupportingService() != null) {
 					for (ServiceRef sr : soi.getService().getSupportingService()) {
 						Service srv = serviceOrderManager.retrieveService( sr.getId() );
+//						
+//						if ( srv.getState().equals(ServiceStateType.RESERVED) 
+//                            || srv.getState().equals(ServiceStateType.INACTIVE)
+//                            || srv.getState().equals(ServiceStateType.DESIGNED) ){
+//						  try {
+//						    if ( srv.getSupportingResource()!=null && srv.getSupportingResource().size()>0  ) {
+//                              srv = reEvaluateServiceState( srv );
+//						      
+//						    }
+//                          } catch (Exception e) {
+//
+//                          }
+//						}
+						
 						existsReserved = existsReserved || srv.getState().equals(ServiceStateType.RESERVED );
 						existsInactive = existsInactive || srv.getState().equals(ServiceStateType.INACTIVE );
 						existsDesigned = existsDesigned || srv.getState().equals(ServiceStateType.DESIGNED );
@@ -138,18 +154,7 @@ public class OrderCompleteService implements JavaDelegate {
 				}
 				
 				
-				if ( soi.getService().getSupportingResource() != null) {
-					for (ResourceRef rr : soi.getService().getSupportingResource()) {
-						Service srv = serviceOrderManager.retrieveService( rr.getId() );
-						existsReserved = existsReserved || srv.getState().equals(ServiceStateType.RESERVED );
-						existsInactive = existsInactive || srv.getState().equals(ServiceStateType.INACTIVE );
-						existsDesigned = existsDesigned || srv.getState().equals(ServiceStateType.DESIGNED );
-						existsActive  = existsActive || srv.getState().equals(ServiceStateType.ACTIVE );
-						existsTerminated  = existsTerminated || srv.getState().equals(ServiceStateType.TERMINATED );
-						allTerminated = allTerminated && srv.getState().equals(ServiceStateType.TERMINATED );
-						allActive = allActive && srv.getState().equals(ServiceStateType.ACTIVE );
-					}					
-				}
+				
 				
 				@Valid
 				ServiceStateType sserviceState = soi.getService().getState();
@@ -221,5 +226,39 @@ public class OrderCompleteService implements JavaDelegate {
 		}
 		
 	}
+
+//  /**
+//   * @param srv
+//   * @return
+//   */
+//  private Service reEvaluateServiceState(Service aService) {
+//    
+//    List<Resource> rlist = new ArrayList<Resource>();
+//    for (ResourceRef rref : aService.getSupportingResource()) {
+//      Resource res = serviceOrderManager.retrieveResource(rref.getId());
+//
+//      if (  res != null ) {
+//        rlist.add(res);
+//      }
+//    }
+//
+//    ServiceStateType curState = aService.getState();
+//    
+//    ServiceStateType nextState = aService.findNextStateBasedOnSupportingResources(rlist);
+//    if ( !curState.equals(nextState)) {
+//      ServiceUpdate supd = new ServiceUpdate();
+//      supd.setState( nextState );     
+//      Note n = new Note();
+//      n.setText("Service Status Changed via OrderCompleteService method to: " +  nextState);
+//      n.setAuthor(compname);
+//      n.setDate(OffsetDateTime.now(ZoneOffset.UTC).toString());
+//      supd.addNoteItem(n);
+//      
+//      Service serviceResult = serviceOrderManager.updateService( aService.getId(), supd, false );
+//      return serviceResult;
+//      
+//    }
+//    return aService;
+//  }
 
 }

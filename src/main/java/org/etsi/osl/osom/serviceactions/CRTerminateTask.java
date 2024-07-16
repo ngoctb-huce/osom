@@ -2,29 +2,24 @@ package org.etsi.osl.osom.serviceactions;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.etsi.osl.osom.management.ServiceOrderManager;
+import org.etsi.osl.tmf.common.model.service.Note;
+import org.etsi.osl.tmf.common.model.service.ResourceRef;
+import org.etsi.osl.tmf.sim638.model.Service;
+import org.etsi.osl.tmf.sim638.model.ServiceActionQueueItem;
+import org.etsi.osl.tmf.sim638.model.ServiceUpdate;
 import org.flowable.engine.delegate.DelegateExecution;
 import org.flowable.engine.delegate.JavaDelegate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
-import org.etsi.osl.model.DeploymentDescriptor;
-import org.etsi.osl.tmf.common.model.service.Note;
-import org.etsi.osl.tmf.common.model.service.ResourceRef;
-import org.etsi.osl.tmf.rcm634.model.ResourceSpecificationRef;
-import org.etsi.osl.tmf.sim638.model.Service;
-import org.etsi.osl.tmf.sim638.model.ServiceActionQueueItem;
-import org.etsi.osl.tmf.sim638.model.ServiceUpdate;
 
 @Component(value = "CRTerminateTask") //bean name
 public class CRTerminateTask  implements JavaDelegate {
@@ -65,30 +60,42 @@ public class CRTerminateTask  implements JavaDelegate {
             String crspec = aService.getServiceCharacteristicByName( "_CR_SPEC" ).getValue().getValue();
 
             if (crspec != null) {
-              logger.info("Will terminate CR related to service. We need to fetchthe underlying resource"  );
+              logger.info("Will terminate CR related to service"  );
 
               //we need to get the equivalent resource spec. since ServiceSpec is an RFS
+              Map<String, Object> map = new HashMap<>();
+              map.put("currentContextCluster",getServiceCharacteristic(aService, "currentContextCluster")    );
+              map.put("clusterMasterURL",getServiceCharacteristic(aService, "clusterMasterURL")    );
+              map.put("org.etsi.osl.serviceId", aService.getId() );
+              map.put("org.etsi.osl.serviceOrderId", aService.getServiceOrder().stream().findFirst().get().getId() );
+              map.put("org.etsi.osl.prefixName",getServiceCharacteristic(aService, "org.etsi.osl.prefixName")    );
+              map.put("org.etsi.osl.namespace", aService.getServiceOrder().stream().findFirst().get().getId() );
+              map.put("org.etsi.osl.statusCheckFieldName",  getServiceCharacteristic(aService, "_CR_CHECK_FIELD")    );
+              map.put("org.etsi.osl.statusCheckValueStandby", getServiceCharacteristic(aService, "_CR_CHECKVAL_STANDBY")  );
+              map.put("org.etsi.osl.statusCheckValueAlarm", getServiceCharacteristic(aService, "_CR_CHECKVAL_ALARM")  );
+              map.put("org.etsi.osl.statusCheckValueAvailable", getServiceCharacteristic(aService, "_CR_CHECKVAL_AVAILABLE")  );
+              map.put("org.etsi.osl.statusCheckValueReserved", getServiceCharacteristic(aService, "_CR_CHECKVAL_RESERVED")  );
+              map.put("org.etsi.osl.statusCheckValueUnknown", getServiceCharacteristic(aService, "_CR_CHECKVAL_UNKNOWN")  );
+              map.put("org.etsi.osl.statusCheckValueSuspended", getServiceCharacteristic(aService, "_CR_CHECKVAL_SUSPENDED")  );
+              for (ResourceRef resRef : aService.getSupportingResource()) {
+                if (resRef.getName().contains("+_cr_temp")) {
+                  map.put("org.etsi.osl.resourceId", resRef.getId() );                    
+                }
+              }
               
               try {
-                for (ResourceRef resRef : aService.getSupportingResource()) {
-                  Map<String, Object> map = new HashMap<>();
-                  map.put("currentContextCluster",getServiceCharacteristic(aService, "currentContextCluster")    );
-                  map.put("clusterMasterURL",getServiceCharacteristic(aService, "clusterMasterURL")    );
-                  map.put("org.etsi.osl.serviceId", aService.getId() );
-                  map.put("org.etsi.osl.resourceId", resRef.getId() );
-                  map.put("org.etsi.osl.serviceOrderId", aService.getServiceOrder().stream().findFirst().get().getId() );
-                  map.put("org.etsi.osl.namespace", aService.getServiceOrder().stream().findFirst().get().getId() );
-                  map.put("org.etsi.osl.statusCheckFieldName",  getServiceCharacteristic(aService, "_CR_CHECK_FIELD")    );
-                  map.put("org.etsi.osl.statusCheckValueStandby", getServiceCharacteristic(aService, "_CR_CHECKVAL_STANDBY")  );
-                  map.put("org.etsi.osl.statusCheckValueAlarm", getServiceCharacteristic(aService, "_CR_CHECKVAL_ALARM")  );
-                  map.put("org.etsi.osl.statusCheckValueAvailable", getServiceCharacteristic(aService, "_CR_CHECKVAL_AVAILABLE")  );
-                  map.put("org.etsi.osl.statusCheckValueReserved", getServiceCharacteristic(aService, "_CR_CHECKVAL_RESERVED")  );
-                  map.put("org.etsi.osl.statusCheckValueUnknown", getServiceCharacteristic(aService, "_CR_CHECKVAL_UNKNOWN")  );
-                  map.put("org.etsi.osl.statusCheckValueSuspended", getServiceCharacteristic(aService, "_CR_CHECKVAL_SUSPENDED")  );
-                  
-                  serviceOrderManager.cridgeDeletionRequest( map, crspec);
-                  
+                String response = serviceOrderManager.cridgeDeletionRequest( map, crspec);
+
+                int retries = 0;
+                while ( response.equals("SEE OTHER")) {
+                  response = serviceOrderManager.cridgeDeletionRequest( map, crspec);
+                  Thread.sleep(1000);
+                  retries++;
+                  if (retries>100) { //will support maximum 100 registered CRIDGE in queue
+                    break;
+                  }
                 }
+                
               } catch (Exception e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

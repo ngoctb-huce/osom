@@ -22,18 +22,16 @@ package org.etsi.osl.osom.management;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.etsi.osl.tmf.so641.model.ServiceOrder;
+import org.etsi.osl.tmf.so641.model.ServiceOrderStateType;
 import org.flowable.engine.TaskService;
 import org.flowable.engine.delegate.DelegateExecution;
 import org.flowable.engine.delegate.JavaDelegate;
 import org.flowable.task.api.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import org.etsi.osl.tmf.so641.model.ServiceOrder;
-import org.etsi.osl.tmf.so641.model.ServiceOrderStateType;
 
 @Component(value = "fetchAcknowledgedOrders") // bean name
 public class FetchAcknowledgedOrders implements JavaDelegate {
@@ -70,7 +68,7 @@ public class FetchAcknowledgedOrders implements JavaDelegate {
 					
 
 					ServiceOrder sor = serviceOrderManager.retrieveServiceOrder( orderid );
-					if ( sor.getStartDate() != null ) {
+					if ( sor !=null && sor.getStartDate() != null ) {
 						Instant instant = Instant.now() ;                          // Capture the current moment as seen in UTC.
 						boolean canStart = sor.getStartDate().toInstant().isBefore( instant ) ;
 						

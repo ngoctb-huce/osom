@@ -12,18 +12,16 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import javax.tools.Diagnostic;
 import javax.tools.DiagnosticCollector;
 import javax.tools.JavaCompiler;
 import javax.tools.JavaFileObject;
 import javax.tools.StandardJavaFileManager;
 import javax.tools.ToolProvider;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import org.etsi.osl.tmf.lcm.model.LCMRuleSpecification;
+import org.springframework.boot.system.ApplicationHome;
 
 /**
  * @author ctranoris
@@ -165,10 +163,12 @@ public class LCMRulesExecutor {
          * This is the location of the jar inside the running container 
          */
         
-        File classesJar = new File("/opt/openslice/lib/org.etsi.osl.osom-1.2.0-SNAPSHOT.jar");        
-        if ( classesJar.exists()  ) {
-            optionList.addAll(Arrays.asList("-classpath", classesJar.getAbsoluteFile().toString() ));
-        } 
+        ApplicationHome home = new ApplicationHome(LCMRulesExecutor.class);        
+        File classesJar =  home.getSource();     
+        if ( classesJar != null && classesJar.exists()  ) {
+            optionList.addAll(Arrays.asList("-classpath", classesJar.getAbsoluteFile().toString().replace("-exec", "") ));
+        }
+        logger.debug("classesJar =  "+ classesJar); 
         logger.debug("optionList =  "+ optionList.toString());
         
 
@@ -213,7 +213,7 @@ public class LCMRulesExecutor {
 
         URL[] classpath = new URL[] { temp.toUri().toURL()  };
             
-        if ( classesJar.exists()  ) {
+        if ( classesJar != null && classesJar.exists()  ) {
         	classpath = new URL[] { temp.toUri().toURL(), classesJar.toURI().toURL()  };
         } 
         logger.debug("classpath =  "+ classpath.toString());

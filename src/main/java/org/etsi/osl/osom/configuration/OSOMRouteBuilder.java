@@ -25,21 +25,16 @@ import org.apache.camel.Exchange;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.model.dataformat.JsonLibrary;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.etsi.osl.osom.management.ServiceOrderManager;
-import org.etsi.osl.osom.serviceactions.ServiceActionCheck;
+import org.etsi.osl.model.nfv.ExperimentMetadata;
+import org.etsi.osl.model.nfv.Product;
+import org.etsi.osl.model.nfv.ValidationJob;
+import org.etsi.osl.model.nfv.ValidationStatus;
+import org.etsi.osl.model.nfv.VxFMetadata;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
-import org.etsi.osl.model.ExperimentMetadata;
-import org.etsi.osl.model.Product;
-import org.etsi.osl.model.ValidationJob;
-import org.etsi.osl.model.ValidationStatus;
-import org.etsi.osl.model.VxFMetadata;
-import org.etsi.osl.tmf.am642.model.AlarmCreate;
-import org.etsi.osl.tmf.so641.model.ServiceOrder;
 
 @Configuration
 //@RefreshScope
@@ -54,7 +49,9 @@ public class OSOMRouteBuilder extends RouteBuilder {
     @Value("${CRD_DEPLOY_CR_REQ}")
     private String CRD_DEPLOY_CR_REQ = "";
     
-    
+
+    @Value("${CRD_PATCH_CR_REQ}")
+    private String CRD_PATCH_CR_REQ = "";
     
 	public void configure() {
 		
@@ -73,6 +70,20 @@ public class OSOMRouteBuilder extends RouteBuilder {
               //.retriesExhaustedLogLevel(LoggingLevel.WARN)
               .retryAttemptedLogLevel( LoggingLevel.WARN) )
       .to(CRD_DEPLOY_CR_REQ);
+      
+      
+      from("direct:retriesCRD_PATCH_CR_REQ")
+      .errorHandler(deadLetterChannel("direct:retriesDeadLetters")
+              .maximumRedeliveries( 10 ) //let's try 10 times to send it....
+              .redeliveryDelay( 30000 ).useOriginalMessage()
+              //.deadLetterHandleNewException( false )
+              //.logExhaustedMessageHistory(false)
+              .logExhausted(true)
+              .logHandled(true)
+              //.retriesExhaustedLogLevel(LoggingLevel.WARN)
+              .retryAttemptedLogLevel( LoggingLevel.WARN) )
+      .to(CRD_PATCH_CR_REQ);
+      
       
       
       /**

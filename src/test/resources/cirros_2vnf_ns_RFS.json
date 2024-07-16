@@ -499,6 +499,100 @@
       },
       "@valueSchemaLocation": null,
       "id": "5c50dbe4-42f9-4d12-bed9-987c75b592d6"
+    },
+    {
+      "uuid": "3a50dbe4-42f9-4d12-bed9-987c75b592d6",
+      "@baseType": "BaseRootEntity",
+      "@schemaLocation": null,
+      "@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecCharacteristic",
+      "href": null,
+      "name": "AProgrammaticChar",
+      "configurable": false,
+      "description": "AProgrammaticChar dscription",
+      "extensible": null,
+      "isUnique": null,
+      "maxCardinality": 1,
+      "minCardinality": 1,
+      "regex": null,
+      "valueType": "TEXT",
+      "serviceSpecCharRelationship": [],
+      "serviceSpecCharacteristicValue": [
+        {
+          "uuid": "54e00574-6d22-4f48-8bd4-17884f895c13",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": true,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": "N/A",
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": null,
+          "validFor": {
+            "endDateTime": "2040-09-06T23:48:24+03:00",
+            "startDateTime": "2020-09-06T23:48:24+03:00"
+          },
+          "value": {
+            "value": "xzzx",
+            "alias": "AliASAProgrammaticChar"
+          }
+        }
+      ],
+      "validFor": {
+        "endDateTime": "2040-09-06T23:48:24+03:00",
+        "startDateTime": "2020-09-06T23:48:24+03:00"
+      },
+      "@valueSchemaLocation": null,
+      "id": "5c50dbe4-42f9-4d12-bed9-987c75b592d6"
+    },
+    {
+      "uuid": "3a22dbe4-42f9-4d12-bed9-987c75b592d6",
+      "@baseType": "BaseRootEntity",
+      "@schemaLocation": null,
+      "@type": "org.etsi.osl.tmf.scm633.model.ServiceSpecCharacteristic",
+      "href": null,
+      "name": "Another ProgrammaticChar",
+      "configurable": false,
+      "description": "Another AProgrammaticChar dscription",
+      "extensible": null,
+      "isUnique": null,
+      "maxCardinality": 1,
+      "minCardinality": 1,
+      "regex": null,
+      "valueType": "TEXT",
+      "serviceSpecCharRelationship": [],
+      "serviceSpecCharacteristicValue": [
+        {
+          "uuid": "54e00522-6d22-4f48-8bd4-17884f895c13",
+          "@baseType": "BaseEntity",
+          "@schemaLocation": null,
+          "@type": null,
+          "href": null,
+          "isDefault": true,
+          "rangeInterval": null,
+          "regex": null,
+          "unitOfMeasure": "N/A",
+          "valueFrom": null,
+          "valueTo": null,
+          "valueType": null,
+          "validFor": {
+            "endDateTime": "2040-09-06T23:48:24+03:00",
+            "startDateTime": "2020-09-06T23:48:24+03:00"
+          },
+          "value": {
+            "value": "aawwaa",
+            "alias": "AliASAProgrammaticChar"
+          }
+        }
+      ],
+      "validFor": {
+        "endDateTime": "2040-09-06T23:48:24+03:00",
+        "startDateTime": "2020-09-06T23:48:24+03:00"
+      },
+      "@valueSchemaLocation": null,
+      "id": "5c50dbe4-42f9-4d12-bed9-987c75b592d6"
     }
   ],
   "serviceSpecRelationship": [],

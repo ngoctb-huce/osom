@@ -26,28 +26,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import org.apache.camel.ProducerTemplate;
-import org.apache.camel.model.dataformat.JsonLibrary;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.etsi.osl.model.nfv.DeploymentDescriptor;
+import org.etsi.osl.model.nfv.NetworkServiceDescriptor;
+import org.etsi.osl.model.nfv.ScaleDescriptor;
 import org.etsi.osl.osom.serviceactions.NSActionRequestPayload;
-import org.flowable.engine.RuntimeService;
-import org.flowable.engine.TaskService;
-import org.flowable.task.api.Task;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import org.etsi.osl.model.DeploymentDescriptor;
-import org.etsi.osl.model.NetworkServiceDescriptor;
-import org.etsi.osl.model.ScaleDescriptor;
 import org.etsi.osl.tmf.pm632.model.Organization;
-import org.etsi.osl.tmf.rcm634.model.ResourceSpecification;
 import org.etsi.osl.tmf.ri639.model.LogicalResource;
 import org.etsi.osl.tmf.ri639.model.PhysicalResource;
 import org.etsi.osl.tmf.ri639.model.Resource;
@@ -64,6 +52,13 @@ import org.etsi.osl.tmf.stm653.model.ServiceTest;
 import org.etsi.osl.tmf.stm653.model.ServiceTestCreate;
 import org.etsi.osl.tmf.stm653.model.ServiceTestSpecification;
 import org.etsi.osl.tmf.stm653.model.ServiceTestUpdate;
+import org.flowable.engine.RuntimeService;
+import org.flowable.engine.TaskService;
+import org.flowable.task.api.Task;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import jakarta.validation.constraints.NotNull;
 
 /**
@@ -453,16 +448,16 @@ public class ServiceOrderManager {
 	/**
 	 * @param serviceId
 	 * @param s
-	 * @param propagateToSO is a cryptic thing. However it is used as follows: if FALSE, to just update the service status in catalog without further taking any action.
+	 * @param triggerServiceActionQueue is a cryptic thing. However it is used as follows: if FALSE, to just update the service status in catalog without further taking any action.
 	 * if TRUE then the ServiceUpdate will trigger a ServiceActionQueue to further process the update. So this is needed to avoid these kinds of deadlocks
 	 * @return
 	 */
-	public org.etsi.osl.tmf.sim638.model.Service updateService(String serviceId, ServiceUpdate s, boolean propagateToSO) {
+	public org.etsi.osl.tmf.sim638.model.Service updateService(String serviceId, ServiceUpdate s, boolean triggerServiceActionQueue) {
 		logger.info("will update Service : " + serviceId );
 		try {
 			Map<String, Object> map = new HashMap<>();
 			map.put("serviceid", serviceId );
-			map.put("propagateToSO", propagateToSO );
+			map.put("triggerServiceActionQueue", triggerServiceActionQueue );
 			
 			Object response = template.requestBodyAndHeaders( CATALOG_UPD_SERVICE, toJsonString(s), map);
 
@@ -1029,7 +1024,36 @@ public class ServiceOrderManager {
       return null;
       
   }
+  
+  
 
+  /**
+   * @param rFS_CRSPEC 
+   * @param serviceId 
+   * 
+   */
+  public String cridgeDeploymentUpdateRequest(Map<String, Object> map, String CR_SPEC) {
+      
+
+      try {
+        
+        Object response = template.requestBodyAndHeaders( "direct:retriesCRD_PATCH_CR_REQ", CR_SPEC , map );
+          
+
+          if ( !(response instanceof String)) {
+              logger.error("cridgeDeploymentUpdateRequest response object is wrong.");
+              return null;
+          }
+          logger.debug("cridgeDeploymentUpdateRequest response is: " + response);
+          return (String) response;
+          
+      }catch (Exception e) {
+          logger.error("Cannot retrieve cridgeDeploymentUpdateRequest response. " + e.toString());
+          e.printStackTrace();
+      }
+      return null;
+      
+  }
   
 
   /**
