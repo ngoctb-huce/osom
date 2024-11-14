@@ -1,6 +1,9 @@
 server:
   port: 13689
     
+flowable:
+  history-level: none    
+  
 spring:
   application:
     name: openslice-osom
