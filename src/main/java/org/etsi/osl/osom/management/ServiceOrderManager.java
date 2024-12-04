@@ -36,6 +36,8 @@ import org.etsi.osl.model.nfv.NetworkServiceDescriptor;
 import org.etsi.osl.model.nfv.ScaleDescriptor;
 import org.etsi.osl.osom.serviceactions.NSActionRequestPayload;
 import org.etsi.osl.tmf.pm632.model.Organization;
+import org.etsi.osl.tmf.rcm634.model.LogicalResourceSpecification;
+import org.etsi.osl.tmf.rcm634.model.ResourceSpecification;
 import org.etsi.osl.tmf.ri639.model.LogicalResource;
 import org.etsi.osl.tmf.ri639.model.PhysicalResource;
 import org.etsi.osl.tmf.ri639.model.Resource;
@@ -188,7 +190,9 @@ public class ServiceOrderManager {
     @Value("${CATALOG_GET_RESOURCE_BY_ID}")
     private String CATALOG_GET_RESOURCE_BY_ID = "";
     
-    
+
+    @Value("${CATALOG_GET_RESOURCESPEC_BY_ID}")
+    private String CATALOG_GET_RESOURCESPEC_BY_ID = "";
 	
 	@Transactional
 	public void processOrder(ServiceOrder serviceOrder) {
@@ -1081,6 +1085,58 @@ public class ServiceOrderManager {
     
     
   }
+
+  public Resource gcGenericResourceDeploymentRequest(String queueName, Map<String, Object> map, Resource aResource) {
+    try {
+
+      logger.debug("gcGenericResourceDeploymentRequest queueName=" + queueName);
+      
+      String req = toJsonString(aResource);
+      Object response = template.requestBodyAndHeaders( queueName, req , map );
+        
+
+        if ( !(response instanceof String)) {
+            logger.error("gcGenericResourceDeploymentRequest response object is wrong.");
+            return null;
+        }
+        logger.debug("gcGenericResourceDeploymentRequest response is: " + response);
+        Resource res = toJsonObj( (String)response, LogicalResource.class);
+        return  res;
+        
+    }catch (Exception e) {
+        logger.error("Cannot retrieve gcGenericResourceDeploymentRequest response. " + e.toString());
+        e.printStackTrace();
+    }
+    return null;
+  }
+  
+  /**
+   * get  service spec by id from model via bus
+   * @param id
+   * @return
+   * @throws IOException
+   */
+  public ResourceSpecification retrieveResourceSpec(String specid) {
+      logger.info("will retrieve Resource Specification id=" + specid   );
+      
+      try {
+          Object response = template.
+                  requestBody( CATALOG_GET_RESOURCESPEC_BY_ID, specid);
+
+          if ( !(response instanceof String)) {
+              logger.error("Resource Specification object is wrong.");
+              return null;
+          }
+          LogicalResourceSpecification sor = toJsonObj( (String)response, LogicalResourceSpecification.class); 
+          //logger.debug("retrieveSpec response is: " + response);
+          return sor;
+          
+      }catch (Exception e) {
+          logger.error("Cannot retrieve Resource Specification details from catalog. " + e.toString());
+      }
+      return null;
+  }
+  
 
 
 

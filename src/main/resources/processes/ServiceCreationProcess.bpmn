@@ -80,6 +80,11 @@
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${brokeActivity=='RFS_CRSPEC'}]]></conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="flow44" sourceRef="parallelActivityCRDeploymentReq" targetRef="servicetaskCheckForCreatedServices"></sequenceFlow>
+    <callActivity id="activityGenericResourceDeploymentReq" name="Generic Resource Deployment Request" calledElement="procGenericControllerDeploymentRequest" activiti:inheritVariables="true"></callActivity>
+    <sequenceFlow id="flow45" name="brokeActivity==&quot;GRSPEC&quot;" sourceRef="exclusivegateway2" targetRef="activityGenericResourceDeploymentReq">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${brokeActivity=='GRSPEC'}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow46" sourceRef="activityGenericResourceDeploymentReq" targetRef="servicetaskCheckForCreatedServices"></sequenceFlow>
   </process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_CreateServiceProcess">
     <bpmndi:BPMNPlane bpmnElement="CreateServiceProcess" id="BPMNPlane_CreateServiceProcess">
@@ -139,6 +144,9 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="parallelActivityCRDeploymentReq" id="BPMNShape_parallelActivityCRDeploymentReq">
         <omgdc:Bounds height="90.0" width="129.0" x="1094.0" y="332.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="activityGenericResourceDeploymentReq" id="BPMNShape_activityGenericResourceDeploymentReq">
+        <omgdc:Bounds height="71.0" width="130.0" x="1094.0" y="820.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="flow19" id="BPMNEdge_flow19">
         <omgdi:waypoint x="72.0" y="230.0"></omgdi:waypoint>
@@ -295,6 +303,19 @@
       <bpmndi:BPMNEdge bpmnElement="flow44" id="BPMNEdge_flow44">
         <omgdi:waypoint x="1223.0" y="377.0"></omgdi:waypoint>
         <omgdi:waypoint x="1355.0" y="376.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow45" id="BPMNEdge_flow45">
+        <omgdi:waypoint x="907.0" y="250.0"></omgdi:waypoint>
+        <omgdi:waypoint x="907.0" y="855.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1094.0" y="855.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="42.0" width="100.0" x="910.0" y="789.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow46" id="BPMNEdge_flow46">
+        <omgdi:waypoint x="1224.0" y="855.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1407.0" y="855.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1407.0" y="412.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
