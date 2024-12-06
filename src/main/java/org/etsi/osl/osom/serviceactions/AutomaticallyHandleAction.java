@@ -51,7 +51,6 @@ public class AutomaticallyHandleAction  implements JavaDelegate {
 	public void execute(DelegateExecution execution) {
 		
 		logger.debug("AutomaticallyHandleAction:" + execution.getVariableNames().toString() );
-	    logger.debug("Ceneric Controller OrchestrationService");
 	    logger.debug("VariableNames:" + execution.getVariableNames().toString());
 		
 		
