@@ -68,10 +68,10 @@ public class GCOrchestrationService implements JavaDelegate {
 
   public void execute(DelegateExecution execution) {
 
-    logger.info("Ceneric Controller OrchestrationService");
-    logger.info("VariableNames:" + execution.getVariableNames().toString());
-    logger.info("orderid:" + execution.getVariable("orderid").toString());
-    logger.info("contextServiceId:" + execution.getVariable("contextServiceId").toString());
+    logger.debug("Ceneric Controller OrchestrationService");
+    logger.debug("VariableNames:" + execution.getVariableNames().toString());
+    logger.debug("orderid:" + execution.getVariable("orderid").toString());
+    logger.debug("contextServiceId:" + execution.getVariable("contextServiceId").toString());
 
     try {
       
@@ -108,36 +108,42 @@ public class GCOrchestrationService implements JavaDelegate {
         ResourceSpecification rspec = serviceOrderManager.retrieveResourceSpec(rSpecRef.getId());
         
         //we will create a resource based on the values of resourcepsecificationRef
-        Resource resourceCR = createRelatedResource( rspec, sorder, aService );
+        ResourceCreate resourceCreate = createRelatedResource( rspec, sorder, aService );
+        
+
+        //save it to TMF API service inventory
+        Resource resourceI = serviceOrderManager.createResource( resourceCreate, sorder, rspec.getId() );
+        
+        
         ResourceRef rr = new ResourceRef();
-        rr.setId( resourceCR.getId() );
-        rr.setName( resourceCR.getName());
-        rr.setType( resourceCR.getType());
+        rr.setId( resourceI.getId() );
+        rr.setName( resourceI.getName());
+        rr.setType( resourceI.getType());
         su.addSupportingResourceItem( rr );
 
+        su.setState(ServiceStateType.RESERVED);
+        Note successNoteItem = new Note();
+        successNoteItem.setText(String.format("Requesting Controller of "+ rSpecRef.getName() +" to deploy resource"));
+        successNoteItem.setDate(OffsetDateTime.now(ZoneOffset.UTC).toString());
+        successNoteItem.setAuthor(compname);
+        su.addNoteItem(successNoteItem);
+        Service supd = serviceOrderManager.updateService(aService.getId(), su, false);
+        
         Resource response = null;
         
-        response = createNewResourceDeploymentRequest(aService, resourceCR, rspec, sorder.getId(), sorder.getStartDate(),
-              sorder.getExpectedCompletionDate() );
+        response = createNewResourceDeploymentRequest(aService, resourceI, resourceCreate,  sorder.getId() );
         
                 
         
-        if ( response!=null  ) {
-          su.setState(ServiceStateType.RESERVED);
-          Note successNoteItem = new Note();
-          successNoteItem.setText(String.format("Requesting Controller of "+ rSpecRef.getName() +" to deploy resource"));
-          successNoteItem.setDate(OffsetDateTime.now(ZoneOffset.UTC).toString());
-          successNoteItem.setAuthor(compname);
-          su.addNoteItem(successNoteItem);
-        } else {
+        if ( response==null  ) {
           su.setState(ServiceStateType.TERMINATED);
           Note errNoteItem = new Note();
           errNoteItem.setText(String.format("Requesting Controller to deploy resource failed "));
           errNoteItem.setDate(OffsetDateTime.now(ZoneOffset.UTC).toString());
           errNoteItem.setAuthor(compname);
           su.addNoteItem(errNoteItem);
+          supd = serviceOrderManager.updateService(aService.getId(), su, false);
         }
-        Service supd = serviceOrderManager.updateService(aService.getId(), su, false);
         
         return;
 
@@ -187,7 +193,7 @@ public class GCOrchestrationService implements JavaDelegate {
    * @param aService
    * @return
    */
-  private Resource createRelatedResource(ResourceSpecification rspec, ServiceOrder sOrder, Service aService) {
+  private ResourceCreate createRelatedResource(ResourceSpecification rspec, ServiceOrder sOrder, Service aService) {
     
     /**
      * In future releases, it is better to create some helper function in the TMF model that
@@ -221,9 +227,9 @@ public class GCOrchestrationService implements JavaDelegate {
     }
     
     //copy to resource the rest of the characteristics that do not exists yet from the above search
-    copyRemainingSpecCharacteristicsToResourceCharacteristic(rspec , resCreate.getResourceCharacteristic() );     
+    resCreate = copyRemainingSpecCharacteristicsToResourceCharacteristic(rspec , resCreate );     
     
-    return serviceOrderManager.createResource( resCreate, sOrder, rspec.getId() );
+    return resCreate;
 
     
     
@@ -253,8 +259,11 @@ public class GCOrchestrationService implements JavaDelegate {
    * @param spec
    * @param list
    */
-  private void copyRemainingSpecCharacteristicsToResourceCharacteristic(ResourceSpecification spec,
-      @Valid List<org.etsi.osl.tmf.ri639.model.Characteristic> list) {
+  private ResourceCreate copyRemainingSpecCharacteristicsToResourceCharacteristic(ResourceSpecification spec,
+      @Valid ResourceCreate resCreate) {
+    
+    List<org.etsi.osl.tmf.ri639.model.Characteristic> list = resCreate.getResourceCharacteristic();
+    
     for (ResourceSpecificationCharacteristic sourceCharacteristic : spec.getResourceSpecCharacteristic()) {
         if (  sourceCharacteristic.getValueType() != null ) {
             boolean charfound = false;
@@ -321,6 +330,8 @@ public class GCOrchestrationService implements JavaDelegate {
         
     }
     
+    return resCreate;
+    
   }
 
 
@@ -338,33 +349,29 @@ public class GCOrchestrationService implements JavaDelegate {
    * <br>
    * 
    * @param aService reference to the service that the resource and the CR belongs to
-   * @param aResource reference the equivalent resource in TMF repo of the target CR. One to one mapping
+   * @param resourceI reference the equivalent resource in TMF repo of the target CR. One to one mapping
    * @param orderId related service order ID
-   * @param startDate start date of the deployment  (not used currently)
-   * @param endDate end date of the deployment (not used currently)
    * @return a Resource as updated. It might return "OK" if everything is ok. 
    * "SEE OTHER" if there are multiple CRIDGEs then some other cridge will handle the request for the equivalent cluster. 
    * Any other response is handled as error
+   * return Resource object from the controller
    */
-  private Resource createNewResourceDeploymentRequest( Service aService,
-      Resource aResource, 
-      ResourceSpecification rRef, 
-      String orderId,
-      OffsetDateTime startDate,
-      OffsetDateTime endDate) {
+  private Resource createNewResourceDeploymentRequest( Service aService, Resource resourceI,
+      ResourceCreate aResourceCreate, 
+      String orderId) {
 
     try {
       Map<String, Object> map = new HashMap<>();
       map.put("org.etsi.osl.serviceId", aService.getId() );
-      map.put("org.etsi.osl.resourceId", aResource.getId() );
-      map.put("org.etsi.osl.prefixName", "gr" + aResource.getId().substring(0, 8) );
+      map.put("org.etsi.osl.resourceId", resourceI.getId() );
+      map.put("org.etsi.osl.prefixName", "gr" + resourceI.getId().substring(0, 8) );
       map.put("org.etsi.osl.serviceOrderId", orderId );
       
 
       logger.debug("createNewResourceDeploymentRequest ");
       
-      String queueName = "jms:queue:CREATE/"+aResource.getCategory() + "/" + rRef.getVersion() ;
-      Resource response  = serviceOrderManager.gcGenericResourceDeploymentRequest(queueName , map, aResource);
+      String queueName = "jms:queue:CREATE/"+ aResourceCreate.getCategory() + "/" + aResourceCreate.getResourceVersion() ;
+      Resource response  = serviceOrderManager.gcGenericResourceDeploymentRequest(queueName , map, aResourceCreate);
       
 
       return response;

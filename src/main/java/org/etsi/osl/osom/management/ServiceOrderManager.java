@@ -42,6 +42,7 @@ import org.etsi.osl.tmf.ri639.model.LogicalResource;
 import org.etsi.osl.tmf.ri639.model.PhysicalResource;
 import org.etsi.osl.tmf.ri639.model.Resource;
 import org.etsi.osl.tmf.ri639.model.ResourceCreate;
+import org.etsi.osl.tmf.ri639.model.ResourceUpdate;
 import org.etsi.osl.tmf.scm633.model.ServiceSpecification;
 import org.etsi.osl.tmf.sim638.model.ServiceActionQueueItem;
 import org.etsi.osl.tmf.sim638.model.ServiceCreate;
@@ -1086,7 +1087,7 @@ public class ServiceOrderManager {
     
   }
 
-  public Resource gcGenericResourceDeploymentRequest(String queueName, Map<String, Object> map, Resource aResource) {
+  public Resource gcGenericResourceDeploymentRequest(String queueName, Map<String, Object> map, ResourceUpdate aResource) {
     try {
 
       logger.debug("gcGenericResourceDeploymentRequest queueName=" + queueName);
@@ -1109,6 +1110,9 @@ public class ServiceOrderManager {
     }
     return null;
   }
+  
+  
+
   
   /**
    * get  service spec by id from model via bus
