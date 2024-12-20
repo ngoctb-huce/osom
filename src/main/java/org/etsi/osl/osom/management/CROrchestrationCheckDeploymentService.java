@@ -91,13 +91,14 @@ public class CROrchestrationCheckDeploymentService implements JavaDelegate {
             Service serviceResult = serviceOrderManager.updateService( aService.getId(), supd, propagateToSO );
             return;
           }
+         
           rlist.add(res);
           
         }
         @Valid
         ServiceStateType currentState = aService.getState();        
         
-	    ServiceStateType nextState = aService.findNextStateBasedOnSupportingResources(rlist);
+	    ServiceStateType nextState =  aService.findNextStateBasedOnResourceList(rlist);
 	    
 	    if (!currentState.equals(nextState)) {
 	        supd.setState( nextState );     

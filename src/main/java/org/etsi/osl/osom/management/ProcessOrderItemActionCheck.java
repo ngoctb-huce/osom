@@ -34,6 +34,7 @@ public class ProcessOrderItemActionCheck implements JavaDelegate {
 		ServiceOrder sor = serviceOrderManager.retrieveServiceOrder((String) execution.getVariable("orderid"));
 		String orderItemIdToProcess = (String) execution.getVariable("orderItemId");
 		ServiceOrderItem soi = null;
+        execution.setVariable("saction", "NONE");            
 		
 		for (ServiceOrderItem i : sor.getOrderItem()) {
 			if (i.getUuid().equals( orderItemIdToProcess )){
@@ -46,7 +47,6 @@ public class ProcessOrderItemActionCheck implements JavaDelegate {
             logger.error("In ProcessOrderItemActionCheck cannot find ServiceOrderItem orderItemIdToProcess=:" + orderItemIdToProcess);
             logger.error("In ProcessOrderItemActionCheck cannot find ServiceOrderItem sor.getUuid()=:" + sor.getUuid() );
             logger.error("In ProcessOrderItemActionCheck cannot find ServiceOrderItem sor()=:" + sor.toString() );
-            execution.setVariable("saction", "NONE");            
 			return;
 		}
 		
