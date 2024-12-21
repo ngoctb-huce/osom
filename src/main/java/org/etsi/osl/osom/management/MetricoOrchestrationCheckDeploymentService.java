@@ -30,7 +30,7 @@ public class MetricoOrchestrationCheckDeploymentService implements JavaDelegate 
 
     @Value("${spring.application.name}")
     private String compname;
-    
+
     @Override
     public void execute(DelegateExecution execution) {
 
