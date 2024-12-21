@@ -67,6 +67,11 @@ public class ProcessCreateServiceRules implements JavaDelegate {
 			return;
 		}
 		
+		if ( spec == null) {
+          logger.debug("\tCannot retrieve ServiceSpec:" + contextServiceSpecId);
+		  return;
+		}
+		
 
 		/*
 		 * first find all referenced ServiceSpecs of a ServiceSpec to be created
