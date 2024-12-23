@@ -96,7 +96,7 @@ public class GCOrchestrationCheckDeploymentService implements JavaDelegate {
         @Valid
         ServiceStateType currentState = aService.getState();        
         
-	    ServiceStateType nextState = aService.findNextStateBasedOnSupportingResources(rlist);
+	    ServiceStateType nextState = aService.findNextStateBasedOnResourceList(rlist);
 	    
 	    if (!currentState.equals(nextState)) {
 	        supd.setState( nextState );     
