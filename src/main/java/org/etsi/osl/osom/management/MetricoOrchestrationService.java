@@ -94,9 +94,9 @@ public class MetricoOrchestrationService implements JavaDelegate {
 
 			serviceCharacteristic = aService.getServiceCharacteristicByName("_MT_START_TIME");
 			String startTimeString = String.valueOf(serviceCharacteristic.getValue());
-			if (endTimeString != null) {
+			if (startTimeString != null) {
 				OffsetDateTime startTime = convertStringToOffsetDateTime(startTimeString, DateTimeFormat.ISO.DATE_TIME );
-				scheduleDefinition.setScheduleDefinitionEndTime(startTime);
+				scheduleDefinition.setScheduleDefinitionStartTime(startTime);
 			} else{
 				OffsetDateTime startTime = OffsetDateTime.now();
 				scheduleDefinition.setScheduleDefinitionStartTime(startTime);
