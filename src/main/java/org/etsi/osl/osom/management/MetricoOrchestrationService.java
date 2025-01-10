@@ -124,7 +124,7 @@ public class MetricoOrchestrationService implements JavaDelegate {
 			serviceCharacteristic = aService.getServiceCharacteristicByName("_MT_TYPE");
 			String monitoringType = String.valueOf(serviceCharacteristic.getValue());
 			DataAccessEndpointFVO dataAccessEndpoint = new DataAccessEndpointFVO();
-			dataAccessEndpoint.setType(monitoringType);
+			dataAccessEndpoint.setApiType(monitoringType);
 
 			serviceCharacteristic = aService.getServiceCharacteristicByName("_MT_QUERY");
 			String monitoringQuery = String.valueOf(serviceCharacteristic.getValue());
