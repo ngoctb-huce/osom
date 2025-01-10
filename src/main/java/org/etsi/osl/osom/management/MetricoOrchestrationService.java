@@ -10,10 +10,12 @@ import org.etsi.osl.tmf.common.model.service.Characteristic;
 import org.etsi.osl.tmf.common.model.service.Note;
 import org.etsi.osl.tmf.common.model.service.ResourceRef;
 import org.etsi.osl.tmf.common.model.service.ServiceStateType;
+import org.etsi.osl.tmf.common.model.Any;
 import org.etsi.osl.tmf.pm628.model.*;
 import org.etsi.osl.tmf.rcm634.model.ResourceSpecificationRef;
 import org.etsi.osl.tmf.ri639.model.Resource;
 import org.etsi.osl.tmf.ri639.model.ResourceCreate;
+import org.etsi.osl.tmf.ri639.model.ResourceStatusType;
 import org.etsi.osl.tmf.scm633.model.ServiceSpecification;
 import org.etsi.osl.tmf.sim638.model.Service;
 import org.etsi.osl.tmf.sim638.model.ServiceUpdate;
@@ -145,10 +147,9 @@ public class MetricoOrchestrationService implements JavaDelegate {
 			MeasurementCollectionJob mcj = addMeasurementCollectionJob(mcjFVO);
 
 			if  (mcj != null){
-				publishEventMeasurementCollectionJobCreated( mcj.getUuid() );
 
 				ResourceSpecificationRef resourceSpecificationRef = spec.getResourceSpecification().stream().findFirst().get();
-				Resource resourceMT = createRelatedResource( resourceSpecificationRef, sorder, aService );
+				Resource resourceMT = createRelatedResource( resourceSpecificationRef, sorder, aService, mcj );
 				ResourceRef resourceRef = new ResourceRef();
 
 				resourceRef.setId( resourceMT.getId() );
@@ -162,6 +163,8 @@ public class MetricoOrchestrationService implements JavaDelegate {
 				successNoteItem.setAuthor(compname);
 				su.addNoteItem(successNoteItem);
 				Service supd = serviceOrderManager.updateService(aService.getId(), su, false);
+
+				publishEventMeasurementCollectionJobCreated( mcj.getUuid() );
 
 			} else {
 				logger.error("Measurement Collection Job was not created.");
@@ -253,28 +256,40 @@ public class MetricoOrchestrationService implements JavaDelegate {
 
 	/**
 	 *
-	 * THe resource has a temporary name.
-	 * later on the name and its characteristics are updated via cridge
+	 * The resource maps the created MCJ
 	 * @param rSpecRef
 	 * @param sOrder
 	 * @param aService
 	 * @return
 	 */
-	private Resource createRelatedResource(ResourceSpecificationRef rSpecRef, ServiceOrder sOrder, Service aService) {
+	private Resource createRelatedResource(ResourceSpecificationRef rSpecRef, ServiceOrder sOrder, Service aService, MeasurementCollectionJob mcj) {
 
 		ResourceCreate resCreate = new ResourceCreate();
-		resCreate.setName(   "_cr_tmpname_service_" + aService.getId() );
+		resCreate.setName(   rSpecRef.getName() + "-" + aService.getId() );
 		resCreate.setStartOperatingDate( aService.getStartDate() );
 		resCreate.setEndOperatingDate(aService.getEndDate());
+		resCreate.setResourceStatus (ResourceStatusType.RESERVED);
+
 		ResourceSpecificationRef rSpecRefObj = new ResourceSpecificationRef() ;
 		rSpecRefObj.id(rSpecRef.getId())
 				.name( rSpecRef.getName())
 				.setType(rSpecRef.getType());
 		resCreate.setResourceSpecification(rSpecRefObj);
+
+		org.etsi.osl.tmf.ri639.model.Characteristic resCharacteristicItem =  new org.etsi.osl.tmf.ri639.model.Characteristic();
+		resCharacteristicItem.setName( "_MT_MCJ_REF" );
+		resCharacteristicItem.setValueType( "TEXT" );
+		Any val = new Any();
+		val.setValue( mcj.getUuid() );
+		val.setAlias( mcj.getUuid() );
+		resCharacteristicItem.setValue( val );
+		resCreate.addResourceCharacteristicItem(  resCharacteristicItem );
+
+
+		// 1) need to copy the characteristics of the Resource Specification (use this instead of @param rSpecRef) and populate them with value from the aService (see GCOrchestrationService)
+		// 2) also need to populate the characteristic _MT_MCJ_REF with the UUID of the created MCJ / pass it as @param mcj
+
 		return serviceOrderManager.createResource( resCreate, sOrder, rSpecRef.getId() );
-
-
-
 	}
 
 }
