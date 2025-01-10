@@ -85,7 +85,7 @@
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${brokeActivity=='GRSPEC'}]]></conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="flow46" sourceRef="activityGenericResourceDeploymentReq" targetRef="servicetaskCheckForCreatedServices"></sequenceFlow>
-    <callActivity id="parallelMetricoReq" name="Metrico Request" activiti:async="true" calledElement="procMetricoDeploymentRequest" activiti:inheritVariables="false"></callActivity>
+    <callActivity id="parallelMetricoReq" name="Metrico Request" activiti:async="true" calledElement="procMetricoDeploymentRequest" activiti:inheritVariables="true"></callActivity>
     <sequenceFlow id="flow47" sourceRef="parallelMetricoReq" targetRef="servicetaskCheckForCreatedServices"></sequenceFlow>
     <sequenceFlow id="flow48" name="brokeActivity==&quot;RFS_MTSPEC&quot;" sourceRef="exclusivegateway2" targetRef="parallelMetricoReq">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${brokeActivity=='RFS_MTSPEC'}]]></conditionExpression>
