@@ -47,9 +47,6 @@ public class MetricoOrchestrationService implements JavaDelegate {
 	@Value("{PM_MEASUREMENT_COLLECTION_JOB_ADD}")
 	private String PM_MEASUREMENT_COLLECTION_JOB_ADD = "";
 
-	@Value("{PM_MEASUREMENT_COLLECTION_JOB_CREATED}")
-	private String PM_MEASUREMENT_COLLECTION_JOB_CREATED = "";
-
 	@Value("${spring.application.name}")
 	private String compname;
 	
@@ -164,8 +161,6 @@ public class MetricoOrchestrationService implements JavaDelegate {
 				su.addNoteItem(successNoteItem);
 				Service supd = serviceOrderManager.updateService(aService.getId(), su, false);
 
-				publishEventMeasurementCollectionJobCreated( mcj.getUuid() );
-
 			} else {
 				logger.error("Measurement Collection Job was not created.");
 			}
@@ -245,14 +240,6 @@ public class MetricoOrchestrationService implements JavaDelegate {
 		return null;
 	}
 
-	public void publishEventMeasurementCollectionJobCreated(String uuid) {
-		logger.debug("Publishing event for Measurement Collection Job Created with UUID: " + uuid);
-		try {
-			producerTemplate.sendBody(PM_MEASUREMENT_COLLECTION_JOB_CREATED, uuid);
-		} catch (Exception e) {
-			logger.error("Failed to publish event for Measurement Collection Job Created. " + e.toString());
-		}
-	}
 
 	/**
 	 *
