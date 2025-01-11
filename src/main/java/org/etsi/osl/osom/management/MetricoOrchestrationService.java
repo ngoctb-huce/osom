@@ -113,11 +113,11 @@ public class MetricoOrchestrationService implements JavaDelegate {
 					mcjFVO.setGranularity(recurringInterval);
 				} else {
 					logger.error("Invalid _MT_RECURRING_INTERVAL value. Valid values are:" + Granularity.getPossibleValues() + " It will be set to 1 minute.");
-					Granularity recurringInterval = Granularity.G_1M;
+					Granularity recurringInterval = Granularity.G_1MN;
 					mcjFVO.setGranularity(recurringInterval);
 				}
 			} else {
-				Granularity recurringInterval = Granularity.G_1M;
+				Granularity recurringInterval = Granularity.G_1MN;
 				mcjFVO.setGranularity(recurringInterval);
 			}
 
