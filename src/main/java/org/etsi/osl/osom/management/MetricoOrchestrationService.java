@@ -40,13 +40,10 @@ import java.util.List;
 @Component(value = "metricoOrchestrationService") //bean name
 public class MetricoOrchestrationService implements JavaDelegate {
 
-	private static final transient Log logger = LogFactory.getLog(NFVOrchestrationService.class.getName());
+	private static final transient Log logger = LogFactory.getLog(MetricoOrchestrationService.class.getName());
 
-	@Autowired
-	private ProducerTemplate producerTemplate;
-	@Value("{PM_MEASUREMENT_COLLECTION_JOB_ADD}")
-	private String PM_MEASUREMENT_COLLECTION_JOB_ADD = "";
-
+	
+	
 	@Value("${spring.application.name}")
 	private String compname;
 	
@@ -71,20 +68,23 @@ public class MetricoOrchestrationService implements JavaDelegate {
 
 			Characteristic serviceCharacteristic;
 			MeasurementCollectionJobFVO mcjFVO = new MeasurementCollectionJobFVO();
+            mcjFVO.setCreationTime( OffsetDateTime.now());
+            mcjFVO.setLastModifiedTime( OffsetDateTime.now());
+
 			mcjFVO.setProducingApplicationId(aService.getId());
 
 			serviceCharacteristic = aService.getServiceCharacteristicByName("_MT_CHARACTERISTIC_NAME");
-			String characteristicName = String.valueOf(serviceCharacteristic.getValue());
+			String characteristicName = String.valueOf(serviceCharacteristic.getValue().getValue());
 			mcjFVO.setOutputFormat(characteristicName);
 
 			serviceCharacteristic = aService.getServiceCharacteristicByName("_MT_SERVICEUUID");
-			String cfs_id = String.valueOf(serviceCharacteristic.getValue());
+			String cfs_id = String.valueOf(serviceCharacteristic.getValue().getValue());
 			mcjFVO.setConsumingApplicationId(cfs_id);
 
 			serviceCharacteristic = aService.getServiceCharacteristicByName("_MT_END_TIME");
-			String endTimeString = 	String.valueOf(serviceCharacteristic.getValue());
+			String endTimeString = 	String.valueOf(serviceCharacteristic.getValue().getValue());
 			ScheduleDefinitionFVO scheduleDefinition = new ScheduleDefinitionFVO();
-			if (endTimeString != null) {
+			if (endTimeString != null && !endTimeString.equals("")) {
 				OffsetDateTime endTime = convertStringToOffsetDateTime(endTimeString, DateTimeFormat.ISO.DATE_TIME );
 				scheduleDefinition.setScheduleDefinitionEndTime(endTime);
 			} else{
@@ -93,8 +93,8 @@ public class MetricoOrchestrationService implements JavaDelegate {
 			}
 
 			serviceCharacteristic = aService.getServiceCharacteristicByName("_MT_START_TIME");
-			String startTimeString = String.valueOf(serviceCharacteristic.getValue());
-			if (startTimeString != null) {
+			String startTimeString = String.valueOf(serviceCharacteristic.getValue().getValue());
+			if (startTimeString != null&& !startTimeString.equals("")) {
 				OffsetDateTime startTime = convertStringToOffsetDateTime(startTimeString, DateTimeFormat.ISO.DATE_TIME );
 				scheduleDefinition.setScheduleDefinitionStartTime(startTime);
 			} else{
@@ -106,10 +106,10 @@ public class MetricoOrchestrationService implements JavaDelegate {
 			mcjFVO.setScheduleDefinition(scheduleDefinitions);
 
 			serviceCharacteristic = aService.getServiceCharacteristicByName("_MT_RECURRING_INTERVAL");
-			String recurringIntervalString = String.valueOf(serviceCharacteristic.getValue());
+			String recurringIntervalString = String.valueOf(serviceCharacteristic.getValue().getValue());
 			if (recurringIntervalString != null) {
 				if (Granularity.contains(recurringIntervalString)){
-					Granularity recurringInterval = Granularity.valueOf(recurringIntervalString);
+					Granularity recurringInterval = Granularity.valueOf(recurringIntervalString.toUpperCase());
 					mcjFVO.setGranularity(recurringInterval);
 				} else {
 					logger.error("Invalid _MT_RECURRING_INTERVAL value. Valid values are:" + Granularity.getPossibleValues() + " It will be set to 1 minute.");
@@ -122,14 +122,14 @@ public class MetricoOrchestrationService implements JavaDelegate {
 			}
 
 			serviceCharacteristic = aService.getServiceCharacteristicByName("_MT_TYPE");
-			String monitoringType = String.valueOf(serviceCharacteristic.getValue());
+			String monitoringType = String.valueOf(serviceCharacteristic.getValue().getValue());
 			DataAccessEndpointFVO dataAccessEndpoint = new DataAccessEndpointFVO();
 			dataAccessEndpoint.setApiType(monitoringType);
 
 			serviceCharacteristic = aService.getServiceCharacteristicByName("_MT_QUERY");
-			String monitoringQuery = String.valueOf(serviceCharacteristic.getValue());
+			String monitoringQuery = String.valueOf(serviceCharacteristic.getValue().getValue());
 			serviceCharacteristic = aService.getServiceCharacteristicByName("_MT_URL");
-			String monitoringURL = String.valueOf(serviceCharacteristic.getValue());
+			String monitoringURL = String.valueOf(serviceCharacteristic.getValue().getValue());
             try {
                 URI monitoringURI = createUri(monitoringURL, monitoringQuery);
 				dataAccessEndpoint.setUri(monitoringURI);
@@ -141,7 +141,7 @@ public class MetricoOrchestrationService implements JavaDelegate {
 			dataAccessEndpoints.add(dataAccessEndpoint);
 			mcjFVO.setDataAccessEndpoint(dataAccessEndpoints);
 
-			MeasurementCollectionJob mcj = addMeasurementCollectionJob(mcjFVO);
+			MeasurementCollectionJob mcj = serviceOrderManager.addMeasurementCollectionJob(mcjFVO);
 
 			if  (mcj != null){
 
@@ -159,11 +159,13 @@ public class MetricoOrchestrationService implements JavaDelegate {
 				successNoteItem.setDate(OffsetDateTime.now(ZoneOffset.UTC).toString());
 				successNoteItem.setAuthor(compname);
 				su.addNoteItem(successNoteItem);
-				Service supd = serviceOrderManager.updateService(aService.getId(), su, false);
 
 			} else {
 				logger.error("Measurement Collection Job was not created.");
+                su.setState(ServiceStateType.TERMINATED);
 			}
+
+            Service supd = serviceOrderManager.updateService(aService.getId(), su, false);
 
 
 
@@ -221,24 +223,6 @@ public class MetricoOrchestrationService implements JavaDelegate {
 		}
 	}
 
-	public MeasurementCollectionJob addMeasurementCollectionJob(MeasurementCollectionJobFVO mcjFVO) {
-
-		logger.debug("Will create a new Measurement Collection Job");
-		try {
-			Object response = producerTemplate.
-					requestBody( PM_MEASUREMENT_COLLECTION_JOB_ADD, mcjFVO);
-			if ( !(response instanceof String)) {
-				logger.error("Measurement Collection Job object is wrong.");
-				return null;
-			}
-			logger.debug("retrieveMeasurementCollectionJobById response is: " + response);
-			MeasurementCollectionJob mcj = toJsonObj( (String)response, MeasurementCollectionJob.class);
-			return mcj;
-		}catch (Exception e) {
-			logger.error("Cannot create a new Measurement Collection Job. " + e.toString());
-		}
-		return null;
-	}
 
 
 	/**

@@ -35,6 +35,8 @@ import org.etsi.osl.model.nfv.DeploymentDescriptor;
 import org.etsi.osl.model.nfv.NetworkServiceDescriptor;
 import org.etsi.osl.model.nfv.ScaleDescriptor;
 import org.etsi.osl.osom.serviceactions.NSActionRequestPayload;
+import org.etsi.osl.tmf.pm628.model.MeasurementCollectionJob;
+import org.etsi.osl.tmf.pm628.model.MeasurementCollectionJobFVO;
 import org.etsi.osl.tmf.pm632.model.Organization;
 import org.etsi.osl.tmf.rcm634.model.LogicalResourceSpecification;
 import org.etsi.osl.tmf.rcm634.model.ResourceSpecification;
@@ -194,7 +196,11 @@ public class ServiceOrderManager {
 
     @Value("${CATALOG_GET_RESOURCESPEC_BY_ID}")
     private String CATALOG_GET_RESOURCESPEC_BY_ID = "";
-	
+
+    @Value("${PM_MEASUREMENT_COLLECTION_JOB_ADD}")
+    private String PM_MEASUREMENT_COLLECTION_JOB_ADD = "";
+
+    
 	@Transactional
 	public void processOrder(ServiceOrder serviceOrder) {
 
@@ -1140,6 +1146,27 @@ public class ServiceOrderManager {
       }
       return null;
   }
+  
+  
+  public MeasurementCollectionJob addMeasurementCollectionJob(MeasurementCollectionJobFVO mcjFVO) {
+
+    logger.debug("Will create a new Measurement Collection Job");
+    try {
+        Object response = template.
+                requestBody( PM_MEASUREMENT_COLLECTION_JOB_ADD, toJsonString(mcjFVO));
+        if ( !(response instanceof String)) {
+            logger.error("Measurement Collection Job object is wrong.");
+            return null;
+        }
+        logger.debug("retrieveMeasurementCollectionJobById response is: " + response);
+        MeasurementCollectionJob mcj = toJsonObj( (String)response, MeasurementCollectionJob.class);
+        return mcj;
+    }catch (Exception e) {
+        logger.error("Cannot create a new Measurement Collection Job. " + e.toString());
+    }
+    return null;
+}
+
   
 
 
