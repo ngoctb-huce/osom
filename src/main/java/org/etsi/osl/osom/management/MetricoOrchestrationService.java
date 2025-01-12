@@ -141,32 +141,43 @@ public class MetricoOrchestrationService implements JavaDelegate {
 			dataAccessEndpoints.add(dataAccessEndpoint);
 			mcjFVO.setDataAccessEndpoint(dataAccessEndpoints);
 
-			MeasurementCollectionJob mcj = serviceOrderManager.addMeasurementCollectionJob(mcjFVO);
+			ResourceSpecificationRef resourceSpecificationRef = spec.getResourceSpecification().stream().findFirst().get();
+			Resource resourceMT = createRelatedResource( resourceSpecificationRef, sorder, aService );
+			ResourceRef resourceRef = new ResourceRef();
 
-			if  (mcj != null){
+			resourceRef.setId( resourceMT.getId() );
+			resourceRef.setName( resourceMT.getName());
+			resourceRef.setType( resourceMT.getType());
+			su.addSupportingResourceItem( resourceRef );
+			su.setState(ServiceStateType.RESERVED);
+			Note successNoteItem = new Note();
+			successNoteItem.setText(String.format("Requesting METRICO to create a new monitoring job"));
+			successNoteItem.setDate(OffsetDateTime.now(ZoneOffset.UTC).toString());
+			successNoteItem.setAuthor(compname);
+			su.addNoteItem(successNoteItem);
+			
+            Service supd = serviceOrderManager.updateService(aService.getId(), su, false);//we nned first to create this in the db
 
-				ResourceSpecificationRef resourceSpecificationRef = spec.getResourceSpecification().stream().findFirst().get();
-				Resource resourceMT = createRelatedResource( resourceSpecificationRef, sorder, aService, mcj );
-				ResourceRef resourceRef = new ResourceRef();
+            su = new ServiceUpdate();// the object to update the service
+            MeasurementCollectionJob mcj = serviceOrderManager.addMeasurementCollectionJob(mcjFVO);
+            if  (mcj != null){
+              logger.info("Measurement Collection Job was not created.");
 
-				resourceRef.setId( resourceMT.getId() );
-				resourceRef.setName( resourceMT.getName());
-				resourceRef.setType( resourceMT.getType());
-				su.addSupportingResourceItem( resourceRef );
-				su.setState(ServiceStateType.RESERVED);
-				Note successNoteItem = new Note();
-				successNoteItem.setText(String.format("Requesting METRICO to create a new monitoring job"));
-				successNoteItem.setDate(OffsetDateTime.now(ZoneOffset.UTC).toString());
-				successNoteItem.setAuthor(compname);
-				su.addNoteItem(successNoteItem);
+              serviceCharacteristic = new Characteristic();              
+              serviceCharacteristic.setName( "_MT_MCJ_REFID" );
+              serviceCharacteristic.setValueType( "TEXT" );
+              Any val = new Any();
+              val.setValue( mcj.getUuid() );
+              val.setAlias( "" );              
+              serviceCharacteristic.setValue(val);
+              su.addServiceCharacteristicItem(serviceCharacteristic);
+              
+            } else {
+              logger.error("Measurement Collection Job was not created.");
+              su.setState(ServiceStateType.TERMINATED);
+            }
 
-			} else {
-				logger.error("Measurement Collection Job was not created.");
-                su.setState(ServiceStateType.TERMINATED);
-			}
-
-            Service supd = serviceOrderManager.updateService(aService.getId(), su, false);
-
+            supd = serviceOrderManager.updateService(aService.getId(), su, false);//we nned first to create this in the db
 
 
 		}
@@ -233,7 +244,7 @@ public class MetricoOrchestrationService implements JavaDelegate {
 	 * @param aService
 	 * @return
 	 */
-	private Resource createRelatedResource(ResourceSpecificationRef rSpecRef, ServiceOrder sOrder, Service aService, MeasurementCollectionJob mcj) {
+	private Resource createRelatedResource(ResourceSpecificationRef rSpecRef, ServiceOrder sOrder, Service aService) {
 
 		ResourceCreate resCreate = new ResourceCreate();
 		resCreate.setName(   rSpecRef.getName() + "-" + aService.getId() );
@@ -251,8 +262,8 @@ public class MetricoOrchestrationService implements JavaDelegate {
 		resCharacteristicItem.setName( "_MT_MCJ_REF" );
 		resCharacteristicItem.setValueType( "TEXT" );
 		Any val = new Any();
-		val.setValue( mcj.getUuid() );
-		val.setAlias( mcj.getUuid() );
+		val.setValue( "PENDING" );
+		val.setAlias( "PENDING" );
 		resCharacteristicItem.setValue( val );
 		resCreate.addResourceCharacteristicItem(  resCharacteristicItem );
 
