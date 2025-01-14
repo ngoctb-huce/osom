@@ -310,7 +310,7 @@ public class CreateReservedService implements JavaDelegate {
 			if ( initCharValues != null ) {
 			  if ( initCharValues.get( c.getName() ) != null ) {
 			    Characteristic orderCharacteristic = new Characteristic()
-			        .value( new Any( initCharValues.get( c.getName() ), initCharValues.get( c.getName() ))) ;
+			        .value( new Any( initCharValues.get( c.getName() ), null ) );
                 serviceToCreate.addServiceCharacteristicItem( helperCreateCharacteristicItem(c, orderCharacteristic ) );
                 characteristicFound = true;
                 continue;

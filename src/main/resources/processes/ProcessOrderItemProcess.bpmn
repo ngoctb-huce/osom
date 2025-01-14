@@ -26,6 +26,9 @@
     <sequenceFlow id="flow30" sourceRef="stActionDELETE" targetRef="stProcesOrderItemComplete"></sequenceFlow>
     <sequenceFlow id="flow31" sourceRef="stProcesOrderItemComplete" targetRef="endevent2"></sequenceFlow>
     <sequenceFlow id="flow32" sourceRef="stActionADD" targetRef="CreateServiceProcess"></sequenceFlow>
+    <sequenceFlow id="flow33" name="saction=='NONE'" sourceRef="exclusivegateway1" targetRef="endevent2">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${saction=='NONE'}]]></conditionExpression>
+    </sequenceFlow>
   </process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_ProcessOrderItem">
     <bpmndi:BPMNPlane bpmnElement="ProcessOrderItem" id="BPMNPlane_ProcessOrderItem">
@@ -85,7 +88,7 @@
         <omgdi:waypoint x="320.0" y="367.0"></omgdi:waypoint>
         <omgdi:waypoint x="464.0" y="367.0"></omgdi:waypoint>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="14.0" width="88.0" x="340.0" y="339.0"></omgdc:Bounds>
+          <omgdc:Bounds height="14.0" width="100.0" x="340.0" y="339.0"></omgdc:Bounds>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow28" id="BPMNEdge_flow28">
@@ -110,6 +113,15 @@
       <bpmndi:BPMNEdge bpmnElement="flow32" id="BPMNEdge_flow32">
         <omgdi:waypoint x="515.0" y="87.0"></omgdi:waypoint>
         <omgdi:waypoint x="560.0" y="87.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow33" id="BPMNEdge_flow33">
+        <omgdi:waypoint x="320.0" y="197.0"></omgdi:waypoint>
+        <omgdi:waypoint x="319.0" y="467.0"></omgdi:waypoint>
+        <omgdi:waypoint x="867.0" y="467.0"></omgdi:waypoint>
+        <omgdi:waypoint x="867.0" y="191.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="100.0" x="335.0" y="449.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

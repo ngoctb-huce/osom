@@ -22,13 +22,18 @@ package org.etsi.osl.osom.management;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.etsi.osl.tmf.common.model.service.Characteristic;
 import org.etsi.osl.tmf.common.model.service.Note;
 import org.etsi.osl.tmf.common.model.service.ResourceRef;
 import org.etsi.osl.tmf.common.model.service.ServiceRef;
 import org.etsi.osl.tmf.common.model.service.ServiceStateType;
+import org.etsi.osl.tmf.po622.model.ProductOrderStateType;
+import org.etsi.osl.tmf.po622.model.ProductOrderUpdate;
 import org.etsi.osl.tmf.ri639.model.Resource;
 import org.etsi.osl.tmf.sim638.model.Service;
 import org.etsi.osl.tmf.sim638.model.ServiceUpdate;
@@ -54,6 +59,9 @@ public class OrderCompleteService implements JavaDelegate {
 
     @Autowired
     private ServiceOrderManager serviceOrderManager;
+
+    @Autowired
+    private ProductOrderManager productOrderManager;
     
 
     @Autowired
@@ -112,6 +120,7 @@ public class OrderCompleteService implements JavaDelegate {
 			boolean existsInactiveInORder= false;
 			boolean existsTerminatedInORder= false;
 			//boolean updateServiceOrder= false;
+			Map<String, Characteristic> productOrderIds = new HashMap<>();
 			
 			logger.info("ServiceOrder id:" + sOrder.getId());
 			for (ServiceOrderItem soi : sOrder.getOrderItem()) {
@@ -192,6 +201,12 @@ public class OrderCompleteService implements JavaDelegate {
 				allTerminatedItemsInOrder = allTerminatedItemsInOrder && soi.getState().equals( ServiceOrderStateType.COMPLETED );
 
 				logger.info("ServiceOrderItem state:" + sserviceState.toString() );
+				
+				Characteristic prodOrderChar = soi.getService().findCharacteristicByName("_PRODUCT_ORDER_ID_");
+				if ( prodOrderChar != null ) {
+				  productOrderIds.put( prodOrderChar.getValue().getValue(), prodOrderChar);
+				}
+				
 			}
 			
 			   
@@ -221,6 +236,20 @@ public class OrderCompleteService implements JavaDelegate {
 				
 				serviceOrderManager.updateServiceOrderOrder( sOrder.getId() , serviceOrderUpd);
 
+				//pass the state to related product orders, if any
+				for (String prodOredIds : productOrderIds.keySet()) {
+				  ProductOrderUpdate productOrderUpd = new ProductOrderUpdate();
+				  
+				  if ( serviceOrderUpd.getState().equals( ServiceOrderStateType.COMPLETED ) ) {
+				    productOrderUpd.setState( ProductOrderStateType.COMPLETED );
+				  } else if ( serviceOrderUpd.getState().equals( ServiceOrderStateType.FAILED ) ) {
+                    productOrderUpd.setState( ProductOrderStateType.FAILED );
+                  }  
+				  
+				    
+				  productOrderManager.updateProducteOrder(prodOredIds, productOrderUpd);
+                }
+				
 			}
 			
 		}

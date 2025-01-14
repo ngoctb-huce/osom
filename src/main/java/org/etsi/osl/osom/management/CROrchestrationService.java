@@ -108,6 +108,15 @@ public class CROrchestrationService implements JavaDelegate {
         rr.setName( resourceCR.getName());
         rr.setType( resourceCR.getType());
         su.addSupportingResourceItem( rr );
+        su.setState(ServiceStateType.RESERVED);
+        Note successNoteItem = new Note();
+        successNoteItem.setText(String.format("Requesting CRIDGE to deploy crspec"));
+        successNoteItem.setDate(OffsetDateTime.now(ZoneOffset.UTC).toString());
+        successNoteItem.setAuthor(compname);
+        su.addNoteItem(successNoteItem);        
+        Service supd = serviceOrderManager.updateService(aService.getId(), su, false);
+        
+        
 
         String response = null;
         if (crspec != null) {
@@ -120,22 +129,16 @@ public class CROrchestrationService implements JavaDelegate {
         servicecrspecLast.getValue().setValue( crspec );
         su.addServiceCharacteristicItem(servicecrspecLast);
         
-        if ( response!=null && response.equals("OK")) {
-          su.setState(ServiceStateType.RESERVED);
-          Note successNoteItem = new Note();
-          successNoteItem.setText(String.format("Requesting CRIDGE to deploy crspec"));
-          successNoteItem.setDate(OffsetDateTime.now(ZoneOffset.UTC).toString());
-          successNoteItem.setAuthor(compname);
-          su.addNoteItem(successNoteItem);
-        } else {
+        if ( response==null || !response.equals("OK")) {
+          su = new ServiceUpdate();
           su.setState(ServiceStateType.TERMINATED);
           Note errNoteItem = new Note();
           errNoteItem.setText(String.format("Requesting CRIDGE to deploy crspec failed with message: " + response));
           errNoteItem.setDate(OffsetDateTime.now(ZoneOffset.UTC).toString());
           errNoteItem.setAuthor(compname);
           su.addNoteItem(errNoteItem);
+          supd = serviceOrderManager.updateService(aService.getId(), su, false);
         }
-        Service supd = serviceOrderManager.updateService(aService.getId(), su, false);
         
         return;
 

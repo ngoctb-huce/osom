@@ -23,7 +23,6 @@ import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.etsi.osl.tmf.common.model.service.Note;
@@ -40,10 +39,10 @@ import org.springframework.stereotype.Component;
 import jakarta.validation.Valid;
 
 
-@Component(value = "crOrchestrationCheckDeploymentService") //bean name
-public class CROrchestrationCheckDeploymentService implements JavaDelegate {
+@Component(value = "gcOrchestrationCheckDeploymentService") //bean name
+public class GCOrchestrationCheckDeploymentService implements JavaDelegate {
 
-	private static final transient Log logger = LogFactory.getLog(CROrchestrationCheckDeploymentService.class.getName());
+	private static final transient Log logger = LogFactory.getLog(GCOrchestrationCheckDeploymentService.class.getName());
 
 
 
@@ -91,14 +90,13 @@ public class CROrchestrationCheckDeploymentService implements JavaDelegate {
             Service serviceResult = serviceOrderManager.updateService( aService.getId(), supd, propagateToSO );
             return;
           }
-         
           rlist.add(res);
           
         }
         @Valid
         ServiceStateType currentState = aService.getState();        
         
-	    ServiceStateType nextState =  aService.findNextStateBasedOnResourceList(rlist);
+	    ServiceStateType nextState = aService.findNextStateBasedOnResourceList(rlist);
 	    
 	    if (!currentState.equals(nextState)) {
 	        supd.setState( nextState );     
