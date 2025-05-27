@@ -1,343 +1,454 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
-  <process id="CreateServiceProcess" name="CreateServiceProcess" isExecutable="true">
-    <startEvent id="startevent1" name="Start"></startEvent>
-    <serviceTask id="stAutomationCheck" name="Automation Check" activiti:async="true" activiti:delegateExpression="${automationCheck}"></serviceTask>
-    <endEvent id="endevent1" name="End"></endEvent>
-    <serviceTask id="stManualCompleteService" name="User Task Manual Complete Service" activiti:delegateExpression="${userOrderCompleteService}"></serviceTask>
-    <callActivity id="parallelActivityNFVODeploymentReq" name="NFVO Deployment Request" activiti:async="true" calledElement="NFVODeploymentReq" activiti:inheritVariables="true"></callActivity>
-    <callActivity id="parallelExternalSPDeploymentReqProcess" name="External Service Provider Deployment Request" activiti:async="true" calledElement="externalSPDeploymentReqProcess" activiti:inheritVariables="true"></callActivity>
-    <callActivity id="parallelActivityLocalServiceOrchestration" name="Local Service Orchestration" activiti:async="true" calledElement="localServiceOrchestrationProcess" activiti:inheritVariables="true"></callActivity>
-    <serviceTask id="servicetaskCheckForCreatedServices" name="Evaluate Created Services Task " activiti:delegateExpression="${evaluateCreatedServices}"></serviceTask>
-    <serviceTask id="stCreateReservedService" name="Create Service in RESERVED" activiti:delegateExpression="${createReservedService}"></serviceTask>
-    <serviceTask id="servicetask4" name="Process Create Rules" activiti:delegateExpression="${processCreateServiceRules}"></serviceTask>
-    <exclusiveGateway id="exclusivegateway1" name="Exclusive Gateway"></exclusiveGateway>
-    <sequenceFlow id="flow19" sourceRef="startevent1" targetRef="stCreateReservedService"></sequenceFlow>
-    <sequenceFlow id="flow20" sourceRef="stCreateReservedService" targetRef="servicetask4"></sequenceFlow>
-    <sequenceFlow id="flow21" sourceRef="servicetask4" targetRef="exclusivegateway1"></sequenceFlow>
-    <callActivity id="aCreateServiceProcess" name="Create Service Process" activiti:async="true" calledElement="CreateServiceProcess" activiti:inheritVariables="true">
-      <multiInstanceLoopCharacteristics isSequential="false" activiti:collection="serviceSpecsToCreate" activiti:elementVariable="serviceSpecID"></multiInstanceLoopCharacteristics>
-    </callActivity>
-    <sequenceFlow id="flow22" name="anyNotCreatedSupportingServices[!allSupportingServicesCreatedAndActive]" sourceRef="exclusivegateway1" targetRef="exclusivegateway4">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${!allSupportingServicesCreatedAndActive}]]></conditionExpression>
-    </sequenceFlow>
-    <sequenceFlow id="flow23" sourceRef="aCreateServiceProcess" targetRef="servicetask4"></sequenceFlow>
-    <sequenceFlow id="flow24" name="allSupportingServicesCreatedAndActive" sourceRef="exclusivegateway1" targetRef="stAutomationCheck">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${allSupportingServicesCreatedAndActive}]]></conditionExpression>
-    </sequenceFlow>
-    <sequenceFlow id="flow25" sourceRef="servicetaskCheckForCreatedServices" targetRef="endevent1"></sequenceFlow>
-    <exclusiveGateway id="exclusivegateway2" name="Exclusive Gateway"></exclusiveGateway>
-    <sequenceFlow id="flow26" sourceRef="stAutomationCheck" targetRef="exclusivegateway2"></sequenceFlow>
-    <sequenceFlow id="flow27" name="brokeActivity==&quot;RFS_OSM&quot;" sourceRef="exclusivegateway2" targetRef="parallelActivityNFVODeploymentReq">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${brokeActivity=='RFS_OSM'}]]></conditionExpression>
-    </sequenceFlow>
-    <sequenceFlow id="flow28" name="brokeActivity==&quot;PARTNER&quot;" sourceRef="exclusivegateway2" targetRef="parallelExternalSPDeploymentReqProcess">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${brokeActivity=='PARTNER'}]]></conditionExpression>
-    </sequenceFlow>
-    <sequenceFlow id="flow29" name="brokeActivity==&quot;AUTO&quot;" sourceRef="exclusivegateway2" targetRef="parallelActivityLocalServiceOrchestration">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${brokeActivity=='AUTO'}]]></conditionExpression>
-    </sequenceFlow>
-    <sequenceFlow id="flow30" name="brokeActivity==&quot;MANUALLY&quot;" sourceRef="exclusivegateway2" targetRef="stManualCompleteService">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${brokeActivity=='MANUALLY'}]]></conditionExpression>
-    </sequenceFlow>
-    <exclusiveGateway id="exclusivegateway3" name="Exclusive Gateway"></exclusiveGateway>
-    <sequenceFlow id="flow31" sourceRef="stManualCompleteService" targetRef="exclusivegateway3"></sequenceFlow>
-    <intermediateCatchEvent id="timerintermediatecatchevent1" name="Timer start wait 15 secs">
-      <timerEventDefinition>
-        <timeDuration>PT15S</timeDuration>
-      </timerEventDefinition>
-    </intermediateCatchEvent>
-    <sequenceFlow id="flow32" name="!serviceHandledManually" sourceRef="exclusivegateway3" targetRef="timerintermediatecatchevent1">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${!serviceHandledManually}]]></conditionExpression>
-    </sequenceFlow>
-    <sequenceFlow id="flow33" sourceRef="timerintermediatecatchevent1" targetRef="stManualCompleteService"></sequenceFlow>
-    <sequenceFlow id="flow34" name="serviceHandledManually" sourceRef="exclusivegateway3" targetRef="servicetaskCheckForCreatedServices">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${serviceHandledManually}]]></conditionExpression>
-    </sequenceFlow>
-    <sequenceFlow id="flow35" sourceRef="parallelActivityNFVODeploymentReq" targetRef="servicetaskCheckForCreatedServices"></sequenceFlow>
-    <sequenceFlow id="flow36" sourceRef="parallelExternalSPDeploymentReqProcess" targetRef="servicetaskCheckForCreatedServices"></sequenceFlow>
-    <sequenceFlow id="flow37" sourceRef="parallelActivityLocalServiceOrchestration" targetRef="servicetaskCheckForCreatedServices"></sequenceFlow>
-    <exclusiveGateway id="exclusivegateway4" name="Exclusive Gateway"></exclusiveGateway>
-    <sequenceFlow id="flow38" name="!allSupportingServicesCreated" sourceRef="exclusivegateway4" targetRef="aCreateServiceProcess">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${!allSupportingServicesCreated}]]></conditionExpression>
-    </sequenceFlow>
-    <intermediateCatchEvent id="timerintermediatecatchevent2" name="TimerCatchEvent">
-      <timerEventDefinition>
-        <timeDuration>PT15S</timeDuration>
-      </timerEventDefinition>
-    </intermediateCatchEvent>
-    <sequenceFlow id="flow39" name="allSupportingServicesCreated (but there are some not Active/Terminated)" sourceRef="exclusivegateway4" targetRef="timerintermediatecatchevent2">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${allSupportingServicesCreated}]]></conditionExpression>
-    </sequenceFlow>
-    <sequenceFlow id="flow40" sourceRef="timerintermediatecatchevent2" targetRef="servicetask4"></sequenceFlow>
-    <callActivity id="parallelActivityServiceTestOrchestrationProcess" name="Service Test Orchestration" calledElement="serviceTestOrchestrationProcess" activiti:inheritVariables="true"></callActivity>
-    <sequenceFlow id="flow41" name="brokeActivity==&quot;TESTSPEC&quot;" sourceRef="exclusivegateway2" targetRef="parallelActivityServiceTestOrchestrationProcess">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${brokeActivity=='TESTSPEC'}]]></conditionExpression>
-    </sequenceFlow>
-    <sequenceFlow id="flow42" sourceRef="parallelActivityServiceTestOrchestrationProcess" targetRef="servicetaskCheckForCreatedServices"></sequenceFlow>
-    <callActivity id="parallelActivityCRDeploymentReq" name="CR Deployment Request" calledElement="procCRDeploymentRequest" activiti:inheritVariables="true"></callActivity>
-    <sequenceFlow id="flow43" name="brokeActivity==&quot;RFS_CRSPEC&quot;" sourceRef="exclusivegateway2" targetRef="parallelActivityCRDeploymentReq">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${brokeActivity=='RFS_CRSPEC'}]]></conditionExpression>
-    </sequenceFlow>
-    <sequenceFlow id="flow44" sourceRef="parallelActivityCRDeploymentReq" targetRef="servicetaskCheckForCreatedServices"></sequenceFlow>
-    <callActivity id="activityGenericResourceDeploymentReq" name="Generic Resource Deployment Request" calledElement="procGenericControllerDeploymentRequest" activiti:inheritVariables="true"></callActivity>
-    <sequenceFlow id="flow45" name="brokeActivity==&quot;GRSPEC&quot;" sourceRef="exclusivegateway2" targetRef="activityGenericResourceDeploymentReq">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${brokeActivity=='GRSPEC'}]]></conditionExpression>
-    </sequenceFlow>
-    <sequenceFlow id="flow46" sourceRef="activityGenericResourceDeploymentReq" targetRef="servicetaskCheckForCreatedServices"></sequenceFlow>
-    <callActivity id="parallelMetricoReq" name="Metrico Request" activiti:async="true" calledElement="procMetricoDeploymentRequest" activiti:inheritVariables="true"></callActivity>
-    <sequenceFlow id="flow47" sourceRef="parallelMetricoReq" targetRef="servicetaskCheckForCreatedServices"></sequenceFlow>
-    <sequenceFlow id="flow48" name="brokeActivity==&quot;RFS_MTSPEC&quot;" sourceRef="exclusivegateway2" targetRef="parallelMetricoReq">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${brokeActivity=='RFS_MTSPEC'}]]></conditionExpression>
-    </sequenceFlow>
-  </process>
-  <bpmndi:BPMNDiagram id="BPMNDiagram_CreateServiceProcess">
-    <bpmndi:BPMNPlane bpmnElement="CreateServiceProcess" id="BPMNPlane_CreateServiceProcess">
-      <bpmndi:BPMNShape bpmnElement="startevent1" id="BPMNShape_startevent1">
-        <omgdc:Bounds height="35.0" width="35.0" x="37.0" y="213.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="stAutomationCheck" id="BPMNShape_stAutomationCheck">
-        <omgdc:Bounds height="55.0" width="105.0" x="711.0" y="203.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="endevent1" id="BPMNShape_endevent1">
-        <omgdc:Bounds height="35.0" width="35.0" x="1560.0" y="359.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="stManualCompleteService" id="BPMNShape_stManualCompleteService">
-        <omgdc:Bounds height="61.0" width="105.0" x="1040.0" y="70.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="parallelActivityNFVODeploymentReq" id="BPMNShape_parallelActivityNFVODeploymentReq">
-        <omgdc:Bounds height="81.0" width="131.0" x="1094.0" y="243.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="parallelExternalSPDeploymentReqProcess" id="BPMNShape_parallelExternalSPDeploymentReqProcess">
-        <omgdc:Bounds height="91.0" width="131.0" x="1094.0" y="475.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="parallelActivityLocalServiceOrchestration" id="BPMNShape_parallelActivityLocalServiceOrchestration">
-        <omgdc:Bounds height="81.0" width="128.0" x="1095.0" y="585.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="servicetaskCheckForCreatedServices" id="BPMNShape_servicetaskCheckForCreatedServices">
-        <omgdc:Bounds height="71.0" width="105.0" x="1355.0" y="341.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="stCreateReservedService" id="BPMNShape_stCreateReservedService">
-        <omgdc:Bounds height="66.0" width="105.0" x="100.0" y="198.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="servicetask4" id="BPMNShape_servicetask4">
-        <omgdc:Bounds height="63.0" width="105.0" x="270.0" y="199.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="exclusivegateway1" id="BPMNShape_exclusivegateway1">
-        <omgdc:Bounds height="40.0" width="40.0" x="537.0" y="210.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="aCreateServiceProcess" id="BPMNShape_aCreateServiceProcess">
-        <omgdc:Bounds height="71.0" width="121.0" x="387.0" y="485.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="exclusivegateway2" id="BPMNShape_exclusivegateway2">
-        <omgdc:Bounds height="40.0" width="40.0" x="887.0" y="210.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="exclusivegateway3" id="BPMNShape_exclusivegateway3">
-        <omgdc:Bounds height="40.0" width="40.0" x="1237.0" y="80.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="timerintermediatecatchevent1" id="BPMNShape_timerintermediatecatchevent1">
-        <omgdc:Bounds height="35.0" width="35.0" x="1137.0" y="169.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="exclusivegateway4" id="BPMNShape_exclusivegateway4">
-        <omgdc:Bounds height="40.0" width="40.0" x="537.0" y="326.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="timerintermediatecatchevent2" id="BPMNShape_timerintermediatecatchevent2">
-        <omgdc:Bounds height="35.0" width="35.0" x="385.0" y="329.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="parallelActivityServiceTestOrchestrationProcess" id="BPMNShape_parallelActivityServiceTestOrchestrationProcess">
-        <omgdc:Bounds height="81.0" width="143.0" x="1095.0" y="710.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="parallelActivityCRDeploymentReq" id="BPMNShape_parallelActivityCRDeploymentReq">
-        <omgdc:Bounds height="90.0" width="129.0" x="1094.0" y="332.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="activityGenericResourceDeploymentReq" id="BPMNShape_activityGenericResourceDeploymentReq">
-        <omgdc:Bounds height="71.0" width="130.0" x="1094.0" y="820.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="parallelMetricoReq" id="BPMNShape_parallelMetricoReq">
-        <omgdc:Bounds height="71.0" width="121.0" x="1070.0" y="900.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge bpmnElement="flow19" id="BPMNEdge_flow19">
-        <omgdi:waypoint x="72.0" y="230.0"></omgdi:waypoint>
-        <omgdi:waypoint x="100.0" y="231.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow20" id="BPMNEdge_flow20">
-        <omgdi:waypoint x="205.0" y="231.0"></omgdi:waypoint>
-        <omgdi:waypoint x="270.0" y="230.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow21" id="BPMNEdge_flow21">
-        <omgdi:waypoint x="375.0" y="230.0"></omgdi:waypoint>
-        <omgdi:waypoint x="537.0" y="230.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow22" id="BPMNEdge_flow22">
-        <omgdi:waypoint x="557.0" y="250.0"></omgdi:waypoint>
-        <omgdi:waypoint x="557.0" y="326.0"></omgdi:waypoint>
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="65.0" width="100.0" x="567.0" y="256.0"></omgdc:Bounds>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow23" id="BPMNEdge_flow23">
-        <omgdi:waypoint x="387.0" y="520.0"></omgdi:waypoint>
-        <omgdi:waypoint x="322.0" y="520.0"></omgdi:waypoint>
-        <omgdi:waypoint x="322.0" y="262.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow24" id="BPMNEdge_flow24">
-        <omgdi:waypoint x="577.0" y="230.0"></omgdi:waypoint>
-        <omgdi:waypoint x="711.0" y="230.0"></omgdi:waypoint>
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="39.0" width="100.0" x="576.0" y="197.0"></omgdc:Bounds>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow25" id="BPMNEdge_flow25">
-        <omgdi:waypoint x="1460.0" y="376.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1560.0" y="376.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow26" id="BPMNEdge_flow26">
-        <omgdi:waypoint x="816.0" y="230.0"></omgdi:waypoint>
-        <omgdi:waypoint x="887.0" y="230.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow27" id="BPMNEdge_flow27">
-        <omgdi:waypoint x="907.0" y="250.0"></omgdi:waypoint>
-        <omgdi:waypoint x="907.0" y="283.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1094.0" y="283.0"></omgdi:waypoint>
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="39.0" width="100.0" x="917.0" y="270.0"></omgdc:Bounds>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow28" id="BPMNEdge_flow28">
-        <omgdi:waypoint x="907.0" y="250.0"></omgdi:waypoint>
-        <omgdi:waypoint x="907.0" y="520.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1094.0" y="520.0"></omgdi:waypoint>
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="39.0" width="100.0" x="927.0" y="484.0"></omgdc:Bounds>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow29" id="BPMNEdge_flow29">
-        <omgdi:waypoint x="907.0" y="250.0"></omgdi:waypoint>
-        <omgdi:waypoint x="907.0" y="625.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1095.0" y="625.0"></omgdi:waypoint>
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="39.0" width="100.0" x="917.0" y="584.0"></omgdc:Bounds>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow30" id="BPMNEdge_flow30">
-        <omgdi:waypoint x="907.0" y="210.0"></omgdi:waypoint>
-        <omgdi:waypoint x="907.0" y="100.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1040.0" y="100.0"></omgdi:waypoint>
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="39.0" width="100.0" x="917.0" y="131.0"></omgdc:Bounds>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow31" id="BPMNEdge_flow31">
-        <omgdi:waypoint x="1145.0" y="100.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1237.0" y="100.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow32" id="BPMNEdge_flow32">
-        <omgdi:waypoint x="1257.0" y="120.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1256.0" y="186.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1172.0" y="186.0"></omgdi:waypoint>
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="39.0" width="100.0" x="1261.0" y="139.0"></omgdc:Bounds>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow33" id="BPMNEdge_flow33">
-        <omgdi:waypoint x="1137.0" y="186.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1092.0" y="186.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1092.0" y="131.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow34" id="BPMNEdge_flow34">
-        <omgdi:waypoint x="1277.0" y="100.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1407.0" y="100.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1407.0" y="341.0"></omgdi:waypoint>
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="39.0" width="100.0" x="1289.0" y="70.0"></omgdc:Bounds>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow35" id="BPMNEdge_flow35">
-        <omgdi:waypoint x="1225.0" y="283.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1407.0" y="283.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1407.0" y="341.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow36" id="BPMNEdge_flow36">
-        <omgdi:waypoint x="1225.0" y="520.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1407.0" y="520.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1407.0" y="412.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow37" id="BPMNEdge_flow37">
-        <omgdi:waypoint x="1223.0" y="625.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1407.0" y="625.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1407.0" y="412.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow38" id="BPMNEdge_flow38">
-        <omgdi:waypoint x="557.0" y="366.0"></omgdi:waypoint>
-        <omgdi:waypoint x="557.0" y="519.0"></omgdi:waypoint>
-        <omgdi:waypoint x="508.0" y="520.0"></omgdi:waypoint>
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="39.0" width="100.0" x="577.0" y="393.0"></omgdc:Bounds>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow39" id="BPMNEdge_flow39">
-        <omgdi:waypoint x="537.0" y="346.0"></omgdi:waypoint>
-        <omgdi:waypoint x="420.0" y="346.0"></omgdi:waypoint>
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="65.0" width="100.0" x="439.0" y="290.0"></omgdc:Bounds>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow40" id="BPMNEdge_flow40">
-        <omgdi:waypoint x="385.0" y="346.0"></omgdi:waypoint>
-        <omgdi:waypoint x="322.0" y="346.0"></omgdi:waypoint>
-        <omgdi:waypoint x="322.0" y="262.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow41" id="BPMNEdge_flow41">
-        <omgdi:waypoint x="907.0" y="250.0"></omgdi:waypoint>
-        <omgdi:waypoint x="907.0" y="750.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1095.0" y="750.0"></omgdi:waypoint>
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="39.0" width="100.0" x="910.0" y="699.0"></omgdc:Bounds>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow42" id="BPMNEdge_flow42">
-        <omgdi:waypoint x="1238.0" y="750.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1407.0" y="750.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1407.0" y="412.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow43" id="BPMNEdge_flow43">
-        <omgdi:waypoint x="907.0" y="250.0"></omgdi:waypoint>
-        <omgdi:waypoint x="907.0" y="377.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1094.0" y="377.0"></omgdi:waypoint>
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="39.0" width="100.0" x="941.0" y="344.0"></omgdc:Bounds>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow44" id="BPMNEdge_flow44">
-        <omgdi:waypoint x="1223.0" y="377.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1355.0" y="376.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow45" id="BPMNEdge_flow45">
-        <omgdi:waypoint x="907.0" y="250.0"></omgdi:waypoint>
-        <omgdi:waypoint x="907.0" y="855.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1094.0" y="855.0"></omgdi:waypoint>
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="39.0" width="100.0" x="910.0" y="789.0"></omgdc:Bounds>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow46" id="BPMNEdge_flow46">
-        <omgdi:waypoint x="1224.0" y="855.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1407.0" y="855.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1407.0" y="412.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow47" id="BPMNEdge_flow47">
-        <omgdi:waypoint x="1191.0" y="935.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1407.0" y="935.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1407.0" y="412.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow48" id="BPMNEdge_flow48">
-        <omgdi:waypoint x="907.0" y="250.0"></omgdi:waypoint>
-        <omgdi:waypoint x="907.0" y="935.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1070.0" y="935.0"></omgdi:waypoint>
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="39.0" width="100.0" x="950.0" y="879.0"></omgdc:Bounds>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-    </bpmndi:BPMNPlane>
-  </bpmndi:BPMNDiagram>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:tns="http://www.activiti.org/test" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" expressionLanguage="http://www.w3.org/1999/XPath" id="m1747210343813" name="" targetNamespace="http://www.activiti.org/test" typeLanguage="http://www.w3.org/2001/XMLSchema">
+    <process id="CreateServiceProcess" isClosed="false" isExecutable="true" name="CreateServiceProcess" processType="None">
+        <startEvent id="startevent1" name="Start"/>
+        <serviceTask activiti:async="true" activiti:delegateExpression="${automationCheck}" activiti:exclusive="true" id="stAutomationCheck" name="Automation Check"/>
+        <endEvent id="endevent1" name="End"/>
+        <serviceTask activiti:delegateExpression="${userOrderCompleteService}" activiti:exclusive="true" id="stManualCompleteService" name="User Task Manual Complete Service"/>
+        <callActivity activiti:async="true" activiti:exclusive="true" activiti:inheritVariables="true" calledElement="NFVODeploymentReq" id="parallelActivityNFVODeploymentReq" name="NFVO Deployment Request"/>
+        <callActivity activiti:async="true" activiti:exclusive="true" activiti:inheritVariables="true" calledElement="externalSPDeploymentReqProcess" id="parallelExternalSPDeploymentReqProcess" name="External Service Provider Deployment Request"/>
+        <callActivity activiti:async="true" activiti:exclusive="true" activiti:inheritVariables="true" calledElement="localServiceOrchestrationProcess" id="parallelActivityLocalServiceOrchestration" name="Local Service Orchestration"/>
+        <serviceTask activiti:delegateExpression="${evaluateCreatedServices}" activiti:exclusive="true" id="servicetaskCheckForCreatedServices" name="Evaluate Created Services Task"/>
+        <serviceTask activiti:delegateExpression="${createReservedService}" activiti:exclusive="true" id="stCreateReservedService" name="Create Service in RESERVED"/>
+        <serviceTask activiti:delegateExpression="${processCreateServiceRules}" activiti:exclusive="true" id="servicetask4" name="Process Create Rules"/>
+        <exclusiveGateway gatewayDirection="Unspecified" id="exclusivegateway1" name="Exclusive Gateway"/>
+        <sequenceFlow id="flow19" sourceRef="startevent1" targetRef="stCreateReservedService"/>
+        <sequenceFlow id="flow20" sourceRef="stCreateReservedService" targetRef="servicetask4"/>
+        <sequenceFlow id="flow21" sourceRef="servicetask4" targetRef="exclusivegateway1"/>
+        <callActivity activiti:async="true" activiti:exclusive="true" activiti:inheritVariables="true" calledElement="CreateServiceProcess" id="aCreateServiceProcess" name="Create Service Process">
+            <multiInstanceLoopCharacteristics activiti:collection="serviceSpecsToCreate" activiti:elementVariable="serviceSpecID" isSequential="false"/>
+        </callActivity>
+        <sequenceFlow id="flow22" name="anyNotCreatedSupportingServices[!allSupportingServicesCreatedAndActive]" sourceRef="exclusivegateway1" targetRef="exclusivegateway4">
+            <conditionExpression xsi:type="tFormalExpression"><![CDATA[${!allSupportingServicesCreatedAndActive}]]></conditionExpression>
+        </sequenceFlow>
+        <sequenceFlow id="flow23" sourceRef="aCreateServiceProcess" targetRef="servicetask4"/>
+        <sequenceFlow id="flow24" name="allSupportingServicesCreatedAndActive" sourceRef="exclusivegateway1" targetRef="stAutomationCheck">
+            <conditionExpression xsi:type="tFormalExpression"><![CDATA[${allSupportingServicesCreatedAndActive}]]></conditionExpression>
+        </sequenceFlow>
+        <sequenceFlow id="flow25" sourceRef="servicetaskCheckForCreatedServices" targetRef="endevent1"/>
+        <exclusiveGateway gatewayDirection="Unspecified" id="exclusivegateway2" name="Exclusive Gateway"/>
+        <sequenceFlow id="flow26" sourceRef="stAutomationCheck" targetRef="exclusivegateway2"/>
+        <sequenceFlow id="flow27" name="brokeActivity==&quot;RFS_OSM&quot;" sourceRef="exclusivegateway2" targetRef="parallelActivityNFVODeploymentReq">
+            <conditionExpression xsi:type="tFormalExpression"><![CDATA[${brokeActivity=='RFS_OSM'}]]></conditionExpression>
+        </sequenceFlow>
+        <sequenceFlow id="flow28" name="brokeActivity==&quot;PARTNER&quot;" sourceRef="exclusivegateway2" targetRef="parallelExternalSPDeploymentReqProcess">
+            <conditionExpression xsi:type="tFormalExpression"><![CDATA[${brokeActivity=='PARTNER'}]]></conditionExpression>
+        </sequenceFlow>
+        <sequenceFlow id="flow29" name="brokeActivity==&quot;AUTO&quot;" sourceRef="exclusivegateway2" targetRef="parallelActivityLocalServiceOrchestration">
+            <conditionExpression xsi:type="tFormalExpression"><![CDATA[${brokeActivity=='AUTO'}]]></conditionExpression>
+        </sequenceFlow>
+        <sequenceFlow id="flow30" name="brokeActivity==&quot;MANUALLY&quot;" sourceRef="exclusivegateway2" targetRef="stManualCompleteService">
+            <conditionExpression xsi:type="tFormalExpression"><![CDATA[${brokeActivity=='MANUALLY'}]]></conditionExpression>
+        </sequenceFlow>
+        <exclusiveGateway gatewayDirection="Unspecified" id="exclusivegateway3" name="Exclusive Gateway"/>
+        <sequenceFlow id="flow31" sourceRef="stManualCompleteService" targetRef="exclusivegateway3"/>
+        <intermediateCatchEvent id="timerintermediatecatchevent1" name="Timer start wait 15 secs">
+            <timerEventDefinition id="timerintermediatecatchevent1_ED_1">
+                <timeDuration><![CDATA[PT15S]]></timeDuration>
+            </timerEventDefinition>
+        </intermediateCatchEvent>
+        <sequenceFlow id="flow32" name="!serviceHandledManually" sourceRef="exclusivegateway3" targetRef="timerintermediatecatchevent1">
+            <conditionExpression xsi:type="tFormalExpression"><![CDATA[${!serviceHandledManually}]]></conditionExpression>
+        </sequenceFlow>
+        <sequenceFlow id="flow33" sourceRef="timerintermediatecatchevent1" targetRef="stManualCompleteService"/>
+        <sequenceFlow id="flow34" name="serviceHandledManually" sourceRef="exclusivegateway3" targetRef="servicetaskCheckForCreatedServices">
+            <conditionExpression xsi:type="tFormalExpression"><![CDATA[${serviceHandledManually}]]></conditionExpression>
+        </sequenceFlow>
+        <sequenceFlow id="flow35" sourceRef="parallelActivityNFVODeploymentReq" targetRef="servicetaskCheckForCreatedServices"/>
+        <sequenceFlow id="flow36" sourceRef="parallelExternalSPDeploymentReqProcess" targetRef="servicetaskCheckForCreatedServices"/>
+        <sequenceFlow id="flow37" sourceRef="parallelActivityLocalServiceOrchestration" targetRef="servicetaskCheckForCreatedServices"/>
+        <exclusiveGateway gatewayDirection="Unspecified" id="exclusivegateway4" name="Exclusive Gateway"/>
+        <sequenceFlow id="flow38" name="!allSupportingServicesCreated" sourceRef="exclusivegateway4" targetRef="aCreateServiceProcess">
+            <conditionExpression xsi:type="tFormalExpression"><![CDATA[${!allSupportingServicesCreated}]]></conditionExpression>
+        </sequenceFlow>
+        <intermediateCatchEvent id="timerintermediatecatchevent2" name="TimerCatchEvent">
+            <timerEventDefinition id="timerintermediatecatchevent2_ED_1">
+                <timeDuration><![CDATA[PT15S]]></timeDuration>
+            </timerEventDefinition>
+        </intermediateCatchEvent>
+        <sequenceFlow id="flow39" name="allSupportingServicesCreated (but there are some not Active/Terminated)" sourceRef="exclusivegateway4" targetRef="timerintermediatecatchevent2">
+            <conditionExpression xsi:type="tFormalExpression"><![CDATA[${allSupportingServicesCreated}]]></conditionExpression>
+        </sequenceFlow>
+        <sequenceFlow id="flow40" sourceRef="timerintermediatecatchevent2" targetRef="servicetask4"/>
+        <callActivity activiti:exclusive="true" activiti:inheritVariables="true" calledElement="serviceTestOrchestrationProcess" id="parallelActivityServiceTestOrchestrationProcess" name="Service Test Orchestration"/>
+        <sequenceFlow id="flow41" name="brokeActivity==&quot;TESTSPEC&quot;" sourceRef="exclusivegateway2" targetRef="parallelActivityServiceTestOrchestrationProcess">
+            <conditionExpression xsi:type="tFormalExpression"><![CDATA[${brokeActivity=='TESTSPEC'}]]></conditionExpression>
+        </sequenceFlow>
+        <sequenceFlow id="flow42" sourceRef="parallelActivityServiceTestOrchestrationProcess" targetRef="servicetaskCheckForCreatedServices"/>
+        <callActivity activiti:exclusive="true" activiti:inheritVariables="true" calledElement="procCRDeploymentRequest" id="parallelActivityCRDeploymentReq" name="CR Deployment Request"/>
+        <sequenceFlow id="flow43" name="brokeActivity==&quot;RFS_CRSPEC&quot;" sourceRef="exclusivegateway2" targetRef="parallelActivityCRDeploymentReq">
+            <conditionExpression xsi:type="tFormalExpression"><![CDATA[${brokeActivity=='RFS_CRSPEC'}]]></conditionExpression>
+        </sequenceFlow>
+        <sequenceFlow id="flow44" sourceRef="parallelActivityCRDeploymentReq" targetRef="servicetaskCheckForCreatedServices"/>
+        <callActivity activiti:exclusive="true" activiti:inheritVariables="true" calledElement="procGenericControllerDeploymentRequest" id="activityGenericResourceDeploymentReq" name="Generic Resource Deployment Request"/>
+        <sequenceFlow id="flow45" name="brokeActivity==&quot;GRSPEC&quot;" sourceRef="exclusivegateway2" targetRef="activityGenericResourceDeploymentReq">
+            <conditionExpression xsi:type="tFormalExpression"><![CDATA[${brokeActivity=='GRSPEC'}]]></conditionExpression>
+        </sequenceFlow>
+        <sequenceFlow id="flow46" sourceRef="activityGenericResourceDeploymentReq" targetRef="servicetaskCheckForCreatedServices"/>
+        <callActivity activiti:async="true" activiti:exclusive="true" activiti:inheritVariables="true" calledElement="procMetricoDeploymentRequest" id="parallelMetricoReq" name="Metrico Request"/>
+        <sequenceFlow id="flow47" sourceRef="parallelMetricoReq" targetRef="servicetaskCheckForCreatedServices"/>
+        <sequenceFlow id="flow48" name="brokeActivity==&quot;RFS_MTSPEC&quot;" sourceRef="exclusivegateway2" targetRef="parallelMetricoReq">
+            <conditionExpression xsi:type="tFormalExpression"><![CDATA[${brokeActivity=='RFS_MTSPEC'}]]></conditionExpression>
+        </sequenceFlow>
+    </process>
+    <bpmndi:BPMNDiagram documentation="background=#2B2D30;count=2;horizontalcount=2;orientation=0;width=842.4;height=1195.2;imageableWidth=832.4;imageableHeight=1185.2;imageableX=5.0;imageableY=5.0" id="Diagram-_1" name="New Diagram">
+        <bpmndi:BPMNPlane bpmnElement="_1">
+            <bpmndi:BPMNShape bpmnElement="startevent1" id="Shape-startevent1">
+                <omgdc:Bounds height="32.0" width="32.0" x="37.0" y="213.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="stAutomationCheck" id="Shape-stAutomationCheck">
+                <omgdc:Bounds height="55.0" width="105.0" x="711.0" y="203.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="55.0" width="105.0" x="0.0" y="0.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="endevent1" id="Shape-endevent1">
+                <omgdc:Bounds height="32.0" width="32.0" x="1560.0" y="359.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="stManualCompleteService" id="Shape-stManualCompleteService">
+                <omgdc:Bounds height="61.0" width="105.0" x="1040.0" y="70.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="61.0" width="105.0" x="0.0" y="0.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="parallelActivityNFVODeploymentReq" id="Shape-parallelActivityNFVODeploymentReq" isExpanded="false">
+                <omgdc:Bounds height="81.0" width="131.0" x="1094.0" y="243.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="81.0" width="131.0" x="0.0" y="0.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="parallelExternalSPDeploymentReqProcess" id="Shape-parallelExternalSPDeploymentReqProcess" isExpanded="false">
+                <omgdc:Bounds height="91.0" width="131.0" x="1094.0" y="475.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="91.0" width="131.0" x="0.0" y="0.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="parallelActivityLocalServiceOrchestration" id="Shape-parallelActivityLocalServiceOrchestration" isExpanded="false">
+                <omgdc:Bounds height="81.0" width="128.0" x="1095.0" y="585.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="81.0" width="128.0" x="0.0" y="0.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="servicetaskCheckForCreatedServices" id="Shape-servicetaskCheckForCreatedServices">
+                <omgdc:Bounds height="71.0" width="105.0" x="1355.0" y="341.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="71.0" width="105.0" x="0.0" y="0.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="stCreateReservedService" id="Shape-stCreateReservedService">
+                <omgdc:Bounds height="66.0" width="105.0" x="100.0" y="198.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="66.0" width="105.0" x="0.0" y="0.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="servicetask4" id="Shape-servicetask4">
+                <omgdc:Bounds height="63.0" width="105.0" x="270.0" y="199.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="63.0" width="105.0" x="0.0" y="0.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="exclusivegateway1" id="Shape-exclusivegateway1" isMarkerVisible="false">
+                <omgdc:Bounds height="32.0" width="32.0" x="537.0" y="210.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="aCreateServiceProcess" id="Shape-aCreateServiceProcess" isExpanded="false">
+                <omgdc:Bounds height="71.0" width="121.0" x="387.0" y="485.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="71.0" width="121.0" x="0.0" y="0.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="exclusivegateway2" id="Shape-exclusivegateway2" isMarkerVisible="false">
+                <omgdc:Bounds height="32.0" width="32.0" x="887.0" y="210.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="exclusivegateway3" id="Shape-exclusivegateway3" isMarkerVisible="false">
+                <omgdc:Bounds height="32.0" width="32.0" x="1237.0" y="80.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="timerintermediatecatchevent1" id="Shape-timerintermediatecatchevent1">
+                <omgdc:Bounds height="32.0" width="32.0" x="1137.0" y="169.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="exclusivegateway4" id="Shape-exclusivegateway4" isMarkerVisible="false">
+                <omgdc:Bounds height="32.0" width="32.0" x="537.0" y="326.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="timerintermediatecatchevent2" id="Shape-timerintermediatecatchevent2">
+                <omgdc:Bounds height="32.0" width="32.0" x="385.0" y="329.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="parallelActivityServiceTestOrchestrationProcess" id="Shape-parallelActivityServiceTestOrchestrationProcess" isExpanded="false">
+                <omgdc:Bounds height="81.0" width="143.0" x="1095.0" y="710.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="81.0" width="143.0" x="0.0" y="0.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="parallelActivityCRDeploymentReq" id="Shape-parallelActivityCRDeploymentReq" isExpanded="false">
+                <omgdc:Bounds height="90.0" width="129.0" x="1094.0" y="332.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="90.0" width="129.0" x="0.0" y="0.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="activityGenericResourceDeploymentReq" id="Shape-activityGenericResourceDeploymentReq" isExpanded="false">
+                <omgdc:Bounds height="71.0" width="130.0" x="1094.0" y="820.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="71.0" width="130.0" x="0.0" y="0.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="parallelMetricoReq" id="Shape-parallelMetricoReq" isExpanded="false">
+                <omgdc:Bounds height="71.0" width="121.0" x="1070.0" y="900.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="71.0" width="121.0" x="0.0" y="0.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge bpmnElement="flow46" id="BPMNEdge_flow46" sourceElement="activityGenericResourceDeploymentReq" targetElement="servicetaskCheckForCreatedServices">
+                <omgdi:waypoint x="1224.0" y="855.0"/>
+                <omgdi:waypoint x="1407.0" y="855.0"/>
+                <omgdi:waypoint x="1407.0" y="412.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow47" id="BPMNEdge_flow47" sourceElement="parallelMetricoReq" targetElement="servicetaskCheckForCreatedServices">
+                <omgdi:waypoint x="1191.0" y="935.0"/>
+                <omgdi:waypoint x="1407.0" y="935.0"/>
+                <omgdi:waypoint x="1407.0" y="412.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow48" id="BPMNEdge_flow48" sourceElement="exclusivegateway2" targetElement="parallelMetricoReq">
+                <omgdi:waypoint x="907.0" y="238.0"/>
+                <omgdi:waypoint x="907.0" y="935.0"/>
+                <omgdi:waypoint x="1070.0" y="935.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="39.0" width="100.0" x="950.0" y="879.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow42" id="BPMNEdge_flow42" sourceElement="parallelActivityServiceTestOrchestrationProcess" targetElement="servicetaskCheckForCreatedServices">
+                <omgdi:waypoint x="1238.0" y="750.0"/>
+                <omgdi:waypoint x="1407.0" y="750.0"/>
+                <omgdi:waypoint x="1407.0" y="412.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow43" id="BPMNEdge_flow43" sourceElement="exclusivegateway2" targetElement="parallelActivityCRDeploymentReq">
+                <omgdi:waypoint x="907.0" y="238.0"/>
+                <omgdi:waypoint x="907.0" y="377.0"/>
+                <omgdi:waypoint x="1094.0" y="377.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="39.0" width="100.0" x="941.0" y="344.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow44" id="BPMNEdge_flow44" sourceElement="parallelActivityCRDeploymentReq" targetElement="servicetaskCheckForCreatedServices">
+                <omgdi:waypoint x="1223.0" y="377.0"/>
+                <omgdi:waypoint x="1355.0" y="376.5"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow45" id="BPMNEdge_flow45" sourceElement="exclusivegateway2" targetElement="activityGenericResourceDeploymentReq">
+                <omgdi:waypoint x="907.0" y="238.0"/>
+                <omgdi:waypoint x="907.0" y="855.0"/>
+                <omgdi:waypoint x="1094.0" y="855.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="39.0" width="100.0" x="910.0" y="789.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow40" id="BPMNEdge_flow40" sourceElement="timerintermediatecatchevent2" targetElement="servicetask4">
+                <omgdi:waypoint x="385.0312805773287" y="346.0"/>
+                <omgdi:waypoint x="322.0" y="346.0"/>
+                <omgdi:waypoint x="322.0" y="262.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow41" id="BPMNEdge_flow41" sourceElement="exclusivegateway2" targetElement="parallelActivityServiceTestOrchestrationProcess">
+                <omgdi:waypoint x="907.0" y="238.0"/>
+                <omgdi:waypoint x="907.0" y="750.0"/>
+                <omgdi:waypoint x="1095.0" y="750.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="39.0" width="100.0" x="910.0" y="699.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow39" id="BPMNEdge_flow39" sourceElement="exclusivegateway4" targetElement="timerintermediatecatchevent2">
+                <omgdi:waypoint x="537.0" y="342.0"/>
+                <omgdi:waypoint x="417.0" y="345.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="65.0" width="100.0" x="439.0" y="290.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow35" id="BPMNEdge_flow35" sourceElement="parallelActivityNFVODeploymentReq" targetElement="servicetaskCheckForCreatedServices">
+                <omgdi:waypoint x="1225.0" y="283.0"/>
+                <omgdi:waypoint x="1407.0" y="283.0"/>
+                <omgdi:waypoint x="1407.0" y="341.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow36" id="BPMNEdge_flow36" sourceElement="parallelExternalSPDeploymentReqProcess" targetElement="servicetaskCheckForCreatedServices">
+                <omgdi:waypoint x="1225.0" y="520.0"/>
+                <omgdi:waypoint x="1407.0" y="520.0"/>
+                <omgdi:waypoint x="1407.0" y="412.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow37" id="BPMNEdge_flow37" sourceElement="parallelActivityLocalServiceOrchestration" targetElement="servicetaskCheckForCreatedServices">
+                <omgdi:waypoint x="1223.0" y="625.0"/>
+                <omgdi:waypoint x="1407.0" y="625.0"/>
+                <omgdi:waypoint x="1407.0" y="412.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow38" id="BPMNEdge_flow38" sourceElement="exclusivegateway4" targetElement="aCreateServiceProcess">
+                <omgdi:waypoint x="557.0" y="354.0"/>
+                <omgdi:waypoint x="557.0" y="519.0"/>
+                <omgdi:waypoint x="508.0" y="519.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="39.0" width="100.0" x="577.0" y="393.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow31" id="BPMNEdge_flow31" sourceElement="stManualCompleteService" targetElement="exclusivegateway3">
+                <omgdi:waypoint x="1145.0" y="100.5"/>
+                <omgdi:waypoint x="1237.0" y="96.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow32" id="BPMNEdge_flow32" sourceElement="exclusivegateway3" targetElement="timerintermediatecatchevent1">
+                <omgdi:waypoint x="1256.0" y="109.0"/>
+                <omgdi:waypoint x="1256.0" y="186.0"/>
+                <omgdi:waypoint x="1168.9687194226713" y="186.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="39.0" width="100.0" x="1261.0" y="139.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow33" id="BPMNEdge_flow33" sourceElement="timerintermediatecatchevent1" targetElement="stManualCompleteService">
+                <omgdi:waypoint x="1137.0312805773287" y="186.0"/>
+                <omgdi:waypoint x="1092.0" y="186.0"/>
+                <omgdi:waypoint x="1092.0" y="131.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow34" id="BPMNEdge_flow34" sourceElement="exclusivegateway3" targetElement="servicetaskCheckForCreatedServices">
+                <omgdi:waypoint x="1265.0" y="100.0"/>
+                <omgdi:waypoint x="1407.0" y="100.0"/>
+                <omgdi:waypoint x="1407.0" y="341.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="39.0" width="100.0" x="1289.0" y="70.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow30" id="BPMNEdge_flow30" sourceElement="exclusivegateway2" targetElement="stManualCompleteService">
+                <omgdi:waypoint x="907.0" y="214.0"/>
+                <omgdi:waypoint x="907.0" y="100.0"/>
+                <omgdi:waypoint x="1040.0" y="100.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="39.0" width="100.0" x="917.0" y="131.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow28" id="BPMNEdge_flow28" sourceElement="exclusivegateway2" targetElement="parallelExternalSPDeploymentReqProcess">
+                <omgdi:waypoint x="907.0" y="238.0"/>
+                <omgdi:waypoint x="907.0" y="520.0"/>
+                <omgdi:waypoint x="1094.0" y="520.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="39.0" width="100.0" x="927.0" y="484.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow29" id="BPMNEdge_flow29" sourceElement="exclusivegateway2" targetElement="parallelActivityLocalServiceOrchestration">
+                <omgdi:waypoint x="907.0" y="238.0"/>
+                <omgdi:waypoint x="907.0" y="625.0"/>
+                <omgdi:waypoint x="1095.0" y="625.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="39.0" width="100.0" x="917.0" y="584.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow24" id="BPMNEdge_flow24" sourceElement="exclusivegateway1" targetElement="stAutomationCheck">
+                <omgdi:waypoint x="569.0" y="226.0"/>
+                <omgdi:waypoint x="711.0" y="230.5"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="39.0" width="100.0" x="576.0" y="197.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow25" id="BPMNEdge_flow25" sourceElement="servicetaskCheckForCreatedServices" targetElement="endevent1">
+                <omgdi:waypoint x="1460.0" y="376.5"/>
+                <omgdi:waypoint x="1560.0" y="375.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow26" id="BPMNEdge_flow26" sourceElement="stAutomationCheck" targetElement="exclusivegateway2">
+                <omgdi:waypoint x="816.0" y="230.5"/>
+                <omgdi:waypoint x="887.0" y="226.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow27" id="BPMNEdge_flow27" sourceElement="exclusivegateway2" targetElement="parallelActivityNFVODeploymentReq">
+                <omgdi:waypoint x="907.0" y="238.0"/>
+                <omgdi:waypoint x="907.0" y="283.0"/>
+                <omgdi:waypoint x="1094.0" y="283.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="39.0" width="100.0" x="917.0" y="270.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow20" id="BPMNEdge_flow20" sourceElement="stCreateReservedService" targetElement="servicetask4">
+                <omgdi:waypoint x="205.0" y="231.0"/>
+                <omgdi:waypoint x="270.0" y="230.5"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow21" id="BPMNEdge_flow21" sourceElement="servicetask4" targetElement="exclusivegateway1">
+                <omgdi:waypoint x="375.0" y="230.5"/>
+                <omgdi:waypoint x="537.0" y="226.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow22" id="BPMNEdge_flow22" sourceElement="exclusivegateway1" targetElement="exclusivegateway4">
+                <omgdi:waypoint x="553.0" y="242.0"/>
+                <omgdi:waypoint x="553.0" y="326.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="65.0" width="100.0" x="567.0" y="256.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow23" id="BPMNEdge_flow23" sourceElement="aCreateServiceProcess" targetElement="servicetask4">
+                <omgdi:waypoint x="387.0" y="520.0"/>
+                <omgdi:waypoint x="322.0" y="520.0"/>
+                <omgdi:waypoint x="322.0" y="262.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow19" id="BPMNEdge_flow19" sourceElement="startevent1" targetElement="stCreateReservedService">
+                <omgdi:waypoint x="69.0" y="229.0"/>
+                <omgdi:waypoint x="100.0" y="231.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNEdge>
+        </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
 </definitions>

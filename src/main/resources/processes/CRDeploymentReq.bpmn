@@ -1,79 +1,109 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
-  <process id="procCRDeploymentRequest" name="CR Deployment Request process" isExecutable="true">
-    <startEvent id="startevent1" name="Start"></startEvent>
-    <serviceTask id="stCRCreatetask" name="CR Create Task" activiti:delegateExpression="${crOrchestrationService}"></serviceTask>
-    <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="stCRCreatetask"></sequenceFlow>
-    <serviceTask id="stCheckCRServiceDeployment" name="Check CR Service Deployment" activiti:delegateExpression="${crOrchestrationCheckDeploymentService}"></serviceTask>
-    <sequenceFlow id="flow2" sourceRef="stCRCreatetask" targetRef="stCheckCRServiceDeployment"></sequenceFlow>
-    <exclusiveGateway id="exclusivegateway1" name="Exclusive Gateway"></exclusiveGateway>
-    <sequenceFlow id="flow3" sourceRef="stCheckCRServiceDeployment" targetRef="exclusivegateway1"></sequenceFlow>
-    <intermediateCatchEvent id="timerintermediatecatchevent1" name="Timer start wait 30 secs">
-      <timerEventDefinition>
-        <timeDuration>PT30S</timeDuration>
-      </timerEventDefinition>
-    </intermediateCatchEvent>
-    <sequenceFlow id="flowserviceDeploymentNotFinished" name="Service Deployment Not Finished" sourceRef="exclusivegateway1" targetRef="timerintermediatecatchevent1">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${!serviceDeploymentFinished}]]></conditionExpression>
-    </sequenceFlow>
-    <sequenceFlow id="flow5" sourceRef="timerintermediatecatchevent1" targetRef="stCheckCRServiceDeployment"></sequenceFlow>
-    <endEvent id="endevent1" name="End"></endEvent>
-    <sequenceFlow id="flowServiceDeploymentFinished" name="Service Deployment Finished" sourceRef="exclusivegateway1" targetRef="endevent1">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${serviceDeploymentFinished}]]></conditionExpression>
-    </sequenceFlow>
-  </process>
-  <bpmndi:BPMNDiagram id="BPMNDiagram_procCRDeploymentRequest">
-    <bpmndi:BPMNPlane bpmnElement="procCRDeploymentRequest" id="BPMNPlane_procCRDeploymentRequest">
-      <bpmndi:BPMNShape bpmnElement="startevent1" id="BPMNShape_startevent1">
-        <omgdc:Bounds height="35.0" width="35.0" x="120.0" y="150.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="stCRCreatetask" id="BPMNShape_stCRCreatetask">
-        <omgdc:Bounds height="55.0" width="105.0" x="210.0" y="140.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="stCheckCRServiceDeployment" id="BPMNShape_stCheckCRServiceDeployment">
-        <omgdc:Bounds height="71.0" width="111.0" x="390.0" y="132.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="exclusivegateway1" id="BPMNShape_exclusivegateway1">
-        <omgdc:Bounds height="40.0" width="40.0" x="700.0" y="147.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="timerintermediatecatchevent1" id="BPMNShape_timerintermediatecatchevent1">
-        <omgdc:Bounds height="35.0" width="35.0" x="593.0" y="250.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="endevent1" id="BPMNShape_endevent1">
-        <omgdc:Bounds height="35.0" width="35.0" x="850.0" y="150.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
-        <omgdi:waypoint x="155.0" y="167.0"></omgdi:waypoint>
-        <omgdi:waypoint x="210.0" y="167.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
-        <omgdi:waypoint x="315.0" y="167.0"></omgdi:waypoint>
-        <omgdi:waypoint x="390.0" y="167.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3">
-        <omgdi:waypoint x="501.0" y="167.0"></omgdi:waypoint>
-        <omgdi:waypoint x="700.0" y="167.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flowserviceDeploymentNotFinished" id="BPMNEdge_flowserviceDeploymentNotFinished">
-        <omgdi:waypoint x="720.0" y="187.0"></omgdi:waypoint>
-        <omgdi:waypoint x="719.0" y="267.0"></omgdi:waypoint>
-        <omgdi:waypoint x="628.0" y="267.0"></omgdi:waypoint>
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="42.0" width="100.0" x="721.0" y="208.0"></omgdc:Bounds>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow5" id="BPMNEdge_flow5">
-        <omgdi:waypoint x="593.0" y="267.0"></omgdi:waypoint>
-        <omgdi:waypoint x="445.0" y="267.0"></omgdi:waypoint>
-        <omgdi:waypoint x="445.0" y="203.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flowServiceDeploymentFinished" id="BPMNEdge_flowServiceDeploymentFinished">
-        <omgdi:waypoint x="740.0" y="167.0"></omgdi:waypoint>
-        <omgdi:waypoint x="850.0" y="167.0"></omgdi:waypoint>
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="42.0" width="100.0" x="739.0" y="132.0"></omgdc:Bounds>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-    </bpmndi:BPMNPlane>
-  </bpmndi:BPMNDiagram>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:tns="http://www.activiti.org/test" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" expressionLanguage="http://www.w3.org/1999/XPath" id="m1747800209650" name="" targetNamespace="http://www.activiti.org/test" typeLanguage="http://www.w3.org/2001/XMLSchema">
+    <process id="procCRDeploymentRequest" isClosed="false" isExecutable="true" name="CR Deployment Request process" processType="None">
+        <startEvent id="startevent1" name="Start"/>
+        <serviceTask activiti:delegateExpression="${crOrchestrationService}" activiti:exclusive="true" id="stCRCreatetask" name="CR Create Task"/>
+        <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="stCRCreatetask"/>
+        <serviceTask activiti:delegateExpression="${crOrchestrationCheckDeploymentService}" activiti:exclusive="true" id="stCheckCRServiceDeployment" name="Check CR Service Deployment"/>
+        <sequenceFlow id="flow2" sourceRef="stCRCreatetask" targetRef="stCheckCRServiceDeployment"/>
+        <exclusiveGateway gatewayDirection="Unspecified" id="exclusivegateway1" name="Exclusive Gateway"/>
+        <sequenceFlow id="flow3" sourceRef="stCheckCRServiceDeployment" targetRef="exclusivegateway1"/>
+        <intermediateCatchEvent id="timerintermediatecatchevent1" name="Timer start wait 30 secs">
+            <timerEventDefinition id="timerintermediatecatchevent1_ED_1">
+                <timeDuration><![CDATA[PT30S]]></timeDuration>
+            </timerEventDefinition>
+        </intermediateCatchEvent>
+        <sequenceFlow id="flowserviceDeploymentNotFinished" name="Service Deployment Not Finished" sourceRef="exclusivegateway1" targetRef="timerintermediatecatchevent1">
+            <conditionExpression xsi:type="tFormalExpression"><![CDATA[${!serviceDeploymentFinished}]]></conditionExpression>
+        </sequenceFlow>
+        <sequenceFlow id="flow5" sourceRef="timerintermediatecatchevent1" targetRef="stCheckCRServiceDeployment"/>
+        <endEvent id="endevent1" name="End"/>
+        <sequenceFlow id="flowServiceDeploymentFinished" name="Service Deployment Finished" sourceRef="exclusivegateway1" targetRef="endevent1">
+            <conditionExpression xsi:type="tFormalExpression"><![CDATA[${serviceDeploymentFinished}]]></conditionExpression>
+        </sequenceFlow>
+    </process>
+    <bpmndi:BPMNDiagram documentation="background=#2B2D30;count=1;horizontalcount=1;orientation=0;width=842.4;height=1195.2;imageableWidth=832.4;imageableHeight=1185.2;imageableX=5.0;imageableY=5.0" id="Diagram-_1" name="New Diagram">
+        <bpmndi:BPMNPlane bpmnElement="procCRDeploymentRequest">
+            <bpmndi:BPMNShape bpmnElement="startevent1" id="Shape-startevent1">
+                <omgdc:Bounds height="32.0" width="32.0" x="120.0" y="150.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="stCRCreatetask" id="Shape-stCRCreatetask">
+                <omgdc:Bounds height="55.0" width="105.0" x="210.0" y="140.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="55.0" width="105.0" x="0.0" y="0.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="stCheckCRServiceDeployment" id="Shape-stCheckCRServiceDeployment">
+                <omgdc:Bounds height="71.0" width="111.0" x="390.0" y="132.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="71.0" width="111.0" x="0.0" y="0.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="exclusivegateway1" id="Shape-exclusivegateway1" isMarkerVisible="false">
+                <omgdc:Bounds height="32.0" width="32.0" x="700.0" y="147.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="timerintermediatecatchevent1" id="Shape-timerintermediatecatchevent1">
+                <omgdc:Bounds height="32.0" width="32.0" x="593.0" y="250.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="endevent1" id="Shape-endevent1">
+                <omgdc:Bounds height="32.0" width="32.0" x="850.0" y="150.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge bpmnElement="flowServiceDeploymentFinished" id="BPMNEdge_flowServiceDeploymentFinished" sourceElement="exclusivegateway1" targetElement="endevent1">
+                <omgdi:waypoint x="732.0" y="163.0"/>
+                <omgdi:waypoint x="850.0" y="166.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="42.0" width="100.0" x="739.0" y="132.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1" sourceElement="startevent1" targetElement="stCRCreatetask">
+                <omgdi:waypoint x="152.0" y="166.0"/>
+                <omgdi:waypoint x="210.0" y="167.5"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2" sourceElement="stCRCreatetask" targetElement="stCheckCRServiceDeployment">
+                <omgdi:waypoint x="315.0" y="167.5"/>
+                <omgdi:waypoint x="390.0" y="167.5"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3" sourceElement="stCheckCRServiceDeployment" targetElement="exclusivegateway1">
+                <omgdi:waypoint x="501.0" y="167.5"/>
+                <omgdi:waypoint x="700.0" y="163.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flowserviceDeploymentNotFinished" id="BPMNEdge_flowserviceDeploymentNotFinished" sourceElement="exclusivegateway1" targetElement="timerintermediatecatchevent1">
+                <omgdi:waypoint x="719.0" y="176.0"/>
+                <omgdi:waypoint x="719.0" y="267.0"/>
+                <omgdi:waypoint x="624.9687194226713" y="267.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="42.0" width="100.0" x="721.0" y="208.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow5" id="BPMNEdge_flow5" sourceElement="timerintermediatecatchevent1" targetElement="stCheckCRServiceDeployment">
+                <omgdi:waypoint x="593.0312805773287" y="267.0"/>
+                <omgdi:waypoint x="445.0" y="267.0"/>
+                <omgdi:waypoint x="445.0" y="203.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNEdge>
+        </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
 </definitions>

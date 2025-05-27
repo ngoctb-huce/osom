@@ -1,71 +1,107 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
-  <process id="procMetricoDeploymentRequest" name="Metrico Deployment Request" isExecutable="true">
-    <startEvent id="startevent1" name="Start"></startEvent>
-    <serviceTask id="stMetricoCreateTask" name="Metrico Create Task" activiti:delegateExpression="${metricoOrchestrationService}"></serviceTask>
-    <serviceTask id="stCheckMetricoServiceDeployment" name="Check METRICO Service Deployment" activiti:delegateExpression="${metricoOrchestrationCheckDeploymentService}"></serviceTask>
-    <exclusiveGateway id="exclusivegateway1" name="Exclusive Gateway"></exclusiveGateway>
-    <intermediateCatchEvent id="timerintermediatecatchevent1" name="TimerCatchEvent">
-      <timerEventDefinition>
-        <timeDuration>PT30S</timeDuration>
-      </timerEventDefinition>
-    </intermediateCatchEvent>
-    <sequenceFlow id="flow3" sourceRef="stCheckMetricoServiceDeployment" targetRef="exclusivegateway1"></sequenceFlow>
-    <sequenceFlow id="flow4" sourceRef="exclusivegateway1" targetRef="timerintermediatecatchevent1">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${!serviceDeploymentFinished}]]></conditionExpression>
-    </sequenceFlow>
-    <endEvent id="endevent1" name="End"></endEvent>
-    <sequenceFlow id="flow5" sourceRef="exclusivegateway1" targetRef="endevent1"></sequenceFlow>
-    <sequenceFlow id="flow6" sourceRef="timerintermediatecatchevent1" targetRef="stCheckMetricoServiceDeployment"></sequenceFlow>
-    <sequenceFlow id="flow7" sourceRef="stMetricoCreateTask" targetRef="stCheckMetricoServiceDeployment"></sequenceFlow>
-    <sequenceFlow id="flow8" sourceRef="startevent1" targetRef="stMetricoCreateTask"></sequenceFlow>
-  </process>
-  <bpmndi:BPMNDiagram id="BPMNDiagram_procMetricoDeploymentRequest">
-    <bpmndi:BPMNPlane bpmnElement="procMetricoDeploymentRequest" id="BPMNPlane_procMetricoDeploymentRequest">
-      <bpmndi:BPMNShape bpmnElement="startevent1" id="BPMNShape_startevent1">
-        <omgdc:Bounds height="35.0" width="35.0" x="120.0" y="165.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="stMetricoCreateTask" id="BPMNShape_stMetricoCreateTask">
-        <omgdc:Bounds height="91.0" width="105.0" x="250.0" y="140.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="stCheckMetricoServiceDeployment" id="BPMNShape_stCheckMetricoServiceDeployment">
-        <omgdc:Bounds height="91.0" width="105.0" x="500.0" y="140.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="exclusivegateway1" id="BPMNShape_exclusivegateway1">
-        <omgdc:Bounds height="40.0" width="40.0" x="800.0" y="165.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="timerintermediatecatchevent1" id="BPMNShape_timerintermediatecatchevent1">
-        <omgdc:Bounds height="35.0" width="35.0" x="650.0" y="330.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="endevent1" id="BPMNShape_endevent1">
-        <omgdc:Bounds height="35.0" width="35.0" x="950.0" y="165.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3">
-        <omgdi:waypoint x="605.0" y="185.0"></omgdi:waypoint>
-        <omgdi:waypoint x="800.0" y="185.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow4" id="BPMNEdge_flow4">
-        <omgdi:waypoint x="820.0" y="205.0"></omgdi:waypoint>
-        <omgdi:waypoint x="820.0" y="347.0"></omgdi:waypoint>
-        <omgdi:waypoint x="685.0" y="347.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow5" id="BPMNEdge_flow5">
-        <omgdi:waypoint x="840.0" y="185.0"></omgdi:waypoint>
-        <omgdi:waypoint x="950.0" y="182.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow6" id="BPMNEdge_flow6">
-        <omgdi:waypoint x="650.0" y="347.0"></omgdi:waypoint>
-        <omgdi:waypoint x="552.0" y="347.0"></omgdi:waypoint>
-        <omgdi:waypoint x="552.0" y="231.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow7" id="BPMNEdge_flow7">
-        <omgdi:waypoint x="355.0" y="185.0"></omgdi:waypoint>
-        <omgdi:waypoint x="500.0" y="185.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow8" id="BPMNEdge_flow8">
-        <omgdi:waypoint x="155.0" y="182.0"></omgdi:waypoint>
-        <omgdi:waypoint x="250.0" y="185.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-    </bpmndi:BPMNPlane>
-  </bpmndi:BPMNDiagram>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:tns="http://www.activiti.org/test" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" expressionLanguage="http://www.w3.org/1999/XPath" id="m1744346274387" name="" targetNamespace="http://www.activiti.org/test" typeLanguage="http://www.w3.org/2001/XMLSchema">
+    <process id="procMetricoDeploymentRequest" isClosed="false" isExecutable="true" name="Metrico Deployment Request" processType="None">
+        <startEvent id="startevent1" name="Start"/>
+        <serviceTask activiti:delegateExpression="${metricoOrchestrationService}" activiti:exclusive="true" id="stMetricoCreateTask" name="Metrico Create Task"/>
+        <serviceTask activiti:delegateExpression="${metricoOrchestrationCheckDeploymentService}" activiti:exclusive="true" id="stCheckMetricoServiceDeployment" name="Check METRICO Service Deployment"/>
+        <exclusiveGateway gatewayDirection="Unspecified" id="exclusivegateway1" name="Exclusive Gateway"/>
+        <intermediateCatchEvent id="timerintermediatecatchevent1" name="TimerCatchEvent">
+            <timerEventDefinition id="timerintermediatecatchevent1_ED_1">
+                <timeDuration><![CDATA[PT30S]]></timeDuration>
+            </timerEventDefinition>
+        </intermediateCatchEvent>
+        <sequenceFlow id="flow3" sourceRef="stCheckMetricoServiceDeployment" targetRef="exclusivegateway1"/>
+        <sequenceFlow id="flow4" sourceRef="exclusivegateway1" targetRef="timerintermediatecatchevent1">
+            <conditionExpression xsi:type="tFormalExpression"><![CDATA[${!serviceDeploymentFinished}]]></conditionExpression>
+        </sequenceFlow>
+        <endEvent id="endevent1" name="End"/>
+        <sequenceFlow id="flow5" sourceRef="exclusivegateway1" targetRef="endevent1"/>
+        <sequenceFlow id="flow6" sourceRef="timerintermediatecatchevent1" targetRef="stCheckMetricoServiceDeployment"/>
+        <sequenceFlow id="flow7" sourceRef="stMetricoCreateTask" targetRef="stCheckMetricoServiceDeployment"/>
+        <sequenceFlow id="flow8" sourceRef="startevent1" targetRef="stMetricoCreateTask"/>
+    </process>
+    <bpmndi:BPMNDiagram documentation="background=#2B2D30;count=1;horizontalcount=1;orientation=0;width=842.4;height=1195.2;imageableWidth=832.4;imageableHeight=1185.2;imageableX=5.0;imageableY=5.0" id="Diagram-_1" name="New Diagram">
+        <bpmndi:BPMNPlane bpmnElement="procMetricoDeploymentRequest">
+            <bpmndi:BPMNShape bpmnElement="startevent1" id="Shape-startevent1">
+                <omgdc:Bounds height="32.0" width="32.0" x="120.0" y="165.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="stMetricoCreateTask" id="Shape-stMetricoCreateTask">
+                <omgdc:Bounds height="91.0" width="105.0" x="250.0" y="140.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="91.0" width="105.0" x="0.0" y="0.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="stCheckMetricoServiceDeployment" id="Shape-stCheckMetricoServiceDeployment">
+                <omgdc:Bounds height="91.0" width="105.0" x="500.0" y="140.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="91.0" width="105.0" x="0.0" y="0.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="exclusivegateway1" id="Shape-exclusivegateway1" isMarkerVisible="false">
+                <omgdc:Bounds height="32.0" width="32.0" x="800.0" y="165.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="timerintermediatecatchevent1" id="Shape-timerintermediatecatchevent1">
+                <omgdc:Bounds height="32.0" width="32.0" x="650.0" y="330.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="endevent1" id="Shape-endevent1">
+                <omgdc:Bounds height="32.0" width="32.0" x="950.0" y="165.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3" sourceElement="stCheckMetricoServiceDeployment" targetElement="exclusivegateway1">
+                <omgdi:waypoint x="605.0" y="185.5"/>
+                <omgdi:waypoint x="800.0" y="181.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow4" id="BPMNEdge_flow4" sourceElement="exclusivegateway1" targetElement="timerintermediatecatchevent1">
+                <omgdi:waypoint x="820.0" y="193.0"/>
+                <omgdi:waypoint x="820.0" y="347.0"/>
+                <omgdi:waypoint x="681.9687194226713" y="347.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow5" id="BPMNEdge_flow5" sourceElement="exclusivegateway1" targetElement="endevent1">
+                <omgdi:waypoint x="832.0" y="181.0"/>
+                <omgdi:waypoint x="950.0" y="181.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow6" id="BPMNEdge_flow6" sourceElement="timerintermediatecatchevent1" targetElement="stCheckMetricoServiceDeployment">
+                <omgdi:waypoint x="650.0312805773287" y="347.0"/>
+                <omgdi:waypoint x="552.0" y="347.0"/>
+                <omgdi:waypoint x="552.0" y="231.0"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow7" id="BPMNEdge_flow7" sourceElement="stMetricoCreateTask" targetElement="stCheckMetricoServiceDeployment">
+                <omgdi:waypoint x="355.0" y="185.5"/>
+                <omgdi:waypoint x="500.0" y="185.5"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow8" id="BPMNEdge_flow8" sourceElement="startevent1" targetElement="stMetricoCreateTask">
+                <omgdi:waypoint x="152.0" y="181.0"/>
+                <omgdi:waypoint x="250.0" y="185.5"/>
+                <bpmndi:BPMNLabel>
+                    <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNEdge>
+        </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
 </definitions>

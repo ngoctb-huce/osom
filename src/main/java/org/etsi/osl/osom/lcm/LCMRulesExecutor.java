@@ -93,6 +93,7 @@ public class LCMRulesExecutor {
 	 */
 	private String preprocess_ClearAllEVALVariables(String newValue) {
 		String anewValue = newValue;
+		logger.debug("anewValue = " + anewValue);
 		logger.debug("clearEVALVariables before " + newValue);
 				
 		anewValue = anewValue.replace("$QUOTESTR$", "\"");
