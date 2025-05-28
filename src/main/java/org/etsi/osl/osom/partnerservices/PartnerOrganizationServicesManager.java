@@ -557,7 +557,7 @@ public class PartnerOrganizationServicesManager {
 	}
 
 	public ServiceOrder makeExternalServiceOrder(ServiceOrderCreate servOrder, Organization org, String remoteServiceSpecID) {
-				
+		logger.debug("TRITM ServiceOrderCreate: " + servOrder);
 		Characteristic ctype = org.findPartyCharacteristic("EXTERNAL_TMFAPI_CLIENTREGISTRATIONID");
 		if ( ctype !=null ) {			
 			if (ctype.getValue().getValue().contains("flowone")) {
