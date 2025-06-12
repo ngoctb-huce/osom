@@ -1,3 +1,5 @@
+package org.etsi.osl.osom.management;
+
 import org.etsi.osl.tmf.am642.model.AlarmStateType;
 import org.etsi.osl.tmf.am642.model.AlarmUpdate;
 import org.etsi.osl.tmf.am642.model.Comment;
@@ -11,8 +13,6 @@ import org.springframework.test.util.ReflectionTestUtils;
 import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-
-package org.etsi.osl.osom.management;
 
 
 
