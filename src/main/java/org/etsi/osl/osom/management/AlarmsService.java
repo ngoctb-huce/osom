@@ -22,6 +22,10 @@ public class AlarmsService {
 
 	private static final transient Log logger = LogFactory.getLog(AlarmsService.class.getName());
 
+	/**
+	 * Injected instance of CamelContext used for configuring and managing Apache Camel routes
+	 * within the AlarmsService. This context enables integration and routing capabilities.
+	 */
 	@Autowired
 	CamelContext contxt;
 
@@ -44,6 +48,19 @@ public class AlarmsService {
 	 * @param alarm
 	 * @param canBehandled
 	 * @param actions
+	 */
+	/**
+	 * Updates the state of an alarm, optionally clearing it and adding a comment.
+	 *
+	 * <p>
+	 * If {@code cleared} is {@code true}, the alarm is marked as cleared, a clear system ID is set,
+	 * and a comment indicating the alarm was cleared is added. If {@code cleared} is {@code false},
+	 * only a comment indicating the alarm was updated (but not cleared) is added.
+	 * </p>
+	 *
+	 * @param alarmId   the unique identifier of the alarm to update
+	 * @param textNote  additional text to include in the comment
+	 * @param cleared   {@code true} to clear the alarm, {@code false} to only update it
 	 */
 	public void patchAlarmClear(String alarmId, String textNote, boolean cleared ) {
 		AlarmUpdate aupd = new AlarmUpdate();
